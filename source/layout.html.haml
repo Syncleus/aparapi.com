@@ -6,7 +6,8 @@
     %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
     %meta{:content => "no", :name => "msapplication-tap-highlight"}/
     %meta{:content => "Materialize is a modern responsive CSS framework based on Material Design by Google. ", :name => "description"}/
-    %title Documentation - Materialize
+    %title
+      Aparapi | #{page_title}
     / Favicons
     %link{:href => "images/favicon/apple-touch-icon-152x152.png", :rel => "apple-touch-icon-precomposed"}/
     %meta{:content => "#FFFFFF", :name => "msapplication-TileColor"}/
@@ -36,7 +37,7 @@
       %ul#nav-mobile.side-nav.fixed
         %li.logo
           %a#logo-container.brand-logo{:href => "http://materializecss.com/"}
-            %object#front-page-logo{:data => "images/materialize.svg", :type => "image/svg+xml"} Your browser does not support SVG
+            %object#front-page-logo{:data => "images/logo.svg", :type => "image/svg+xml"} Your browser does not support SVG
         %li.search
           .search-wrapper.card
             %input#search/
@@ -70,9 +71,9 @@
     %main
       #index-banner.section.no-pad-bot
         .container
-          %h1.header.center-on-small-only Materialize
+          %h1.header.center-on-small-only Aparapi
           .row.center
-            %h4.header.col.s12.light.center A modern responsive front-end framework based on Material Design
+            %h4.header.col.s12.light.center Open-source framework for executing native Java code on the GPU.
           .row.center
             %a#download-button.btn-large.waves-effect.waves-light{:href => "http://materializecss.com/getting-started.html"} Get Started
           .row.center
@@ -97,7 +98,7 @@
               %br/
               %img#responsive-img{:src => "images/responsive.png"}/
           .row
-            %h3.col.s12.light.center.header Materialize simplifies life for developers and the users they serve.
+            %h3.col.s12.light.center.header Aparapi simplifies life for developers and reduces server costs.
           / Promo Section
           .row
             .col.s12.m4
@@ -107,7 +108,7 @@
                 %p.light.center We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
             .col.s12.m4
               .center.promo
-                %i.material-icons group
+                %i.material-icons attach_money
                 %p.promo-caption User Experience Focused
                 %p.light.center By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.
             .col.s12.m4
@@ -135,7 +136,7 @@
           .col.l4.s12
             %h5.white-text Join the Discussion
             %p.grey-text.text-lighten-4 We have a Gitter chat room set up where you can talk directly with us. Come in and discuss new features, future goals, general problems or questions, or anything else you can think of.
-            %a.btn.waves-effect.waves-light.red.lighten-3{:href => "https://github.com/Syncleus/aparapi", :target => "_blank"} Chat
+            %a.btn.waves-effect.waves-light.red.lighten-3{:href => "https://gitter.im/Syncleus/aparapi", :target => "_blank"} Chat
           .col.l4.s12{:style => "overflow: hidden;"}
             %h5.white-text Connect
             %iframe{:allowtransparency => "true", :frameborder => "0", :height => "30", :scrolling => "0", :src => "http://ghbtns.com/github-btn.html?user=Syncleus&repo=aparapi&type=watch&count=true&size=large", :width => "170"}
