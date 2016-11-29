@@ -87,8 +87,15 @@ helpers do
   end
 end
 
+# Add bower's directory to sprockets asset path
+after_configuration do
+  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
+  sprockets.append_path File.join "#{root}", @bower_config["directory"]
+end
+
 # Build-specific configuration
 configure :build do
+
   # Minify CSS on build
   # activate :minify_css
 

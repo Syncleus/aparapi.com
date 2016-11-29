@@ -19,3 +19,7 @@
 
 #Intellij
 .idea/
+
+#bower components
+components/
+
