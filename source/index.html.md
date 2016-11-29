@@ -23,6 +23,7 @@ Your patterns are located in the `source/patterns` folder.
 **For example:**
 
 ```
+
 source/patterns/
   components/
     alerts/
@@ -51,6 +52,7 @@ source/patterns/
 **Explanation:**
 
 ```
+
 elements/         <= Category
   typography/     <= Subcategory
     headings.html <= Pattern
@@ -64,9 +66,10 @@ optional.
 **For example `headings.html`:**
 
 ```html
+
 ---
 title: Headings
-description: All HTML headings, &lt;h1&gt; through &lt;h6&gt;, are available. .h1 through .h6 classes are also available, for when you want to match the font styling of a heading but still want your text to be displayed inline.
+description: All HTML headings, <h1> through &lt;h6&gt;, are available. .h1 through .h6 classes are also available, for when you want to match the font styling of a heading but still want your text to be displayed inline.
 ---
 
 <h1>Heading 1</h1>
@@ -85,6 +88,7 @@ template using the JSON format.
 **For example:**
 
 ```
+
 ---
 title: Lorem ipsum
 description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -108,6 +112,7 @@ use_source: false
 Your JS is located at `source/javascripts/`
 
 ```
+
 source/javascripts
   mpl/    <= JS for the middleman-pattern-library
   base.js <= JS for your patterns
@@ -116,6 +121,7 @@ source/javascripts
 and your CSS is located at `source/stylesheets/`
 
 ```
+
 source/stylesheets/
   mpl/      <= CSS for the middleman-pattern-library
   base.css  <= CSS for your patterns, you can also use Sass.
@@ -127,6 +133,7 @@ Finally, when you are ready to deliver static code, you will need to build the
 site. Using the command-line, from the project folder, run `middleman build`:
 
 ```bash
+
 $ cd my_pattern_library
 $ bundle exec middleman build
 ```
