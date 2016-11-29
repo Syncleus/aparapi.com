@@ -108,5 +108,4 @@ configure :build do
 
   # Ignoring Files
   ignore '/template.html'
-  ignore '/stylesheets/mpl/vendor/*'
 end
