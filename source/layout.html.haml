@@ -42,11 +42,15 @@
             %input#search/
             %i.material-icons search
             .search-results
-        %li.bold
-          Introduction
-        = link_to 'Overview', '/index.html'
-        %li
-          %div.divider
+          %li.no-padding
+            %ul.collapsible.collapsible-accordion
+              %li.bold
+                %a.collapsible-header.waves-effect.waves-teal
+                  Introduction
+                .collapsible-body
+                  %ul
+                    %li
+                      = link_to 'Overview', '/index.html'
         - navigation.each_with_index do |(category, subcategories), index|
           %li.no-padding
             %ul.collapsible.collapsible-accordion
