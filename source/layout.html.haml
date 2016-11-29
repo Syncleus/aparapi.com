@@ -37,12 +37,9 @@
           %li.no-padding
             %ul.collapsible.collapsible-accordion
               %li.bold
-                %a.collapsible-header.waves-effect.waves-teal
-                  Introduction
-                .collapsible-body
-                  %ul
-                    %li
-                      = link_to 'Overview', '/index.html'
+                %a.waves-effect.waves-teal
+                  = link_to 'Overview', '/index.html'
+
         - navigation.each_with_index do |(category, subcategories), index|
           %li.no-padding
             %ul.collapsible.collapsible-accordion
@@ -54,7 +51,7 @@
                     - subcategories.each do |subcategory|
                       %li
                         = link_to subcategory[:name], subcategory.link, |
-                          class: 'mdl-navigation__link',                |
+                          class: 'mdl-navigation__link',
                           data: { title: subcategory.name }
                     - unless index == navigation.size - 1
                       %li
@@ -65,23 +62,8 @@
           %h1.header.center-on-small-only Aparapi
           .row.center
             %h4.header.col.s12.light.center Open-source framework for executing native Java code on the GPU.
-          .row.center
-            %a#download-button.btn-large.waves-effect.waves-light{:href => "http://materializecss.com/getting-started.html"} Get Started
-          .row.center
-            %a.red-text.text-lighten-4{:href => "https://github.com/Syncleus/aparapi"} beta release v1.0.0
-          .buysellads-header.buysellads-homepage.row.center
-            / CarbonAds Zone Code
-            %script#_carbonads_js{:async => "", :src => "//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=materializecss", :type => "text/javascript"}
-          %br/
-        .github-commit
-          .container
-            .commit
-              Latest Commit on Github:
-                
-              %a.sha{:href => ""}
-                
-              %span.date
-              %a#github-button.btn-flat.right.grey-text.text-lighten-5.waves-effect.waves-light.hide-on-small-only{:href => "https://github.com/Syncleus/aparapi"} Github
+          = yield_content(:additional_header) if content_for?(:additional_header)
+        = yield_content(:banner) if content_for?(:banner)
       .container
         = yield
     %footer.page-footer
