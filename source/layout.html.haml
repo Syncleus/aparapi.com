@@ -48,15 +48,21 @@
         %li
           %div.divider
         - navigation.each_with_index do |(category, subcategories), index|
-          %li
-            = category
-          - subcategories.each do |subcategory|
-            = link_to subcategory[:name], subcategory.link, |
-              class: 'mdl-navigation__link',                |
-              data: { title: subcategory.name }
-          - unless index == navigation.size - 1
-            %li
-              %div.divider
+          %li.no-padding
+            %ul.collapsible.collapsible-accordion
+              %li.bold
+                %a.collapsible-header.waves-effect.waves-teal
+                  = category
+                .collapsible-body
+                  %ul
+                    - subcategories.each do |subcategory|
+                      %li
+                        = link_to subcategory[:name], subcategory.link, |
+                          class: 'mdl-navigation__link',                |
+                          data: { title: subcategory.name }
+                    - unless index == navigation.size - 1
+                      %li
+                        %div.divider
     %main
       #index-banner.section.no-pad-bot
         .container
