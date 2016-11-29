@@ -1,0 +1,37 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "UTF-8"}/
+    %meta{:content => "width=device-width, minimum-scale=1.0", :name => "viewport"}/
+    %title
+      Pattern Library | #{page_title}
+    = stylesheet_link_tag "https://code.getmdl.io/1.2.1/material.teal-red.min.css"
+    = stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons"
+    = stylesheet_link_tag "mpl/application"
+    = favicon_tag "images/favicon.png"
+  %body
+    .mdl-layout.mdl-js-layout.mdl-layout--fixed-drawer.mdl-layout--fixed-header
+      %header.mdl-layout__header
+        .mdl-layout__header-row
+          %span.mdl-layout-title= page_title
+        = yield_content(:tab_navigation) if content_for?(:tab_navigation)
+      .mdl-layout__drawer
+        %nav.mdl-navigation
+          %span.mdl-navigation__link.mpl-navigation__title
+            Introduction
+          = link_to 'Overview', '/index.html', class: 'mdl-navigation__link'
+          .mpl-navigation__separator
+          - navigation.each_with_index do |(category, subcategories), index|
+            %span.mdl-navigation__link.mpl-navigation__title
+              = category
+            - subcategories.each do |subcategory|
+              = link_to subcategory[:name], subcategory.link, |
+                class: 'mdl-navigation__link',                |
+                data: { title: subcategory.name }
+            - unless index == navigation.size - 1
+              .mpl-navigation__separator
+      %main.mdl-layout__content
+        .mpl-layout__content
+          = yield
+    = javascript_include_tag "https://code.getmdl.io/1.2.1/material.min.js"
+    = javascript_include_tag "mpl/application"

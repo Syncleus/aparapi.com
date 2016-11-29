@@ -52,6 +52,7 @@ end
 activate :sprockets
 
 # Middleman-Syntax - https://github.com/middleman/middleman-syntax
+set :haml, { :ugly => false, :format => :html5 }
 set :markdown_engine, :redcarpet
 set :markdown, fenced_code_blocks: true, smartypants: true, footnotes: true,
   link_attributes: { rel: 'nofollow' }, tables: true
