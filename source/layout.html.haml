@@ -1,25 +1,25 @@
 !!!
 %html{:lang => "en"}
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "no", :name => "msapplication-tap-highlight"}/
-    %meta{:content => "Materialize is a modern responsive CSS framework based on Material Design by Google. ", :name => "description"}/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "no", :name => "msapplication-tap-highlight"}
+    %meta{:content => "Materialize is a modern responsive CSS framework based on Material Design by Google. ", :name => "description"}
     %title
       Aparapi | #{page_title}
     / Favicons
-    %link{:href => "/images/favicon/apple-touch-icon-152x152.png", :rel => "apple-touch-icon-precomposed"}/
-    %meta{:content => "#FFFFFF", :name => "msapplication-TileColor"}/
-    %meta{:content => "/images/favicon/mstile-144x144.png", :name => "msapplication-TileImage"}/
-    %link{:href => "/images/favicon/favicon-32x32.png", :rel => "icon", :sizes => "32x32"}/
+    %link{:href => "/images/favicon/apple-touch-icon-152x152.png", :rel => "apple-touch-icon-precomposed"}
+    %meta{:content => "#FFFFFF", :name => "msapplication-TileColor"}
+    %meta{:content => "/images/favicon/mstile-144x144.png", :name => "msapplication-TileImage"}
+    %link{:href => "/images/favicon/favicon-32x32.png", :rel => "icon", :sizes => "32x32"}
     / Android 5 Chrome Color
-    %meta{:content => "#EE6E73", :name => "theme-color"}/
+    %meta{:content => "#EE6E73", :name => "theme-color"}
     / CSS
-    %link{:href => "/stylesheets/prism.css", :rel => "stylesheet"}/
-    %link{:href => "/stylesheets/style.css", :media => "screen,projection", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "http://fonts.googleapis.com/css?family=Inconsolata", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "http://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+    %link{:href => "/stylesheets/prism.css", :rel => "stylesheet"}
+    %link{:href => "/stylesheets/style.css", :media => "screen,projection", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://fonts.googleapis.com/css?family=Inconsolata", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}
   %body
     %header
       .container
@@ -31,7 +31,7 @@
             %object#front-page-logo{:data => "/images/logo.svg", :type => "image/svg+xml"} Your browser does not support SVG
         %li.search
           .search-wrapper.card
-            %input#search/
+            %input#search
             %i.material-icons search
             .search-results
         = navigation(data.tree)
@@ -53,8 +53,8 @@
             %h5.white-text Help Aparapi Grow
             %p.grey-text.text-lighten-4 We are a team of volunteers working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.
             %form#paypal-donate{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post", :target => "_top"}
-              %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}/
-              %input{:name => "encrypted", :type => "hidden", :value => "-----BEGIN PKCS7-----MIIHoAYJKoZIhvcNAQcEoIIHkTCCB40CAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYATcKxN8t35TG2x34eY272SuZO3QbGy+BTGIM5DRV6Hmosotzw2TF42ceWmbXb3Gk4Wy5kUgo4TgHExCZHUSlHUl+A9KWLFejotgQJPhbiBsnns3klWbKftA3LEnP/kz/SW7OyBlpluoHoEGb354/aoX3JEctp3akHiZEmD7JyEgjELMAkGBSsOAwIaBQAwggEcBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECOGCJwba6JICgIH4RtE1LE3juagKs+swI5tb9Y2LacWo+qn1H1aLKeg57bQMqqcWYvkoO1joYoglPc1h4mO0egZjHPQ6ih0K0IYlXw2SRpNylSlIMUE3GW6smjSSwRhscZfXQYUnmQsfYvkFwoKrlZGf/1u0Q7nwlZ1szIKnDMZ5f+k8xBcM0sMNutn/y9CH6A3zo01gQBIF29+1WYAoQspNAnfWQy3ydV7nbjIA9ThDp2WquWw3EVlvqlvm/3C2AFuH/L4q0ltn3qjkCdzXK0O2jW3TRrzligPkAy6CN0Tw2jGW5GENNC1L92vHFH4kBXUPlhvw39TgoN7/KRUjVoYPYgugggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNjExMjkyMjA1NTNaMCMGCSqGSIb3DQEJBDEWBBS4i3Exr/pFcKOJy8uKmH+nGIMjqDANBgkqhkiG9w0BAQEFAASBgDAbFZ2jieloeB/0wCAcvYCFAIXmmBaMS5js/byzU5gK7exSTlRMX74IkmHemItaOcw3wyFlu4i118D9K9SbSbFiX9DGDcezGh42u/6G8TuZMwlvmiehwMioTVcm4jWG40YLiv8pJZypfoSx2w4IAFb4na5i/E1qOrwQOpiBho+s-----END PKCS7-----\n"}/
+              %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
+              %input{:name => "encrypted", :type => "hidden", :value => "-----BEGIN PKCS7-----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-----END PKCS7-----\n"}
               %button.btn.waves-effect.waves-light.red.lighten-3{:alt => "PayPal - The safer, easier way to pay online!", :name => "action", :type => "submit"}
                 Donate Now
           .col.l4.s12
@@ -64,9 +64,9 @@
           .col.l4.s12{:style => "overflow: hidden;"}
             %h5.white-text Connect
             %iframe{:allowtransparency => "true", :frameborder => "0", :height => "30", :scrolling => "0", :src => "http://ghbtns.com/github-btn.html?user=Syncleus&repo=aparapi&type=watch&count=true&size=large", :width => "170"}
-            %br/
+            %br
             %a.twitter-follow-button{"data-dnt" => "true", "data-show-count" => "true", "data-size" => "large", :href => "https://twitter.com/AparapiLib"} Follow @AparapiLib
-            %br/
+            %br
             .g-follow{"data-annotation" => "bubble", "data-height" => "24", "data-href" => "https://plus.google.com/102266131584900704956", "data-rel" => "publisher"}
       .footer-copyright
         .container
@@ -77,6 +77,7 @@
     :javascript
       if (!window.jQuery) { document.write('<script src="bin/jquery-2.1.1.min.js"><\/script>'); }
     %script{:src => "/javascripts/jquery.timeago.js"}
+    %script{:src => "/javascripts/materialize.min.js"}
     %script{:src => "/javascripts/prism.js"}
     %script{:src => "/javascripts/lunr.min.js"}
     %script{:src => "/javascripts/search.js"}
