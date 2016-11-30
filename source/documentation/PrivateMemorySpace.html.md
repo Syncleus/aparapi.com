@@ -1,5 +1,6 @@
-PrivateMemorySpace
-==================
+---
+    title: PrivateMemorySpace
+---
 
 *Using `__private` memory space in Aparapi kernels. Phase-Implementation Updated Sep 14, 2014 by barneydp...@gmail.com*
 
