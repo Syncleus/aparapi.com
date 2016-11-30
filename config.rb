@@ -61,7 +61,7 @@ helpers do
                 active = this_resource == current_page ? 'active' : ''
                 title = discover_title(this_resource)
                 link = link_to(title, this_resource)
-                html << "<li class='no-padding #{active}'>"
+                html << "<li class='no-padding'>"
                 html << "<ul class='collapsible collapsible-accordion'>"
                 html << "<li class='bold'>"
                 html << "#{link}"
@@ -80,7 +80,7 @@ helpers do
                 # This is a directory.
                 # The directory has a key and should be listed in the page hieararcy with HTML.
                 dir_name = format_directory_name(key)
-                html << "<li class='no-padding #{active}'>"
+                html << "<li class='no-padding'>"
                 html << "<ul class='collapsible collapsible-accordion'>"
                 html << "<li class='bold'>"
                 html << "<a class='collapsible-header waves-effect waves-teal'>"
