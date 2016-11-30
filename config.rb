@@ -32,7 +32,10 @@ set :markdown, fenced_code_blocks: true, smartypants: true, footnotes: true,
     link_attributes: {rel: 'nofollow'}, tables: true
 activate :syntax
 
-activate :navtree
+activate :navtree do |options|
+    options.automatic_tree_updates = false
+    options.promote_files = ['index.html.haml']
+end
 
 ###
 # Helpers
