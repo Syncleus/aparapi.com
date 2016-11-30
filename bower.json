@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "dependencies": {
     "timeago": "~1.5",
-    "prism": "~1.5",
     "lunr.js": "~0.7",
     "materialize": "~0.97"
   }
