@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | ChoosingSpecificDevicesForExecution
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>ChoosingSpecificDevicesForExecution</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,57 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>Using the new Device API&rsquo;s to choose Kernel execution on a specific device. Updated Sep 18, 2012 by frost.g&hellip;@gmail.com</em></p>
+        
+        <p>Previously Aparapi chose the first GPU device when Kernel.execute() was called. This make it easy to execute simple Kernels, but was problematic when users wished finer control over which device should be chosen. Especially when the first device may be unsuitable. We recently added new classes and API&rsquo;s to allow the developer to specify exactly which device we intend to target.</p>
+        
+        <p>A new Device class has been added. This allows the user to select a specific device; either by calling a helper method Device.firstGPU() or Device.best(). Or by allowing the user to iterate through all devices and choose one based on some other criteria (capabilities? vendor name?).</p>
+        
+        <p>So selecting the &lsquo;best&rsquo; (most performant) device could be achieved using.</p>
+        <pre class="highlight plaintext"><code>Device device = Device.best();
+        </code></pre>
+        <p>Alternatively if I wanted the first AMD GPU device I might use:-</p>
+        <pre class="highlight plaintext"><code>Device chosen=null;
+        for (Device device: devices.getAll()){
+           if (device.getVendor().contains("AMD") &amp;&amp; device.isGPU()){
+              chosen = device;
+              break;
+           }
+        }
+        </code></pre>
+        <p>A Device can be queried <code>(isGPU(), isOpenCL(), isGroup(), isJava(), getOpenCLPlatform(), getMaxMemory(), getLocalSizes())</code> to yield it&rsquo;s characteristics.</p>
+        
+        <p>To execute on a specific device we must use the device to create our range.</p>
+        <pre class="highlight plaintext"><code>Range range = device.createRange2D(width, height);
+        </code></pre>
+        <p>This allows the Range to be created with knowledge of the underlying device. So for example device.createRange3D(1024, 1024, 1024, 16, 16, 16) will fail if the device does not allow a local size of (16x16x16).</p>
+        
+        <p>A range created using a device method captures the device which created it. The range instance has a device field which is set by the device which creates it.</p>
+        
+        <p>It&rsquo;s as if we had this code</p>
+        <pre class="highlight plaintext"><code>Range range = Range.create(width, height);
+        range.setDevice(device);
+        </code></pre>
+        <p>So the Range locks the device that it can be used with.</p>
+        
+        <p>Now when we have a Kernel.</p>
+        <pre class="highlight plaintext"><code>Kernel kernel = new Kernel(){
+            @Override public void run(){
+              ...
+            }
+        }
+        </code></pre>
+        <p>And we then use a device created range.</p>
+        <pre class="highlight plaintext"><code>Device device = Device.firstGPU();
+        Kernel kernel = new Kernel(){
+            @Override public void run(){
+              // uses input[];
+            }
+        };
+        range = device.createRange2D(1024, 1024);
+        kernel.execute(range);
+        </code></pre>
+        <p>We have forced execution on the first GPU.</p>
       </div>
     </main>
     <footer class='page-footer'>

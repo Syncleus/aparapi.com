@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | UsingAparapiLambdaBranchWithHSASimulator
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>UsingAparapiLambdaBranchWithHSASimulator</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,51 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>One-sentence summary of this page. Updated Feb 28, 2014 by frost.g&hellip;@gmail.com</em></p>
+        
+        <h2>Introduction</h2>
+        
+        <p>Although HSA compatible devices are available, we understand that Aparapi developers may not have access to these devices.</p>
+        
+        <p>The HSA foundation has open sourced an LLVM based HSAIL emulator which we can use to test HSAIL generated code.</p>
+        
+        <p>The project is based here (<a href="https://github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator" rel="nofollow">https://github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator</a>) but we have extracted detailed download and build instructions for Ubuntu below.</p>
+        
+        <p>Aparapi users/developers can use this simulator to test correctness.</p>
+        
+        <h2>Building the HSA Simulator on Ubuntu</h2>
+        
+        <p>We assume you have ant, svn and g++ available because you can build other aparapi artifacts.</p>
+        
+        <p>You will also need git, libelf-dev, libdwarf-dev, flex and cmake</p>
+        <pre class="highlight plaintext"><code>$ sudo apt-get install git libelf-dev libdwarf-dev flex cmake
+        </code></pre>
+        <p>login&hellip;</p>
+        <pre class="highlight plaintext"><code>$ git clone https://github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator.git okra
+        $ cd okra
+        $ ant -f build-okra-sim.xml
+        </code></pre>
+        <h2>The build should take approximately 15 mins.</h2>
+        
+        <p>How to setup and test an initial lambda/HSA enabled Aparapi build
+        Assuming you have built okra in /home/gfrost/okra</p>
+        
+        <p>Assuming your Java8 JDK is in /home/gfrost/jdk1.8.0</p>
+        
+        <p>Assuming your aparapi svn trunk is /home/gfrost/aparapi</p>
+        <pre class="highlight plaintext"><code>$ export JAVA_HOME=/home/gfrost/jdk1.8.0
+        $ export OKRA=/home/gfrost/okra
+        $ export PATH=${PATH}:${JAVA_HOME}/bin:${OKRA}/dist/bin
+        $ java -version
+        java version "1.8.0-ea"
+        Java(TM) SE Runtime Environment (build 1.8.0-ea-b94)
+        Java HotSpot(TM) 64-Bit Server VM (build 25.0-b36, mixed mode)
+        $ cd /home/gfrost/aparapi/branches/lambda
+        $ ant
+        $ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${OKRA}/dist/bin
+        $ java -agentpath:com.amd.aparapi.jni/dist/libaparapi_x86_64.so -cp com.amd.aparapi/dist/aparapi.jar:${OKRA}/dist/okra.jar hsailtest.Squares
+        $
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>

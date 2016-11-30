@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | PossibleAparapiLambdaSyntaxOptions
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>PossibleAparapiLambdaSyntaxOptions</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,104 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>syntax suggestions for HSA enabled Aparapi</em></p>
+        
+        <h1>Introduction</h1>
+        
+        <p>Now that Java 8 is nearly upon us and HSA enabled Aparapi &lsquo;lambda&rsquo; branch is usable (though in no way complete) I figured we could use this page to discuss the &#39;programming model&rsquo; we might prefer for Aparapi, and contrast with the API&rsquo;s for the new Java 8 lambda based stream APIs.</p>
+        
+        <h2>Converting between Aparapi HSA + Java 8 enabled Aparapi</h2>
+        
+        <p>Our <strong>hello world</strong> app has always been the &ldquo;vector add&rdquo;. In classic Aparapi we could transform</p>
+        <pre class="highlight plaintext"><code>final float inA[] = .... // get a float array from somewhere
+        final float inB[] = .... // get a float from somewhere
+                             // assume (inA.length==inB.length)
+        final float result = new float[inA.length];
+        
+        for (int i=0; i&lt;array.length; i++){
+            result[i]=intA[i]+inB[i];
+        }
+        </code></pre>
+        <p>to</p>
+        <pre class="highlight plaintext"><code>Kernel kernel = new Kernel(){
+           @Override public void run(){
+              int i= getGlobalId();
+              result[i]=intA[i]+inB[i];
+           }
+        };
+        Range range = Range.create(result.length);
+        kernel.execute(range);
+        </code></pre>
+        <p>For the lambda aparapi branch we can currently use</p>
+        <pre class="highlight plaintext"><code>Device.hsa().forEach(result.length, i-&gt; result[i]=intA[i]+inB[i]);
+        </code></pre>
+        <p>Note that the closest Java 8 construct is</p>
+        <pre class="highlight plaintext"><code>IntStream.range(0, result.length).parallel().forEach(i-&gt; result[i]=intA[i]+inB[i]);
+        </code></pre>
+        <p>Aparapi and Java 8 stream API&rsquo;s both use IntConsumer as the lambda type. So you can reuse the lambda.</p>
+        <pre class="highlight plaintext"><code>IntConsumer lambda = i-&gt; result[i]=intA[i]+inB[i];
+        
+        IntStream.range(0, result.length).parallel().forEach(lambda);
+        Device.hsa().forEach(result.length, lambda);
+        </code></pre>
+        <p>Exposing the Deviceness of this was a conscious effort. We may also hide it completely.</p>
+        <pre class="highlight plaintext"><code>IntConsumer lambda = i-&gt; result[i]=intA[i]+inB[i];
+        
+        IntStream.range(0, result.length).parallel().forEach(lambda);
+        Aparapi.forEach(result.length, lambda);
+        </code></pre>
+        <p>I am toying with providing an API which maps more closely to the Stream API from Java 8.</p>
+        
+        <p>Maybe</p>
+        <pre class="highlight plaintext"><code>IntStream.range(0, result.length).parallel().forEach(lambda);
+        Aparapi.range(0, result.length).parallel().forEach(lambda);
+        </code></pre>
+        <p>This way users can more readily swap between the two.</p>
+        
+        <p>For collections/arrays in Aparapi we can also offer</p>
+        <pre class="highlight plaintext"><code>T[] arr = // get an array of T from somewhere
+        ArrayList&lt;T&gt; list = // get an array backed list of T from somewhere
+        
+        Aparapi.range(arr).forEach(t -&gt; /* do something with each T */);
+        </code></pre>
+        <p>We can create special cases. Say for mutating images</p>
+        <pre class="highlight plaintext"><code>BufferedImage in, out;
+        Aparapi.forEachPixel(in, out, rgb[] -&gt; rgb[0] = 0 );
+        </code></pre>
+        <p>We may also need select operations for associative operations</p>
+        <pre class="highlight plaintext"><code>class Person{
+            int age;
+            String first;
+            String last;
+        };
+        
+        Aparapi.selectOne(Person[] people, (p1,p2)-&gt; p1.age&gt;p2.age?p1:p2 );
+        </code></pre>
+        <h2>A case for map reduce</h2>
+        
+        <p>A mapper maps from one type to another. Possibly by extracting state. Here is a mapper which maps each String in an array of Strings to its length.</p>
+        
+        <p>As if the mapper was</p>
+        <pre class="highlight plaintext"><code>interface mapToInt&lt;T&gt;{ int map(T v); }
+        </code></pre>
+        <p>Here it is in action.</p>
+        <pre class="highlight plaintext"><code>Aparapi.range(strings).map(s-&gt;string.length())...
+        </code></pre>
+        <p>Now the result is a stream of int&rsquo;s which can be &#39;reduced&rsquo; by a reduction lambda.</p>
+        
+        <p>In this case the reduction reduces two int&rsquo;s to one, by choosing the max of k and v. All reductions must be commutative style operations (max, min, add) where the order of execution is not important.</p>
+        <pre class="highlight plaintext"><code>int lengthOfLongestString = Aparapi.range(strings).map(s-&gt;string.length()).reduce((k,v)-&gt; k&gt;v?k:v);
+        </code></pre>
+        <p>Here we had a sum reduction.</p>
+        <pre class="highlight plaintext"><code>int sumOfLengths = Aparapi.range(strings).map(s -&gt;string.length()).reduce((k,v)-&gt; k+v);
+        </code></pre>
+        <p>Some of these may be common enough that we offer direct functionality.</p>
+        <pre class="highlight plaintext"><code>int sumOfLengths = Aparapi.range(strings).map(s -&gt;string.length()).sum();
+        int maxOfLengths = Aparapi.range(strings).map(s -&gt;string.length()).max();
+        int minOfLengths = Aparapi.range(strings).map(s -&gt;string.length()).min();
+        String string = Aparapi.range(strings).map(s-&gt;string.length()).select((k,v)-&gt; k&gt;v);
+        </code></pre>
+        <p>This last one needs some explaining. We map String to int then select the String whose length is the greatest.</p>
       </div>
     </main>
     <footer class='page-footer'>

@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | SettingUpLinuxHSAMachineForAparapi
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>SettingUpLinuxHSAMachineForAparapi</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,284 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to setup a Linux HSA machine for testing HSA enabled Aparapi Updated May 22, 2014 by frost.g&hellip;@gmail.com</em></p>
+        
+        <ul>
+        <li>HSA Videos
+        
+        <ul>
+        <li><a href="http://www.youtube.com/watch?v=5ntILiXTuhE" rel="nofollow">http://www.youtube.com/watch?v=5ntILiXTuhE</a></li>
+        <li><a href="http://www.youtube.com/watch?v=caEPq4KvTTA" rel="nofollow">http://www.youtube.com/watch?v=caEPq4KvTTA</a></li>
+        </ul></li>
+        <li>HSA Articles
+        
+        <ul>
+        <li><a href="http://developer.amd.com/resources/heterogeneous-computing/what-is-heterogeneous-computing/" rel="nofollow">http://developer.amd.com/resources/heterogeneous-computing/what-is-heterogeneous-computing/</a></li>
+        </ul></li>
+        <li>HSA Foundation
+        
+        <ul>
+        <li><a href="https://github.com/HSAFoundation" rel="nofollow">https://github.com/HSAFoundation</a></li>
+        </ul></li>
+        </ul>
+        
+        <h2>Introduction</h2>
+        
+        <p>Now that HSA hardware is generally available I figured it was time to describe how to setup a HSA enabled Linux platform so that it can run Aparapi.</p>
+        
+        <p>Here is a nice introduction to HSA <a href="http://developer.amd.com/resources/heterogeneous-computing/what-is-heterogeneous-system-architecture-hsa/" rel="nofollow">http://developer.amd.com/resources/heterogeneous-computing/what-is-heterogeneous-system-architecture-hsa/</a></p>
+        
+        <p>But for Aparapi users the main advantage is that we are no longer limited to the GPU memory for running GPU tasks. Also because the CPU and the GPU can both see the same memory (the Java heap) Aparapi code can now access Java objects directly. This removes a number of Aparapi constraints. So more of your code can now run on the GPU.</p>
+        
+        <h2>Hardware Required</h2>
+        
+        <p>These instructions were based on my experience setting up a platform using the following hardware.</p>
+        
+        <table><thead>
+        <tr>
+        <th>Component</th>
+        <th>Suggested</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+        <td>APU</td>
+        <td>AMD A10-7850K APU <a href="http://www.amd.com/us/products/desktop/processors/a-series/Pages/a-series-apu.aspx" rel="nofollow">http://www.amd.com/us/products/desktop/processors/a-series/Pages/a-series-apu.aspx</a></td>
+        </tr>
+        <tr>
+        <td>Motherboard</td>
+        <td>ASUS A88X-PRO or A88XM-A <a href="http://www.asus.com/Motherboards/A88XPRO" rel="nofollow">http://www.asus.com/Motherboards/A88XPRO</a> <a href="http://www.asus.com/Motherboards/A88XMA" rel="nofollow">http://www.asus.com/Motherboards/A88XMA</a></td>
+        </tr>
+        <tr>
+        <td>Memory</td>
+        <td>G.SKILL Ripjaws X Series 16GB (2 x 8GB) 240-Pin DDR3 SDRAM DDR3 2133</td>
+        </tr>
+        </tbody></table>
+        
+        <h2>Software Required</h2>
+        
+        <p>We also have some software dependencies.</p>
+        
+        <table><thead>
+        <tr>
+        <th>Component</th>
+        <th>Suggested</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+        <td>Java 8 JDK</td>
+        <td><a href="http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html" rel="nofollow">http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html</a></td>
+        </tr>
+        <tr>
+        <td>Ubuntu 13.10 64-bit edition</td>
+        <td><a href="http://www.ubuntu.com/download" rel="nofollow">http://www.ubuntu.com/download</a></td>
+        </tr>
+        <tr>
+        <td>Ubuntu 13.10 64-bit edition HSA enabled kernel image</td>
+        <td><a href="https://github.com/HSAFoundation/Linux-HSA-Drivers-And-Images-AMD" rel="nofollow">https://github.com/HSAFoundation/Linux-HSA-Drivers-And-Images-AMD</a></td>
+        </tr>
+        <tr>
+        <td>OKRA HSA enabled runtime</td>
+        <td><a href="https://github.com/HSAFoundation/Okra-Interface-to-HSA-Device" rel="nofollow">https://github.com/HSAFoundation/Okra-Interface-to-HSA-Device</a></td>
+        </tr>
+        </tbody></table>
+        
+        <p>The hope is that the list of HW/SW support widens, but for early adopters this is the set of HW/SW we have been testing with.</p>
+        
+        <h1>Setting up your System</h1>
+        
+        <h2>Configure your BIOS to support IOMMU</h2>
+        
+        <p>Once you have built your AMD A10-7850K APU based system you should make sure that your system is configured to use IOMMU.</p>
+        
+        <p>Remember HSA allows the GPU and CPU cores to share the same memory. IOMMU needs to be enabled for this.</p>
+        
+        <h2>For the A88X-PRO board</h2>
+        
+        <p>For the recommended ASUS board above you will need to make sure that your BIOS is updated to version 0802. Here is a direct link to the 0802 version of the BIOS from ASUS&rsquo;s site as of 2/28/2014.</p>
+        
+        <p><a href="http://dlcdnet.asus.com/pub/ASUS/mb/SocketFM2/A88X-PRO/A88X-PRO-ASUS-0802.zip" rel="nofollow">http://dlcdnet.asus.com/pub/ASUS/mb/SocketFM2/A88X-PRO/A88X-PRO-ASUS-0802.zip</a></p>
+        
+        <p>Once you have the latest BIOS you will need to enable IOMMU in the system BIOS. This is done using the &ldquo;CPU Configuration&rdquo; screen under &ldquo;Advanced Mode&rdquo; and then enabling IOMMU.</p>
+        
+        <h2>For the A88XM-A</h2>
+        
+        <p>You will need the 1102 (or later) version of the BIOS</p>
+        
+        <p><a href="http://dlcdnet.asus.com/pub/ASUS/mb/SocketFM2/A88XM-A/A88XM-A-ASUS-1102.zip" rel="nofollow">http://dlcdnet.asus.com/pub/ASUS/mb/SocketFM2/A88XM-A/A88XM-A-ASUS-1102.zip</a></p>
+        
+        <p>Once you have the latest BIOS you will need to enable IOMMU in the system BIOS. This is done using the &ldquo;CPU Configuration&rdquo; screen under &ldquo;Advanced Mode&rdquo; and then enabling IOMMU.</p>
+        
+        <h2>Installing Ubuntu 13.10</h2>
+        
+        <p>Once you have your BIOS setup you need to install Ubuntu <a href="http://www.ubuntu.com/download" rel="nofollow">http://www.ubuntu.com/download</a></p>
+        
+        <p>Installing HSA enabled kernel + driver
+        Until all of the HSA drivers and features are available in stock linux and have been pulled down into Ubuntu distro we will need a special HSA enabled kernel image.</p>
+        
+        <h2>A Ubuntu compatible kernel can be pulled from github</h2>
+        <pre class="highlight plaintext"><code>$ cd ~ # I put all of this in my home dir
+        $ sudo apt-get install git
+        $ git clone https://github.com/HSAFoundation/Linux-HSA-Drivers-And-Images-AMD.git
+        </code></pre>
+        <p>Or you can pull the zip and unzip using curl if you don&rsquo;t have git</p>
+        <pre class="highlight plaintext"><code>$ cd ~ # I put all of this in my home dir
+        $ curl -L https://github.com/HSAFoundation/Linux-HSA-Drivers-And-Images-AMD/archive/master.zip &gt; drivers.zip
+        $ unzip drivers.zip
+        </code></pre>
+        <p>This will create the following subdir on your machine</p>
+        <pre class="highlight plaintext"><code>Linux-HSA-Drivers-And-Images-AMD/
+           LICENSE
+           README.md
+           ubuntu12.10-based-alpha1/
+               xorg.conf
+               linux-image-3.13.0-kfd+_3.13.0-kfd+-2_amd64.deb
+        </code></pre>
+        <p>From here we can install our new image and setup the HSA KFD (the driver for HSA)and reboot to the new kernel.</p>
+        <pre class="highlight plaintext"><code>$ cd ~/Linux-HSA-Drivers-And-Images-AMD
+        $ echo  "KERNEL==\"kfd\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/kfd.rules
+        $ sudo dpkg -i ubuntu13.10-based-alpha1/linux-image-3.13.0-kfd+_3.13.0-kfd+-2_amd64.deb
+        $ sudo cp ~/Linux-HSA-Drivers-And-Images-AMD/ubuntu13.10-based-alpha1/xorg.conf /etc/X11
+        $ sudo reboot
+        </code></pre>
+        <h2>Installing OKRA RT</h2>
+        
+        <p>Now we need a runtime for executing HSAIL code. We share common infrastructure used by our sister OpenJDK project called Sumatra. Both Aparapi and Sumatra use OKRA to execute HSAIL code on a HSA enabled platform.</p>
+        
+        <p>We can get the latest version using of OKRA (Offloadable Kernel Runtime API) from another HSA foundation repository.</p>
+        <pre class="highlight plaintext"><code>$ cd ~ # I put all of this in my home dir
+        $ git clone https://github.com/HSAFoundation/Okra-Interface-to-HSA-Device.git
+        </code></pre>
+        <p>or if you prefer curl/unzip</p>
+        <pre class="highlight plaintext"><code>$ cd ~ # I put all of this in my home dir
+        $ curl -L https://github.com/HSAFoundation/Okra-Interface-to-HSA-Device/archive/master.zip &gt; okra.zip
+        $ unzip okra.zip
+        </code></pre>
+        <p>This will create the following dir structure.</p>
+        <pre class="highlight plaintext"><code>Okra-Interface-to-HSA-Device/
+           README.md
+           okra/
+              README
+              dist/
+                 okra.jar
+                 bin/
+                    libamdhsacl64.so
+                    libnewhsacore64.so
+                    libokra_x86_64.so
+                 include/
+                    common.h
+                    okraContext.h
+        
+              samples/
+                 dist/
+                   Squares
+                   Squares.hsail
+                 runSquares.sh
+        </code></pre>
+        <p>OKRA offers a C API (for those that are so inclined ;) ) as well as a java jar file which contains JNI wrappers.</p>
+        
+        <h2>Sanity check your HSA and OKRA install</h2>
+        
+        <p>So to sanity check your install you can run a small sample app (binary)</p>
+        <pre class="highlight plaintext"><code>$ cd ~/Okra-Interface-to-HSA-Device/okra/samples/
+        $ sh runSquares.sh
+        </code></pre>
+        <p>If everything is OK this should run the C Squares test app.</p>
+        
+        <p>Congratulations, you have executed your first HSA enabled app.</p>
+        
+        <p>Getting OpenCL headers and libraries
+        We need OpenCL headers and libraries to build Aparapi (remember we still support OpenCL).</p>
+        
+        <p>My recommendation is to download AMD-APP-SDK-v2.9-lnx64.tgz from <a href="http://developer.amd.com/tools-and-sdks/heterogeneous-computing/amd-accelerated-parallel-processing-app-sdk/downloads" rel="nofollow">http://developer.amd.com/tools-and-sdks/heterogeneous-computing/amd-accelerated-parallel-processing-app-sdk/downloads</a> and extract the libraries and headers.</p>
+        
+        <p>Note that we have nested zipped jars in this archive.</p>
+        <pre class="highlight plaintext"><code>$ cd ~
+        $ gunzip ~/Downloads/AMD-APP-SDK-v2.9-lnx64.tgz
+        $ tar xvf ~/Downloads/AMD-APP-SDK-v2.9-lnx64.tar
+        $ rm ~/default-install_lnx_64.pl ~/icd-registration.tgz ~/Install-AMD-APP.sh ~/ReadMe.txt
+        $ gunzip ~/AMD-APP-SDK-v2.9-RC-lnx64.tgz
+        $ tar xvf ~/AMD-APP-SDK-v2.9-RC-lnx64.tar
+        $ rm ~/AMD-APP-SDK-v2.9-RC-lnx64.tar
+        $ rm -rf AMD-APP-SDK-v2.9-RC-lnx64/samples
+        </code></pre>
+        <p>Note where AMD-APP-SDK-v2.9-RC-lnx64 is located, you need this in the following step.</p>
+        
+        <h2>You will need Java 8</h2>
+        
+        <p>Download Java 8 JDK from <a href="https://jdk8.java.net/download.html" rel="nofollow">https://jdk8.java.net/download.html</a> I chose to download the zipped tar and not install with RPM so I can control the location of the install.</p>
+        <pre class="highlight plaintext"><code>$ cd ~
+        $ gunzip /home/gfrost/Downloads/jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar.gz
+        $ tar xvf ~/Downloads/jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar
+        </code></pre>
+        <p>I now have ~/jdk1.8.0 as my java 8 install dir.</p>
+        
+        <p>Alternatively the following will pull from Oracles site using curl</p>
+        <pre class="highlight plaintext"><code>$ cd ~
+        $ curl http://download.java.net/jdk8/archive/b132/binaries/jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar.gz?q=download/jdk8/archive/b132/binaries/jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar.gz &gt; jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar.gz
+        $ gunzip jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar.gz
+        $ tar xvf jdk-8-fcs-bin-b132-linux-x64-04_mar_2014.tar
+        </code></pre>
+        <p>I now have ~/jdk1.8.0 as my java 8 install dir.</p>
+        
+        <h2>You will need ant</h2>
+        <pre class="highlight plaintext"><code>$ sudo apt-get install ant
+        </code></pre>
+        <p>This takes a long time because in also installs a java7 jdk.</p>
+        
+        <h2>You will need g++</h2>
+        
+        <p>We use g++ to build the JNI side of Aparapi</p>
+        <pre class="highlight plaintext"><code>$ sudo apt-get install g++
+        </code></pre>
+        <h2>Pulling the HSA enabled Aparapi branch and building</h2>
+        
+        <p>Now we can pull the Aparapi lambda/HSA branch from SVN</p>
+        <pre class="highlight plaintext"><code>$ sudo apt-get install subversion
+        $ svn checkout https://aparapi.googlecode.com/svn/branches/lambda aparapi-lambda
+        </code></pre>
+        <p>If you are familiar with Aparapi structure then this tree should not be that much of a surprise but there are a few subtle changes.</p>
+        
+        <p>Specifically the build system has been changed to support OKRA, Aparapi JNI code is provided as a Java agent and the execution scripts all refer to ${APARAPI_HOME}/env.sh to setup a reasonable execution environment.</p>
+        
+        <p>You will need to edit env.sh and make sure that APARAPI<em>HOME, OKRA</em>HOME, OCL<em>HOME and JAVA</em>HOME correctly.</p>
+        
+        <p>Here are how I set my vars.</p>
+        
+        <table><thead>
+        <tr>
+        <th>environment variable</th>
+        <th>value</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+        <td>JAVA_HOME</td>
+        <td>/home/${LOGNAME}/jdk1.8.0</td>
+        </tr>
+        <tr>
+        <td>OCL_HOME</td>
+        <td>/home/${LOGNAME}/AMD-APP-SDK-v2.9-RC-lnx64</td>
+        </tr>
+        <tr>
+        <td>APARAPI_HOME</td>
+        <td>/home/${LOGNAME}/aparapi-lambda</td>
+        </tr>
+        <tr>
+        <td>OKRA_HOME</td>
+        <td>/home/${LOGNAME}/Okra-Interface-to-HSA-Device/okra/</td>
+        </tr>
+        </tbody></table>
+        
+        <p>It is recommended (thanks notzed ;) ) that you test your env.sh using sh env.sh until it stops reporting errors. Once you have finished I recommend sourcing it into your current shell before building with ant.</p>
+        <pre class="highlight plaintext"><code>$ cd ~aparapi-lambda
+        $ . env.sh
+        $ ant
+        </code></pre>
+        <p>If you get any problems check the env.sh vars first.</p>
+        
+        <p>If all is well you should be able to run some samples.</p>
+        <pre class="highlight plaintext"><code>$ cd ~/aparapi-lambda/samples/mandel
+        $ sh hsailmandel.sh
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>

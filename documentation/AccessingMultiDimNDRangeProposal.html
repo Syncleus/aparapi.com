@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | AccessingMultiDimNDRangeProposal
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>AccessingMultiDimNDRangeProposal</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,259 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>A proposal for accessing multi-dim ND range execution Updated Dec 14, 2011 by frost.g&hellip;@gmail.com</em></p>
+        
+        <p>We can discuss this proposal either here (in comments) or via the discussion list here.</p>
+        
+        <p>Note this is nothing to do with accessing Java 2D arrays in Aparapi. This discussion is focused on the ability to expose the execution of kernels over 1, 2 or 3 dimensions. The memory in each case is a single contiguous region (like a single dimension primitive array).</p>
+        
+        <p>At present an Aparapi kernel can only be executed using a single dimension. If we wish to represent execution over WIDTH x HEIGHT element grid we would execute over the range (WIDTH*HEIGHT) and manually divide/mod getGlobalID() by WIDTH to determine the x and y for each.</p>
+        
+        <p>Similarly we would multiply y by WIDTH and add x (y*WIDTH+x) to convert an X,Y location to a linear global id</p>
+        <pre class="highlight plaintext"><code>final static int WIDTH=128;
+        final static int HEIGHT=64;
+        final int in[] = new int[WIDTH*HEIGHT];
+        final int out[] = new int[WIDTH*HEIGHT];
+        Kernel kernel = new Kernel(){
+           public void run(){
+              int x = getGlobaId()%WIDTH;
+              int y = getGlobalID()/WIDTH;
+              if (!(x==1 || x==(WIDTH-1) || y==1 || y==(HEIGHT-1)){
+                 int sum = 0;
+                 for (int dx =-1; dx&lt;2; dx++){
+                   for (int dy =-1; dy&lt;2; dy++){
+                     sum+=in[(y+dy)*WIDTH+(x+dx)];
+                   }
+                 }
+                 out[y*WIDTH+x] = sum/9;
+                 // or out[getGlobalID()] = sum/9;
+              }
+           }
+        
+        };
+        kernel.execute(WIDTH*HEIGHT);
+        </code></pre>
+        <p>OpenCL natively allows the user to execute over 1, 2 or 3 dimension grids via the clEnqueueNDRangeKernel() method.</p>
+        
+        <p>We chose not to expose this in Aparapi but there have been requests for us to allow it.</p>
+        
+        <p>There are a number of things to consider here:</p>
+        
+        <ol>
+        <li>Extending the syntax of kernel.execute() to allow multi dimensional grids.</li>
+        <li>Mapping Kernel methods to OpenCL&rsquo;s get<em>local</em>id(int dim), get<em>local</em>size(int dim), get<em>group</em>id(int<em>dim), etc. At present we map kernel.getGlobalId() to get</em>local_id(0).</li>
+        <li>Handling all of these when an application drops back to JTP mode.</li>
+        </ol>
+        
+        <h2>Extending Kernel.execute(int range)</h2>
+        
+        <p>Sadly we can&rsquo;t overload Kernel.execute(int range), Kernel.execute(int xrange, int yrange) and Kernel.execute(int xrange, int yrange, int zrange) because we already have kernel.execute(int, int) mapped for executing mutiple passes over the linear range.</p>
+        
+        <p>Remember</p>
+        <pre class="highlight plaintext"><code>for (int pass=0; pass&lt;20; pass++){
+           kernel(1024);
+        }
+        </code></pre>
+        <p>Is equivalent to</p>
+        <pre class="highlight plaintext"><code>kernel(1024, 20);
+        </code></pre>
+        <p>I think I would prefer</p>
+        <pre class="highlight plaintext"><code>Kernel.execute(int range)
+        Kernel.execute(int range, int passes)
+        Kernel.executeXY(int xrange, int yrange)
+        Kernel.executeXY(int xrange, int yrange, int passes)
+        Kernel.executeXYZ(int xrange, int yrange, int zrange)
+        Kernel.executeXYZ(int xrange, int yrange, int zrange, int passes)
+        Obviously in the above calls we are only supplying the global bounds for the grid. We could also provide mappings allowing local ranges. I think I would prefer
+        
+        Kernel.executeLocal(int range, int local)
+        Kernel.executeLocal(int range, int local, int passes)
+        Kernel.executeXYLocal(int xrange, int yrange, int xlocalrange, int ylocalrange)
+        Kernel.executeXYLocal(int xrange, int yrange, int xlocalrange, int ylocalrange, int passes)
+        Kernel.executeXYZLocal(int xrange, int yrange, int zrange, int xlocalrange, int ylocalrange, int zlocalrange)
+        Kernel.executeXYZLocal(int xrange, int yrange, int zrange, int xlocalrange, int ylocalrange, int zlocalrange, int passes)
+        </code></pre>
+        <p>Another alternative may be to create Range classes</p>
+        <pre class="highlight plaintext"><code>class Range{
+          int passes;
+          int width;
+          static Range create(int width);
+          static Range create(int width, int passes);
+        }
+        
+        class Range2D extends Range{
+           int height;
+           static Range create(int width, int height);
+           static Range create(int width, int height, int passes);
+        
+        }
+        
+        class Range3D extends Range2D{
+           int depth;
+           static Range create(int width, int height);
+           static Range create(int width, int height, int passes);
+        }
+        </code></pre>
+        <p>With appropriate constructors (or factory methods) to allow</p>
+        <pre class="highlight plaintext"><code>Kernel.execute(Range range)
+        </code></pre>
+        <p>Then execute would be simply.</p>
+        <pre class="highlight plaintext"><code>Kernel.execute(Range.create(1,1))
+        </code></pre>
+        <p>We can also arrange for the group size to be placed in the base Range class.</p>
+        <pre class="highlight plaintext"><code>class Range{
+          int groupSize;
+          int passes;
+          int width;
+          static Range create(int width);
+          static Range create(int width, int passes);
+        }
+        </code></pre>
+        <h2>Mapping to OpenCL multi dim methods. i.e get<em>global</em>id(1), get<em>local</em>size(2) etc</h2>
+        
+        <p>We could just add getGlobalId(int dim), getLocalSize(int dim) etc to replicate OpenCL methods.</p>
+        
+        <p>I would prefer to offer the following global mappings</p>
+        
+        <table><thead>
+        <tr>
+        <th>Kernel</th>
+        <th>OpenCL</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+        <td>getGlobalId()</td>
+        <td>get<em>global</em>id(0)</td>
+        </tr>
+        <tr>
+        <td>getGlobalX()</td>
+        <td>get<em>global</em>id(0)</td>
+        </tr>
+        <tr>
+        <td>getGlobalY()</td>
+        <td>get<em>global</em>id(1)</td>
+        </tr>
+        <tr>
+        <td>getGlobalZ()</td>
+        <td>get<em>global</em>id(2)</td>
+        </tr>
+        <tr>
+        <td>getGlobalSize()</td>
+        <td>get<em>global</em>size(0)</td>
+        </tr>
+        <tr>
+        <td>getGlobalWidth()</td>
+        <td>get<em>global</em>size(0)</td>
+        </tr>
+        <tr>
+        <td>getGlobalHeight()</td>
+        <td>get<em>global</em>size(1)</td>
+        </tr>
+        <tr>
+        <td>getGlobalDepth()</td>
+        <td>get<em>global</em>size(2)</td>
+        </tr>
+        </tbody></table>
+        
+        <p>And the following local mappings</p>
+        
+        <table><thead>
+        <tr>
+        <th>Kernel</th>
+        <th>OpenCL</th>
+        </tr>
+        </thead><tbody>
+        <tr>
+        <td>getLocalId()</td>
+        <td>get<em>local</em>id(0)</td>
+        </tr>
+        <tr>
+        <td>getLocalX()</td>
+        <td>get<em>local</em>id(0)</td>
+        </tr>
+        <tr>
+        <td>getLocalY()</td>
+        <td>get<em>local</em>id(1)</td>
+        </tr>
+        <tr>
+        <td>getLocalZ()</td>
+        <td>get<em>local</em>id(2)</td>
+        </tr>
+        <tr>
+        <td>getLocalSize()</td>
+        <td>get<em>local</em>size(0)</td>
+        </tr>
+        <tr>
+        <td>getLocalWidth()</td>
+        <td>get<em>local</em>size(0)</td>
+        </tr>
+        <tr>
+        <td>getLocalHeight()</td>
+        <td>get<em>local</em>size(1)</td>
+        </tr>
+        <tr>
+        <td>getLocalDepth()</td>
+        <td>get<em>local</em>size(2)</td>
+        </tr>
+        </tbody></table>
+        
+        <h2>An example</h2>
+        <pre class="highlight plaintext"><code>final static int WIDTH=128;
+        final static int HEIGHT=64;
+        final int in[] = new int[WIDTH*HEIGHT];
+        final int out[] = new int[WIDTH*HEIGHT];
+        Kernel kernel = new Kernel(){
+           public void run(){
+              int x = getGlobalX();
+              int y = getGlobalY();
+              if (!(x==1 || x==(getGlobalWidth()-1) || y==1 || y==(getGlobalHeight()-1)){
+                 int sum = 0;
+                 for (int dx =-1; dx&lt;2; dx++){
+                   for (int dy =-1; dy&lt;2; dy++){
+                     sum+=in[(y+dy)*getGlobalWidth()+(x+dx)];
+                   }
+                 }
+                 out[y*getGlobalWidth()+x] = sum/9;
+                 // or out[getGlobalID()] = sum/9;
+              }
+           }
+        
+        };
+        kernel.executeXY(WIDTH, HEIGHT);
+        </code></pre>
+        <p>Or if we choose the Range class approach.</p>
+        <pre class="highlight plaintext"><code>final static int WIDTH=128;
+        final static int HEIGHT=64;
+        final int in[] = new int[WIDTH*HEIGHT];
+        final int out[] = new int[WIDTH*HEIGHT];
+        Kernel kernel = new Kernel(){
+           public void run(){
+              int x = getGlobalX();
+              int y = getGlobalY();
+              if (!(x==1 || x==(getGlobalWidth()-1) || y==1 || y==(getGlobalHeight()-1)){
+                 int sum = 0;
+                 for (int dx =-1; dx&lt;2; dx++){
+                   for (int dy =-1; dy&lt;2; dy++){
+                     sum+=in[(y+dy)*getGlobalWidth()+(x+dx)];
+                   }
+                 }
+                 out[y*getGlobalWidth()+x] = sum/9;
+                 // or out[getGlobalID()] = sum/9;
+              }
+           }
+        
+        };
+        kernel.execute(Range2D.create(WIDTH, HEIGHT));
+        </code></pre>
+        <h2>Handling this from JTP mode</h2>
+        
+        <p>Mapping to OpenCL for this is all fairly straightforward.</p>
+        
+        <p>In Java JTP mode we will have to emulate this. For get<em>global</em>id(0..3) (getGlobalX(), getGlobalY() and getGlobalZ() using our proposed Aparapi Java mappings) we can of course easily offer reasonable implementations, this just requires the Java code to essentially nest 3 loops (or emulate) and set globalX, globalY, globalZ inside each nesting.</p>
+        
+        <p>For get<em>local</em>size(0..3) (getLocalWidth(), getLocalHeight() and getLocalDepth() using our proposed Aparapi Java mappings) we will need to break the globalWidth/globalHeight and globalDepth into some arbitrary equal &lsquo;chunks&rsquo; (note I am avoiding using the word groups here to avoid confusion with get<em>group</em>size(0..3)!</p>
+        
+        <p>At present we always create a synthetic group in JTP mode which is the the # or cores. This will need to be changed. If the user requests a grid (64,64,8,8) (global width 64, global height 64, local width 8, local height 8) then we will have to create a JTP group of 64 (8x8) and just in case the kernel code contains a barrier, we will need to ensure we launch 64 threads for this group. From our experience it is best to launch one thread per core, so we may lose some JTP performance executing in this mode.</p>
       </div>
     </main>
     <footer class='page-footer'>

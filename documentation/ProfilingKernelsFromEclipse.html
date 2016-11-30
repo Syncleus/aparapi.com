@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | ProfilingKernelsFromEclipse
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>ProfilingKernelsFromEclipse</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,94 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>Profiling Kernels with AMD profiler in Eclipse (Indigo) Updated May 14, 2012 by frost.g&hellip;@gmail.com</em></p>
+        
+        <h2>Profiling Kernels with AMD profiler in Eclipse (Indigo)</h2>
+        
+        <p>Wayne Johnson</p>
+        
+        <p>12 May 2012
+        Disclaimer: This has been tested with Eclipse (Indigo SR1) only on W7SR1.</p>
+        
+        <p>Assume your Eclipse project follows a typical Maven layout:</p>
+        <pre class="highlight plaintext"><code>Project
+           src/main/java/...
+             AlgorithmImplementation.java
+           src/test/java/...
+             BenchmarkRunner.java
+             BenchmarkTest.java
+           lib/aparapi-2012-02-15/
+             aparapi jar file
+             native libraries for W7, Linux, and OSX
+             …
+           profiles/
+             [this is where the profiles and logs will be generated]
+        </code></pre>
+        <ol>
+        <li>Download and install the current AMD APP SDK</li>
+        <li>Download and install Aparapi (see Wiki), making sure that the native libraries are on your build path.</li>
+        <li><p>Create your algorithm implementation(s).</p>
+        <pre class="highlight plaintext"><code>example: AlgorithmImplementations.java
+        </code></pre></li>
+        <li><p>Create your performance benchmark test as a JUnit test case to exercise your implementations.</p>
+        <pre class="highlight plaintext"><code>example: BenchmarkTest.java
+        </code></pre></li>
+        <li><p>Test your JUnit test case inside Eclipse using BenchmarkRunner to make sure it works. The runner will be the main application for the runnable jar file you create in the next step.</p>
+        <pre class="highlight plaintext"><code>This step will also automatically create the launch configuration that the export command will ask you for. Select BenchmarkRunner.java
+        
+        Right-click &gt; Run as &gt; Java application
+        </code></pre></li>
+        <li><p>Export your project as a runnable jar file.</p>
+        
+        <p>Right-click &gt; Export&hellip;
+          [wizard] Java &gt; Runnable Jar File. Next.
+            Launch configuration: BenchmarkRunner [1] - Project
+            Export destination: Project\runner.jar
+            Library handling: [use default]    Finish.
+          Ok on “&hellip;repacks referenced libraries”
+          Yes on “Confirm replace” [You won’t see this dialog on the first export but will on subsequent exports]
+          Ok [ignore warning dialog]</p>
+        
+        <p>After refreshing Project, you should see a runner.jar file at the top level.</p></li>
+        <li><p>Create an external tool configuration to generate the performance counter profile</p>
+        
+        <p>Run &gt; External Tools &gt; External Tool Configurations&hellip;
+          Name: AMD counters - Project
+          Location: C:\Program Files (x86)\AMD APP\tools\AMD APP Profiler 2.4\x64\sprofile.exe
+          Arguments:
+           -o &ldquo;${project<em>loc}\profiles\counters.csv&rdquo;
+           -w &ldquo;${project</em>loc}&rdquo;
+           &ldquo;C:\Program Files\Java\jdk1.6.0<em>30\bin\java.exe&rdquo;
+           -Djava.library.path=&ldquo;lib\aparapi-2012-02-15&rdquo;
+           -jar &ldquo;${project</em>loc}\runner.jar&rdquo;</p>
+        
+        <p>Note: The &ldquo;java.library.path&rdquo; indicates the relative location of the folder containing the native libraries used by Aparapi. If this is not set correctly, steps 9 and 10 below will run in JTP execution mode and the only error message you will see on the Eclipse console is that the profile was not generated. This is because nothing executed on the GPU.</p></li>
+        <li><p>Create an external tool configuration to generate the cltrace and summary profiles.</p>
+        
+        <ol>
+        <li>Run &gt; External Tools &gt; External Tool Configurations&hellip;</li>
+        <li>Name: AMD cltrace - Project</li>
+        <li>Location: C:\Program Files (x86)\AMD APP\tools\AMD APP Profiler 2.4\x64\sprofile.exe</li>
+        <li><p>Arguments:</p>
+        
+        <p><code>-o &quot;${project_loc}\profiles\cltrace.txt&quot; -k all -r -O -t -T</code></p>
+        
+        <p><code>-w &quot;${project_loc}&quot;</code></p>
+        
+        <p><code>&quot;C:\Program Files\Java\jdk1.6.0_30\bin\java.exe&quot;</code></p>
+        
+        <p><code>-Djava.library.path=&quot;lib\aparapi-2012-02-15&quot;</code></p>
+        
+        <p><code>-jar &quot;${project_loc}\runner.jar&quot;</code></p></li>
+        </ol></li>
+        <li><p>Run the AMD profiler counter configuration to generate the counter profile.</p>
+        
+        <p>Run &gt; External Tools &gt; AMD counters - Project</p></li>
+        <li><p>Run the AMD profiler cltrace configuration to generate the cltrace and summary profiles.</p>
+        
+        <p>Run &gt; External Tools &gt; AMD cltrace - Project
+        A project file for testing the above instructions can be found http://code.google.com/p/aparapi/source/browse/trunk/wiki-collateral/ProfilingKernelsFormEclipseProject.zip</p></li>
+        </ol>
       </div>
     </main>
     <footer class='page-footer'>

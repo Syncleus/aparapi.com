@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | BuildingNBody
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>BuildingNBody</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,47 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to build the NBody example. Updated Nov 11, 2011 by frost.g&hellip;@gmail.com</em></p>
+        
+        <h2>Building NBody</h2>
+        
+        <p>The NBody example is located in the/ examples subdirectory under the Aparapi trunk:</p>
+        <pre class="highlight plaintext"><code>trunk/
+           ...
+           examples/
+             ...
+             nbody/
+                src/java/com.amd.aparapi.nbody/
+                build.xml
+                nbody.sh
+                nbody.bat
+        </code></pre>
+        <p>The NBody example requires a little more work to build because it depends on a third party project named ‘JOGL’.</p>
+        
+        <p>JOGL is a set of OpenGL™ bindings for Java® and the NBody example uses this library to render the particles/bodies (potentially many thousands of them) at runtime. More information about JOGL can be found here http://jogamp.org/jogl/www.</p>
+        
+        <p>The build.xml file build target will download the jars required to build and run the nbody example if the files do not exist.</p>
+        
+        <p>To build nbody, perform the following commands.</p>
+        <pre class="highlight plaintext"><code>C:&gt; ant clean build
+        </code></pre>
+        <p>The NBody build.xml file includes a ‘run’ target so you can launch the application using.</p>
+        <pre class="highlight plaintext"><code>C:&gt; ant run
+        </code></pre>
+        <p>Or if you prefer to launch from either the nbody.sh or nbody.bat script.</p>
+        
+        <p>For Linux® we also need to chmod nbody.sh in order to execute it.</p>
+        <pre class="highlight plaintext"><code>chmod +x nbody.sh
+        </code></pre>
+        <p>The nbody scripts take the execution mode as the first argument, the number of bodies as the second argument, and then the height and width (in pixels).</p>
+        
+        <p>Windows example:</p>
+        <pre class="highlight plaintext"><code>C:&gt; nbody  GPU 32768 800 800
+        </code></pre>
+        <p>Linux example:</p>
+        <pre class="highlight plaintext"><code>$ ./nbody.sh  GPU 32768 800 800
+        </code></pre>
+        <p>Attribution</p>
       </div>
     </main>
     <footer class='page-footer'>

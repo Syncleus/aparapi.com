@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | HSAEnablementOfLambdaBranch
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>HSAEnablementOfLambdaBranch</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,41 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>Adding HSA Support to Aparapi lambda branch Updated Feb 28, 2014 by frost.g&hellip;@gmail.com</em></p>
+        
+        <ul>
+        <li><a href="SettingUpLinuxHSAMachineForAparapi.md" rel="nofollow">How to setup a HSA enabled Linux Platform</a></li>
+        <li><a href="UsingAparapiLambdaBranchWithHSASimulator.md" rel="nofollow">How to setup a HSA simulator on a Linux Platform</a></li>
+        </ul>
+        
+        <p>Recently the HSA Foundation released their ‘Programmers Reference Manual’. This manual is for developers wishing to write code for upcoming HSA compatible devices, it describes the HSA Intermediate Language (HSAIL) along with its binary form (BRIG) and describes how code is expected to execute on a HSA enabled devices.</p>
+        
+        <p>In many ways we can think of HSAIL as we do Java bytecode. It is a common intermediate form that can be optimized at runtime to execute across a variety of future heterogeneous platforms. HSAIL will greatly simplify the development of software taking advantage of both sequential and parallel compute solutions.</p>
+        
+        <p>Now that the spec is out, we have started adding HSA support to the Aparapi lambda branch. We believe that HSA combined with the upcoming Java 8 feature lambda will be a natural way to express parallel algorithms which can be executed on the GPU via HSA.</p>
+        
+        <p>A HSA+Lambda enabled Aparapi will remove many of Aparapi&rsquo;s constraints. HSA allows all of the CPU&rsquo;s memory to be accessed directly from code running on the GPU. This means</p>
+        
+        <ul>
+        <li>We no longer need to move data from the host CPU to the GPU.</li>
+        <li>We are no longer limited to the memory addressable from the GPU</li>
+        <li>We can access multi-dim arrays efficiently</li>
+        <li>We can access Java objects directly from the GPU.
+        These are all substantial benefits.</li>
+        </ul>
+        
+        <p>In the existing code (early prototype) we provide access to HSA as a specific device type.</p>
+        
+        <p>So our ubiquitous &lsquo;squares&rsquo; example will initially be written as:</p>
+        <pre class="highlight plaintext"><code>int in[] = ..//
+        int out[] = .../
+        Device.hsa().forEach(in.length, (i)-&gt;{
+           out[i] = in[i]*in[i];
+         });
+        </code></pre>
+        <p>You will obviously need a Java 8 compatible JDK (<a href="https://jdk8.java.net/download.html" rel="nofollow">https://jdk8.java.net/download.html</a>) in your path.</p>
+        
+        <p>We also recommend using IntelliJ which has preliminary support for Java 8 lambda features. You can download the community edition of IntelliJ from <a href="http://www.jetbrains.com/idea/" rel="nofollow">http://www.jetbrains.com/idea/</a></p>
       </div>
     </main>
     <footer class='page-footer'>

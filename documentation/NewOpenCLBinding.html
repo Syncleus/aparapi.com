@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | NewOpenCLBinding
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>NewOpenCLBinding</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,56 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to use new OpenCL binding mechanism. Updated Mar 6, 2012 by frost.g&hellip;@gmail.com</em>
+        As a step towards the extension mechanism I needed a way to easily bind OpenCL to an interface.</p>
+        
+        <p>Here is what I have come up with. We will use the &lsquo;Square&rsquo; example.</p>
+        
+        <p>You first define an interface with OpenCL annotations..</p>
+        
+        <p>interface Squarer extends OpenCL<Squarer>{
+          @Kernel(&ldquo;{\n&rdquo;//
+                 + &ldquo;  const size<em>t id = get</em>global_id(0);\n&rdquo;//
+                 + &ldquo;  out[id] = in[id]*in[id];\n&rdquo;//
+                 + &ldquo;}\n&rdquo;)//
+           public Squarer square(//
+                 Range _range,//
+                 @GlobalReadOnly(&ldquo;in&rdquo;) float[] in,//
+                 @GlobalWriteOnly(&ldquo;out&rdquo;) float[] out);
+          }</p>
+        
+        <p>This describes the API we wish to bind to a set of kernel entrypoints (here we only have one, but we could have many). Then you &#39;realize&rsquo; the interface by asking a device to create an implementation of the interface. Device is a new Aparapi class which represents a GPU or CPU OpenCL device. So here we are asking for the first (default) GPU device to realize the interface.</p>
+        
+        <p>Squarer squarer = Device.firstGPU(Squarer.class);
+        Now you can call the implementation directly with a Range.</p>
+        
+        <p>squarer.square(Range.create(in.length), in, out);
+        I think that we will have the easiest OpenCL binding out there&hellip;</p>
+        
+        <p>Following some conversations/suggestions online http://a-hackers-craic.blogspot.com/2012/03/aparapi.html we could also offer the ability to provide the OpenCL source from a file/url course using interface level Annotations.</p>
+        
+        <p>So we could allow.</p>
+        
+        <p>@OpenCL.Resource(&ldquo;squarer.cl&rdquo;);
+          interface Squarer extends OpenCL<Squarer>{
+                 public Squarer square(//
+                   Range _range,//
+                   @GlobalReadOnly(&ldquo;in&rdquo;) float[] in,//
+                   @GlobalWriteOnly(&ldquo;out&rdquo;) float[] out);
+          }
+        Or if the text is on-hand at compile time in a single constant string</p>
+        
+        <p>@OpenCL.Source(&ldquo;&hellip; opencl text here&rdquo;);
+          interface Squarer extends OpenCL<Squarer>{
+                 public Squarer square(//
+                   Range _range,//
+                   @GlobalReadOnly(&ldquo;in&rdquo;) float[] in,//
+                   @GlobalWriteOnly(&ldquo;out&rdquo;) float[] out);
+          }
+        Finally to allow for creation of dynamicl OpenCL (good for FFT&rsquo;s of various Radii).</p>
+        
+        <p>String openclSource = &hellip;;
+         Squarer squarer = Device.firstGPU(Squarer.class, openclSource);</p>
       </div>
     </main>
     <footer class='page-footer'>

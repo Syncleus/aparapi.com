@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | UsingConstantMemory
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>UsingConstantMemory</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,57 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to make use of constant memory in a Kernel Updated Feb 28, 2012 by frost.g&hellip;@gmail.com</em></p>
+        
+        <h2>How to make use of new constant memory feature</h2>
+        
+        <p>By default all primitive arrays accessed by an Aparapi Kernel is considered global. If we look at the generated code using <code>-Dcom.amd.aparapi.enableShowGeneratedOpenCL=true</code> we will see that primitive arrays (such as <code>int buf[]</code>) are mapped to <code>__global</code> pointers (such as <code>__global int *buf</code>) in OpenCL.</p>
+        
+        <p>Although this makes Aparapi easy to use (especially to Java developers who are unfamiliar to tiered memory hierarchies), it does limit the ability of the &lsquo;power developer&rsquo; wanting to extract more performance from Aparapi on the GPU.</p>
+        
+        <p>This <a href="http://www.amd.com/us/products/technologies/stream-technology/opencl/pages/opencl-intro.aspx?cmpid=cp_article_2_2010" rel="nofollow">page</a> from AMD&rsquo;s website shows the different types of memory that OpenCL programmers can exploit.</p>
+        
+        <p>Global memory buffers in Aparapi (primitive Java arrays) are stored in host memory and are copied to Global memory (the RAM of the GPU card).</p>
+        
+        <p>Local memory is &#39;closer&rsquo; to the compute devices and not copied from the host memory, it is just allocated for use on the device. The use of local memory on OpenCL can lead to much more performant code as the cost of fetching from local memory is much lower.</p>
+        
+        <p>Local memory is shared by all work item&rsquo;s (kernel instances) executing in the same group. This is why the use of local memory was deferred until we had a satisfactory mechanism for specifying a required group size.</p>
+        
+        <p>We recently also added support for constant memory for data that needs to be written once to the GPU but will not change.</p>
+        
+        <p>Aparapi only supports constant arrays, not scalers.</p>
+        
+        <h2>How to define a primitive array as &ldquo;constant&rdquo;</h2>
+        
+        <p>We have two ways define a constant buffer. Either we can decorate the variable name with a _$constant$ suffix (yes it is a valid identifier n Java).</p>
+        <pre class="highlight plaintext"><code>final int[] buffer = new int[1024]; // this is global accessable to all work items.
+        final int[] buffer_$constant$ = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
+        
+        Kernel k = new Kernel(){
+            public void run(){
+                 // access buffer
+                 // access buffer_$constant$
+                 // ....
+            }
+        }
+        </code></pre>
+        <p>Alternatively (if defining inside the derived Kernel class - cannot be used via anonymous inner class pattern above!) we can can use the @Constant annotation.</p>
+        <pre class="highlight plaintext"><code>final int[] buffer = new int[1024]; // this is global accessable to all work items.
+        
+        Kernel k = new Kernel(){
+            @Constant int[] constantBuffer = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
+            public void run(){
+                 // access buffer
+                 // access constantBuffers
+                 // ....
+            }
+        }
+        </code></pre>
+        <h2>Can I see some code?</h2>
+        
+        <p>I updated the Mandelbrot example so that the pallete of RGB values is represented using constant memory, the source can be found here. Look at line #95. BTW for me this resulted in a 5-7 % performance improvement.</p>
+        
+        <p><a href="tp://code.google.com/p/aparapi/source/browse/trunk/samples/mandel/src/com/amd/aparapi/sample/mandel/Main.java" rel="nofollow">http://code.google.com/p/aparapi/source/browse/trunk/samples/mandel/src/com/amd/aparapi/sample/mandel/Main.java</a></p>
       </div>
     </main>
     <footer class='page-footer'>

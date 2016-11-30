@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | UsingMultiDimExecutionRanges
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>UsingMultiDimExecutionRanges</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,64 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to use the new Range class (for multi-dim range access) Updated Feb 13, 2012 by frost.g&hellip;@gmail.com</em></p>
+        
+        <p>Aparapi now allows developers to execute over one, two or three dimensional ranges. OpenCL natively allows the user to execute over 1, 2 or 3 dimension grids via the clEnqueueNDRangeKernel() method.</p>
+        
+        <p>Initially we chose not to expose 2D or 3D ranges (Aparapi&rsquo;s Kernel.execute(range) allowed only !d ranges, but following a specific request we added the notion of a Range via the new com.amd.aparapi.Range class.</p>
+        
+        <p>A range is created using various static factory methods. For example to create a simple range {0..1024} we would use.</p>
+        
+        <p>Range range = Range.create(1024);
+        In this case the range will span 1..1024 and a &lsquo;default&rsquo; group size will be decided behind the scenes (256 probably in this case).</p>
+        
+        <p>If the user wishes to select a specific group size (say 32) for a one dimensional Range (0..1024) then they can use.</p>
+        
+        <p>Range range = Range.create(1024, 32);
+        The group size must always be a &#39;factor&rsquo; of the global range. So globalRange % groupSize == 0</p>
+        
+        <p>For a 2D range we use the Range.create2D(&hellip;) factory methods.</p>
+        
+        <p>Range range = Range.create2D(32, 32);
+        The above represents a 2D grid of execution 32 rows by 32 columns. In this case a default group size will be determined by the runtime.</p>
+        
+        <p>If we wish to specify the groupsize (say 4x4) then we can use.</p>
+        <pre class="highlight plaintext"><code>Range range = Range.create2D(32, 32, 4, 4);
+        This example uses a 2D range to apply a blurring convolution effect to a pixel buffer.
+        
+        final static int WIDTH=128;
+        final static int HEIGHT=64;
+        final int in[] = new int[WIDTH*HEIGHT];
+        final int out[] = new int[WIDTH*HEIGHT];
+        Kernel kernel = new Kernel(){
+           public void run(){
+              int x = getGlobalId(0);
+              int y = getGlobalId(1);
+              if (x&gt;0 &amp;&amp; x&lt;(getGlobalSize(0)-1) &amp;&amp; y&gt;0 &amp;&amp; y&lt;(getGlobalSize(0)-1)){
+                 int sum = 0;
+                 for (int dx =-1; dx&lt;2; dx++){
+                   for (int dy =-1; dy&lt;2; dy++){
+                     sum+=in[(y+dy)*getGlobalSize(0)+(x+dx)];
+                   }
+                 }
+                 out[y*getGlobalSize(0)+x] = sum/9;
+              }
+           }
+        
+        };
+        Range range = Range.create2D(WIDTH, HEIGHT);
+        kernel.execute(range);
+        </code></pre>
+        <h2>Handling this from JTP mode</h2>
+        
+        <p>Mapping to OpenCL for this is all fairly straightforward.</p>
+        
+        <p>In Java JTP mode we have to emulate the execution over the 1D, 2D and 3D ranges using threads. Note that the number of threads we launch is essentially the size of the group. So be careful creating large groups.</p>
+        
+        <p>If we ask for a 3D range using :-</p>
+        <pre class="highlight plaintext"><code>Range range = Range.create3D(1024, 1024, 1024, 8, 8, 8);
+        </code></pre>
+        <p>We are asking for a group size of 8x8x8 == 512. So we are asking for 512 threads!</p>
       </div>
     </main>
     <footer class='page-footer'>

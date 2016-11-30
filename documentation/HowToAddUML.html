@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Materialize is a modern responsive CSS framework based on Material Design by Google. ' name='description'>
     <title>
-      Aparapi | Getting Started
+      Aparapi | HowToAddUML
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,7 +48,7 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Getting Started</h1>
+          <h1 class='header center-on-small-only'>HowToAddUML</h1>
           <div class='row center'>
           </div>
           
@@ -56,7 +56,44 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p><em>How to add plantuml docs to wiki pages Updated Apr 20, 2013 by frost.g&hellip;@gmail.com</em></p>
+        
+        <p>Go to http://www.plantuml.com/plantuml and type in the text for you diagram.</p>
+        
+        <p>Hit submit and check out the diagram.</p>
+        
+        <p>Once you are happy, so with something like</p>
+        <pre class="highlight plaintext"><code>start
+        :kernel.execute(range);
+        if (?) then (first call for this instance)
+            : Convert Kernel.run() to OpenCL;
+            note
+               We also convert all
+               methods reachable from
+               kernel.run()
+            end note
+            if (?) then (Conversion was successful)
+               : Compile OpenCL;
+               : Map compiled OpenCL to this Kernel;
+            else (Conversion unsuccessful)
+            endif
+        else (not first call)
+        endif
+        if (?) then (OpenCL mapped for this instance)
+           : Bind args (send to GPU);
+           : Execute kernel;
+        else (false)
+           : Execute using a Java Thread Pool;
+        endif
+        stop
+        </code></pre>
+        <p>Paste the resulting URL into the wiki page but append %20as.png at the end of the URL</p>
+        
+        <p>http://www.plantuml.com:80/plantuml/img/BLAHBLAH%20as.png</p>
+        
+        <p>To get this!</p>
+        
+        <p><img src="/documentation/uml.png" alt="Image of UML" /></p>
       </div>
     </main>
     <footer class='page-footer'>
