@@ -98,7 +98,7 @@
     });
 
     window.index.add({
-      href: 'http://materializecss.com/getting-started.html',
+      href: 'http://materializecss.com/getting-started.html.haml',
       title: 'Getting Started',
       body: 'Learn how to easily start using Materialize in your website.'
     });
