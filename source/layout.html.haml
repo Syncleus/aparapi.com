@@ -40,7 +40,8 @@
         .container
           %h1.header.center-on-small-only #{page_title}
           .row.center
-            %h4.header.col.s12.light.center Open-source framework for executing native Java code on the GPU.
+            - if page_description
+              %h4.header.col.s12.light.center #{page_description}
           = yield_content(:additional_header) if content_for?(:additional_header)
         = yield_content(:banner) if content_for?(:banner)
       .container

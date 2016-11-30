@@ -100,8 +100,16 @@ helpers do
     end
     
     def page_title
-        if current_page.data.title.present?
+        if current_page.data.header_title.present?
+            current_page.data.header_title
+        elsif current_page.data.title.present?
             current_page.data.title
+        end
+    end
+
+    def page_description
+        if current_page.data.description.present?
+            current_page.data.description
         end
     end
 end
