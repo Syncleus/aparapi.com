@@ -19,6 +19,12 @@
       body: 'Describes how to get up and running using Aparapi'
     });
 
+    window.index.add({
+      href: 'http://aparapi.com/introduction/about.html',
+      title: 'About',
+      body: 'Background information on Aparapi'
+    });
+
 
     // icon click
     $('ul#nav-mobile li.search .search-wrapper i.material-icons').click(function() {
