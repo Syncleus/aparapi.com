@@ -26,7 +26,8 @@ And refactor the sequential loop to the following form:
 ```java
 
 Kernel kernel = new Kernel() {
-    @Override public void run() {
+    @Override
+    public void run() {
         int i = getGlobalId();
         result[i] = intA[i] + inB[i];
     }
