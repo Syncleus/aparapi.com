@@ -9,7 +9,6 @@ documentation:
   AddressSpacesUsingBuffers.html.md: "/documentation/AddressSpacesUsingBuffers.html.md"
   AparapiExtensionProposal.html.md: "/documentation/AparapiExtensionProposal.html.md"
   AparapiPatterns.html.md: "/documentation/AparapiPatterns.html.md"
-  Attribution.html.md: "/documentation/Attribution.html.md"
   BuildingNBody.html.md: "/documentation/BuildingNBody.html.md"
   ByteCode2OpenCL.pdf: "/documentation/ByteCode2OpenCL.pdf"
   ChoosingSpecificDevicesForExecution.html.md: "/documentation/ChoosingSpecificDevicesForExecution.html.md"
