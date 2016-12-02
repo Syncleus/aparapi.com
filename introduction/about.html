@@ -56,38 +56,6 @@
         
       </div>
       <div class='container'>
-        <h1>What is Aparapi?</h1>
-        
-        <p>Aparapi allows Java developers to take advantage of the compute power of GPU and APU devices by executing data parallel code fragments on the GPU rather than being confined to the local CPU. It does this by converting Java bytecode to OpenCL at runtime and executing on the GPU, if for any reason Aparapi can&rsquo;t execute on the GPU it will execute in a Java thread pool.</p>
-        
-        <p>We like to think that for the appropriate workload this extends Java&rsquo;s &lsquo;Write Once Run Anywhere&rsquo; to include GPU devices.</p>
-        
-        <p>With Aparapi we can take a sequential loop such as this (which adds each element from inA and inB arrays and puts the result in result).</p>
-        <pre class="highlight java"><code>
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">inA</span><span class="o">[]</span> <span class="o">=</span> <span class="o">....</span> <span class="c1">// get a float array of data from somewhere</span>
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">inB</span><span class="o">[]</span> <span class="o">=</span> <span class="o">....</span> <span class="c1">// get a float array of data from somewhere</span>
-        <span class="k">assert</span> <span class="o">(</span><span class="n">inA</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">inB</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="n">inA</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">intA</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">inB</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-        <span class="o">}</span>
-        </code></pre>
-        <p>And refactor the sequential loop to the following form:</p>
-        <pre class="highlight java"><code>
-        <span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">()</span> <span class="o">{</span>
-            <span class="nd">@Override</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-                <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">getGlobalId</span><span class="o">();</span>
-                <span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">intA</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">inB</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="o">}</span>
-        <span class="o">};</span>
-        
-        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
-        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
-        </code></pre>
-        <p>In the above code we extend com.amd.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).</p>
-        
         <h1>About the Name</h1>
         
         <p>Aparapi is just a contraction of &ldquo;A PARallel API&rdquo;</p>

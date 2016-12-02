@@ -56,7 +56,66 @@
         
       </div>
       <div class='container'>
-        <p><strong>Hello World!</strong></p>
+        <p>A framework for executing native Java code on the GPU.</p>
+        
+        <p><strong>Licensed under the Apache Software License v2</strong></p>
+        
+        <p>Aparapi allows developers to write native Javacode capable of being executed directly on a graphics card GPU by converting Java byte code to an OpenCL kernel dynamically at runtime. Because it is backed by OpenCL Aparapi is compatible with all OpenCL compatible Graphics Cards.</p>
+        
+        <p>A GPU has a unique architecture that causes them to behave differently than a CPU. One of the most noticeable differences is that while a typical CPU has less than a dozen cores a high end GPU may have hundreds of cores. This makes them uniquely suited for data-parallel computation that can result in speedups hundreds of times more than what is capable with your average CPU. This can mean the difference between needing a whole data center to house your application versus just one or two computers, potentially saving millions in server costs.</p>
+        
+        <p>Aparapi was originally a project conceived and developed by AMD corporation. It was later abandoned by AMD and sat mostly-idle for several years. Despite this there were some failed efforts by the community to keep the project alive, but without a clear community leader no new releases ever came. Eventually we came along and rescued the project, and modernized the project. Finally after such a long wait the first Aparapi release in 5 years was published and the community continues to push forward with renewed excitement.</p>
+        
+        <p>For detailed documentation see <a href="http://Aparapi.com" rel="nofollow">Aparapi.com</a> or check out the <a href="http://www.javadoc.io/doc/com.syncleus.ferma/ferma" rel="nofollow">latest Javadocs</a>.</p>
+        
+        <p>For support please use <a href="https://gitter.im/Syncleus/aparapi" rel="nofollow">Gitter</a> or the <a href="https://groups.google.com/a/syncleus.com/d/forum/aparapi-list" rel="nofollow">official Aparapi mailing list</a>.</p>
+        
+        <p>Please file bugs and feature requests on <a href="https://github.com/Syncleus/aparapi/issues" rel="nofollow">Github</a>.</p>
+        
+        <h2>Dependency</h2>
+        
+        <p>To include Aparapi in your project of choice include the following Maven dependency into your build.</p>
+        <pre class="highlight xml"><code>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.syncleus.aparapi<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>aparapi<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        </code></pre>
+        <h2>Obtaining the Source</h2>
+        
+        <p>The official source repository for Aparapi is located in the Syncleus Github repository and can be cloned using the
+        following command.</p>
+        <pre class="highlight shell"><code>
+        git clone https://github.com/Syncleus/aparapi.git
+        </code></pre>
+        <h2>Getting Started</h2>
+        
+        <p>With Aparapi we can take a sequential loop such as this (which adds each element from inA and inB arrays and puts the result in result).</p>
+        <pre class="highlight java"><code>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">inA</span><span class="o">[]</span> <span class="o">=</span> <span class="o">....</span> <span class="c1">// get a float array of data from somewhere</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">inB</span><span class="o">[]</span> <span class="o">=</span> <span class="o">....</span> <span class="c1">// get a float array of data from somewhere</span>
+        <span class="k">assert</span> <span class="o">(</span><span class="n">inA</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">inB</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="n">inA</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">intA</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">inB</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>And refactor the sequential loop to the following form:</p>
+        <pre class="highlight java"><code>
+        <span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">getGlobalId</span><span class="o">();</span>
+                <span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">intA</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">inB</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+        
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        </code></pre>
+        <p>In the above code we extend com.syncleus.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).</p>
       </div>
     </main>
     <footer class='page-footer'>
