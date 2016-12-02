@@ -37,7 +37,7 @@ Range range = Range.create(result.length);
 kernel.execute(range);
 ```
 
-In the above code we extend com.amd.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).
+In the above code we extend com.syncleus.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).
 
 # About the Name
 
