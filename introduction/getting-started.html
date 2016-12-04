@@ -68,7 +68,7 @@
         
         <p>For detailed documentation see <a href="http://Aparapi.com" rel="nofollow">Aparapi.com</a> or check out the <a href="http://www.javadoc.io/doc/com.syncleus.ferma/ferma" rel="nofollow">latest Javadocs</a>.</p>
         
-        <p>For support please use <a href="https://gitter.im/Syncleus/aparapi" rel="nofollow">Gitter</a> or the <a href="https://groups.google.com/a/syncleus.com/d/forum/aparapi-list" rel="nofollow">official Aparapi mailing list</a>.</p>
+        <p>For support please use <a href="https://gitter.im/Syncleus/aparapi" rel="nofollow">Gitter</a> or the <a href="https://groups.google.com/d/forum/aparapi" rel="nofollow">official Aparapi mailing list</a>.</p>
         
         <p>Please file bugs and feature requests on <a href="https://github.com/Syncleus/aparapi/issues" rel="nofollow">Github</a>.</p>
         
@@ -77,9 +77,9 @@
         <p>To include Aparapi in your project of choice include the following Maven dependency into your build.</p>
         <pre class="highlight xml"><code>
         <span class="nt">&lt;dependency&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>com.syncleus.aparapi<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.aparapi<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>aparapi<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
         </code></pre>
         <h2>Obtaining the Source</h2>
@@ -115,7 +115,6 @@
         <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
         <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
         </code></pre>
-        <p>In the above code we extend com.syncleus.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).</p>
       </div>
     </main>
     <footer class='page-footer'>
