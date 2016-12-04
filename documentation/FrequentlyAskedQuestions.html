@@ -105,7 +105,7 @@
         
         <h2>Is there a way I can see the generated OpenCL?</h2>
         
-        <p>Yes, by using adding -Dcom.syncleus.aparapi.enableShowGeneratedOpenCL=true to your command line when you start your JVM.</p>
+        <p>Yes, by using adding -Dcom.aparapi.enableShowGeneratedOpenCL=true to your command line when you start your JVM.</p>
         
         <h2>Does Aparapi support sharing buffers with JOGL? Can I exploit the features of JOGAMP/glugen?</h2>
         
@@ -149,7 +149,7 @@
         </code></pre>
         <p>The above code fragment will print either ‘GPU’ if the kernel executed on the GPU or JTP if Aparapi executed the Kernel in a Java Thread Pool.</p>
         
-        <p>Alternatively, setting the property –Dcom.syncleus.aparapi.enableShowExecutionModes=true when you start your JVM will cause Aparapi to automatically report the execution mode of all kernels to stdout.</p>
+        <p>Alternatively, setting the property –Dcom.aparapi.enableShowExecutionModes=true when you start your JVM will cause Aparapi to automatically report the execution mode of all kernels to stdout.</p>
         
         <h2>Why does Aparapi need me to compile my code with -g?</h2>
         

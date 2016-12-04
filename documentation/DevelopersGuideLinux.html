@@ -134,7 +134,7 @@
         
         <h2>Eclipse</h2>
         
-        <p>Eclipse is not required to build Aparapi; however, the developers of Aparapi do use Eclipse and have made the Eclipse artifacts (.classpath and .project files) available so that projects can be imported into Eclipse. The com.syncleus.aparapi.jni subproject (containing C++ JNI source) should be imported as a resource project. We do not recommend importing com.syncleus.aparapi.jni as a CDT project, and we do not recommend trying to configure a CDT build, the existing build.xml files has been customized for multiplatform C++ compilations.</p>
+        <p>Eclipse is not required to build Aparapi; however, the developers of Aparapi do use Eclipse and have made the Eclipse artifacts (.classpath and .project files) available so that projects can be imported into Eclipse. The com.aparapi.jni subproject (containing C++ JNI source) should be imported as a resource project. We do not recommend importing com.aparapi.jni as a CDT project, and we do not recommend trying to configure a CDT build, the existing build.xml files has been customized for multiplatform C++ compilations.</p>
         
         <h2>Building</h2>
         
@@ -143,43 +143,43 @@
         </code></pre>
         <p>Checkout provides the following:</p>
         <pre class="highlight plaintext"><code>aparapi/
-           com.syncleus.aparapi/
-              src/java/com.syncleus.aparapi/*.java
+           com.aparapi/
+              src/java/com.aparapi/*.java
               build.xml
-           com.syncleus.aparapi.jni/
+           com.aparapi.jni/
               src/cpp/*.cpp
               src/cpp/*.h
               build.xml
            test/
               codegen/
                  src/java/
-                    com.syncleus.aparapi/
-                    com.syncleus.aparapi.test/
+                    com.aparapi/
+                    com.aparapi.test/
                  build.xml
               runtime/
                  src/java/
-                    com.syncleus.aparapi/
-                    com.syncleus.aparapi.test/
+                    com.aparapi/
+                    com.aparapi.test/
                  build.xml
            samples/
               mandel
-                 src/java/com.syncleus.aparapi.samples.mandel/*.java
+                 src/java/com.aparapi.samples.mandel/*.java
                  build.xml
                  mandel.sh
                  mandel.bat
               squares/
-                 src/java/com.syncleus.aparapi.samples.squares/*.java
+                 src/java/com.aparapi.samples.squares/*.java
                  build.xml
                  squares.sh
                  squares.bat
               convolution/
-                 src/java/com.syncleus.aparapi.samples.convolution/*.java
+                 src/java/com.aparapi.samples.convolution/*.java
                  build.xml
                  conv.sh
                  conv.bat
            examples/
               nbody/
-                 src/java/com.syncleus.aparapi.nbody/
+                 src/java/com.aparapi.nbody/
                  build.xml
                  nbody.sh
                  nbody.bat
@@ -190,15 +190,15 @@
         </code></pre>
         <h2>Sub Directories</h2>
         
-        <p>The com.syncleus.aparapi and com.syncleus.aparapi.jni subdirectories contain the source for building and using Aparapi.</p>
+        <p>The com.aparapi and com.aparapi.jni subdirectories contain the source for building and using Aparapi.</p>
         
         <p>The ant build.xml file, in each folder accept common &lsquo;clean&rsquo; and &#39;build&rsquo; targets. You can use the build.xml file at the root of the tree for two purposes:</p>
-        <pre class="highlight plaintext"><code>To initiate a build com.syncleus.aparapi of com.syncleus.aparapi.jni.
+        <pre class="highlight plaintext"><code>To initiate a build com.aparapi of com.aparapi.jni.
         To create a binary ‘distribution’ directory and zip file. This zip file is same as those available from the download section of the code.google.com/p/aparapi site.
         </code></pre>
         <h2>Preparing for your first build</h2>
         
-        <p>Edit com.syncleus.aparapi.jni\build.properties and ensure that the properties are valid for your platform.</p>
+        <p>Edit com.aparapi.jni\build.properties and ensure that the properties are valid for your platform.</p>
         
         <p>View the comments in the properties file for assistance. The build.xml ant file contains some simple checks to help diagnose simple configuration errors in case something gets messed up.</p>
         
