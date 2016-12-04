@@ -13,7 +13,7 @@ Aparapi was originally a project conceived and developed by AMD corporation. It 
 
 For detailed documentation see [Aparapi.com](http://Aparapi.com) or check out the [latest Javadocs](http://www.javadoc.io/doc/com.syncleus.ferma/ferma).
 
-For support please use [Gitter](https://gitter.im/Syncleus/aparapi) or the [official Aparapi mailing list](https://groups.google.com/a/syncleus.com/d/forum/aparapi-list).
+For support please use [Gitter](https://gitter.im/Syncleus/aparapi) or the [official Aparapi mailing list](https://groups.google.com/d/forum/aparapi).
 
 Please file bugs and feature requests on [Github](https://github.com/Syncleus/aparapi/issues).
 
@@ -24,9 +24,9 @@ To include Aparapi in your project of choice include the following Maven depende
 ```xml
 
 <dependency>
-    <groupId>com.syncleus.aparapi</groupId>
+    <groupId>com.aparapi</groupId>
     <artifactId>aparapi</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ following command.
 
 git clone https://github.com/Syncleus/aparapi.git
 ```
-    
+
 ## Getting Started
 
 With Aparapi we can take a sequential loop such as this (which adds each element from inA and inB arrays and puts the result in result).
@@ -71,5 +71,3 @@ Kernel kernel = new Kernel() {
 Range range = Range.create(result.length);
 kernel.execute(range);
 ```
-
-In the above code we extend com.syncleus.aparapi.Kernel base class and override the Kernel.run() method to express our data parallel algorithm. We initiate the execution of the Kernel(over a specific range 0..results.length) using Kernel.execute(range).
