@@ -64,7 +64,11 @@
         
         <p>A GPU has a unique architecture that causes them to behave differently than a CPU. One of the most noticeable differences is that while a typical CPU has less than a dozen cores a high end GPU may have hundreds of cores. This makes them uniquely suited for data-parallel computation that can result in speedups hundreds of times more than what is capable with your average CPU. This can mean the difference between needing a whole data center to house your application versus just one or two computers, potentially saving millions in server costs.</p>
         
-        <p>Aparapi was originally a project conceived and developed by AMD corporation. It was later abandoned by AMD and sat mostly-idle for several years. Despite this there were some failed efforts by the community to keep the project alive, but without a clear community leader no new releases ever came. Eventually we came along and rescued the project, and modernized the project. Finally after such a long wait the first Aparapi release in 5 years was published and the community continues to push forward with renewed excitement.</p>
+        <p>Aparapi was originally a project conceived and developed by AMD corporation. It was later abandoned by AMD and sat mostly idle for several years. Despite this there were some failed efforts by the community to keep the project alive, but without a clear community leader no new releases ever came. Eventually we came along and rescued the project. Finally after such a long wait the first Aparapi release in 5 years was published and the community continues to push forward with renewed excitement.</p>
+        
+        <h2>Support and Documentation</h2>
+        
+        <p>Aparapi Javadocs: <a href="http://www.javadoc.io/doc/com.aparapi/aparapi" rel="nofollow">latest</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.2.0" rel="nofollow">1.2.0</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.2" rel="nofollow">1.1.2</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.1" rel="nofollow">1.1.1</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.0" rel="nofollow">1.1.0</a> - <a href="http://www.javadoc.io/doc/com.syncleus.aparapi/aparapi/1.0.0" rel="nofollow">1.0.0</a></p>
         
         <p>For detailed documentation see <a href="http://Aparapi.com" rel="nofollow">Aparapi.com</a> or check out the <a href="http://www.javadoc.io/doc/com.aparapi/aparapi" rel="nofollow">latest Javadocs</a>.</p>
         
@@ -72,7 +76,22 @@
         
         <p>Please file bugs and feature requests on <a href="https://github.com/Syncleus/aparapi/issues" rel="nofollow">Github</a>.</p>
         
-        <h2>Dependency</h2>
+        <h2>Related Projects</h2>
+        
+        <p>This particular repository only represents the core Java library. There are several other related repositories worth taking a look at.</p>
+        
+        <ul>
+        <li><a href="https://github.com/Syncleus/aparapi-examples" rel="nofollow">Aparapi Examples</a> - A collection of Java examples to showcase the Aparapi library and help developers get started.</li>
+        <li><a href="https://github.com/Syncleus/aparapi-jni" rel="nofollow">Aparapi JNI</a> - Represents the native library component. Without this the Java library can&rsquo;t talk to the graphics card.</li>
+        <li><a href="https://github.com/Syncleus/aparapi-archlinux" rel="nofollow">Aparapi Archlinux AUR</a> - An Archlinux AUR for installing the Aparapi JNI.</li>
+        <li><a href="https://github.com/Syncleus/aparapi-archlinux-repo" rel="nofollow">Aparapi Archlinux Repository</a> - A Archlinux binary repository containing all versions of the Aparapi JNI for easy installation.</li>
+        </ul>
+        
+        <h2>Prerequisites</h2>
+        
+        <p>Aparapi will run as-is on the CPU, however in order to access the GPU it requires an Aparapi JNI native library to be installed first. To do that see the <a href="https://github.com/Syncleus/aparapi-jni" rel="nofollow">Aparapi JNI</a> project for more details. </p>
+        
+        <h2>Java Dependency</h2>
         
         <p>To include Aparapi in your project of choice include the following Maven dependency into your build.</p>
         <pre class="highlight xml"><code>
