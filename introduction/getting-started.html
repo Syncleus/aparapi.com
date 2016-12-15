@@ -50,14 +50,13 @@
         <div class='container'>
           <h1 class='header center-on-small-only'>Getting Started</h1>
           <div class='row center'>
+            <h4 class='header col s12 light center'>A framework for executing native Java code on the GPU.</h4>
           </div>
           
         </div>
         
       </div>
       <div class='container'>
-        <p>A framework for executing native Java code on the GPU.</p>
-        
         <p><strong>Licensed under the Apache Software License v2</strong></p>
         
         <p>Aparapi allows developers to write native Java code capable of being executed directly on a graphics card GPU by converting Java byte code to an OpenCL kernel dynamically at runtime. Because it is backed by OpenCL Aparapi is compatible with all OpenCL compatible Graphics Cards.</p>
@@ -65,6 +64,10 @@
         <p>A GPU has a unique architecture that causes them to behave differently than a CPU. One of the most noticeable differences is that while a typical CPU has less than a dozen cores a high end GPU may have hundreds of cores. This makes them uniquely suited for data-parallel computation that can result in speedups hundreds of times more than what is capable with your average CPU. This can mean the difference between needing a whole data center to house your application versus just one or two computers, potentially saving millions in server costs.</p>
         
         <p>Aparapi was originally a project conceived and developed by AMD corporation. It was later abandoned by AMD and sat mostly idle for several years. Despite this there were some failed efforts by the community to keep the project alive, but without a clear community leader no new releases ever came. Eventually we came along and rescued the project. Finally after such a long wait the first Aparapi release in 5 years was published and the community continues to push forward with renewed excitement.</p>
+        
+        <p>Below you will find two side-by-side comparisons for the nbody problem on a CPU vs a GPU. The simulation is being run on an inexpensive computer graphics card. This simulation can be run from the Aparapi examples project. It is obvious the drastic performance gains that can be acheived with Aparapi.</p>
+        
+        <p><img src="http://aparapi.com/images/nbody_gpu.gif" alt="NBody GPU" /> <img src="http://aparapi.com/images/nbody_cpu.gif" alt="NBody CPU" /></p>
         
         <h2>Support and Documentation</h2>
         
@@ -75,6 +78,8 @@
         <p>For support please use <a href="https://gitter.im/Syncleus/aparapi" rel="nofollow">Gitter</a> or the <a href="https://groups.google.com/d/forum/aparapi" rel="nofollow">official Aparapi mailing list</a>.</p>
         
         <p>Please file bugs and feature requests on <a href="https://github.com/Syncleus/aparapi/issues" rel="nofollow">Github</a>.</p>
+        
+        <p>Aparapi conforms to the <a href="http://semver.org/spec/v2.0.0.html" rel="nofollow">Semantic Versioning 2.0.0</a> standard. That means the version of a release isnt arbitrary but rather describes how the library interfaces have changed. Read more about it at the <a href="http://semver.org/spec/v2.0.0.html" rel="nofollow">Semantic Versioning page</a>.</p>
         
         <h2>Related Projects</h2>
         
@@ -139,7 +144,6 @@
         <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
         <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
         </code></pre>
-        <p>`</p>
       </div>
     </main>
     <footer class='page-footer'>
