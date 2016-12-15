@@ -1,6 +1,5 @@
 ---
 index.html.haml: "/index.html.haml"
-showcase.html.haml: "/showcase.html.haml"
 introduction:
   about.html.md: "/introduction/about.html.md"
   getting-started.html.md: "/introduction/getting-started.html.md"
@@ -36,3 +35,4 @@ documentation:
   UsingConstantMemory.html.md: "/documentation/UsingConstantMemory.html.md"
   UsingLocalMemory.html.md: "/documentation/UsingLocalMemory.html.md"
   UsingMultiDimExecutionRanges.html.md: "/documentation/UsingMultiDimExecutionRanges.html.md"
+showcase.html.haml: "/showcase.html.haml"
