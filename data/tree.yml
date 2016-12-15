@@ -1,5 +1,6 @@
 ---
 index.html.haml: "/index.html.haml"
+showcase.html.haml: "/showcase.html.haml"
 introduction:
   about.html.md: "/introduction/about.html.md"
   getting-started.html.md: "/introduction/getting-started.html.md"
