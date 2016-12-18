@@ -1,8 +1,7 @@
 ---
-    title: PrivateMemorySpace
+title: Private Memory Space
+description: Using private memory space in Aparapi kernels. 
 ---
-
-*Using `__private` memory space in Aparapi kernels. Phase-Implementation Updated Sep 14, 2014 by barneydp...@gmail.com*
 
 ## Introduction
 The private memory space identifier (just "private" is also recognised) can be applied to struct fields in order to indicate that the data is not shared with/accessible to other kernel instances. Whilst this is the default for non-array data, it must be explicitly applied to array fields in order to make them private. Aparapi now supports arrays in the private memory space.
@@ -12,10 +11,18 @@ The private memory space is generally only suitable for smallish arrays, but is 
 ##Details
 In Aparapi there are two mechanisms available to mark a Kernel class member as belonging to the private memory space when mapped to OpenCL code (matching the equivalent functionality for marking items as belonging to the local memory space). Either the field can be named with a suffix plus buffer size, for example
 
-    protected short[] myBuffer_$private$32 = new short[32];
+```java
+
+protected short[] myBuffer_$private$32 = new short[32];
+```
+    
 or using the Annotation Kernel.PrivateMemorySpace, for example
 
-    protected @PrivateMemorySpace(32) short[] myBuffer = new short[32];
+```java
+
+protected @PrivateMemorySpace(32) short[] myBuffer = new short[32];
+```
+    
 The latter should be used in preference to the former.
 
 Note that OpenCL requires that the size of a private array be fixed at compile time for any kernel. Thus it is not possible for a single Kernel subclass to support private buffers of varying size. Unfortunately this may entail creating multiple subclasses with varying buffer sizes in order to most efficiently support varying private buffer sizes.

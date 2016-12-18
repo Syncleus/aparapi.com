@@ -1,8 +1,7 @@
 ---
-    title: UsingMultiDimExecutionRanges
+title: Multiple Dim Ranges
+description: How to use the Range class (for multi-dim range access).
 ---
-
-*How to use the new Range class (for multi-dim range access) Updated Feb 13, 2012 by frost.g...@gmail.com*
 
 Aparapi now allows developers to execute over one, two or three dimensional ranges. OpenCL natively allows the user to execute over 1, 2 or 3 dimension grids via the clEnqueueNDRangeKernel() method.
 
@@ -25,39 +24,46 @@ The above represents a 2D grid of execution 32 rows by 32 columns. In this case 
 
 If we wish to specify the groupsize (say 4x4) then we can use.
 
-    Range range = Range.create2D(32, 32, 4, 4);
-    This example uses a 2D range to apply a blurring convolution effect to a pixel buffer.
+```java
 
-    final static int WIDTH=128;
-    final static int HEIGHT=64;
-    final int in[] = new int[WIDTH*HEIGHT];
-    final int out[] = new int[WIDTH*HEIGHT];
-    Kernel kernel = new Kernel(){
-       public void run(){
-          int x = getGlobalId(0);
-          int y = getGlobalId(1);
-          if (x>0 && x<(getGlobalSize(0)-1) && y>0 && y<(getGlobalSize(0)-1)){
-             int sum = 0;
-             for (int dx =-1; dx<2; dx++){
-               for (int dy =-1; dy<2; dy++){
-                 sum+=in[(y+dy)*getGlobalSize(0)+(x+dx)];
-               }
-             }
-             out[y*getGlobalSize(0)+x] = sum/9;
-          }
-       }
+Range range = Range.create2D(32, 32, 4, 4);
+This example uses a 2D range to apply a blurring convolution effect to a pixel buffer.
 
-    };
-    Range range = Range.create2D(WIDTH, HEIGHT);
-    kernel.execute(range);
+final static int WIDTH=128;
+final static int HEIGHT=64;
+final int in[] = new int[WIDTH*HEIGHT];
+final int out[] = new int[WIDTH*HEIGHT];
+Kernel kernel = new Kernel(){
+   public void run(){
+      int x = getGlobalId(0);
+      int y = getGlobalId(1);
+      if (x>0 && x<(getGlobalSize(0)-1) && y>0 && y<(getGlobalSize(0)-1)){
+         int sum = 0;
+         for (int dx =-1; dx<2; dx++){
+           for (int dy =-1; dy<2; dy++){
+             sum+=in[(y+dy)*getGlobalSize(0)+(x+dx)];
+           }
+         }
+         out[y*getGlobalSize(0)+x] = sum/9;
+      }
+   }
+
+};
+Range range = Range.create2D(WIDTH, HEIGHT);
+kernel.execute(range);
+```
 
 ##Handling this from JTP mode
+
 Mapping to OpenCL for this is all fairly straightforward.
 
 In Java JTP mode we have to emulate the execution over the 1D, 2D and 3D ranges using threads. Note that the number of threads we launch is essentially the size of the group. So be careful creating large groups.
 
 If we ask for a 3D range using :-
 
-    Range range = Range.create3D(1024, 1024, 1024, 8, 8, 8);
+```java
 
-We are asking for a group size of 8x8x8 == 512. So we are asking for 512 threads!
+Range range = Range.create3D(1024, 1024, 1024, 8, 8, 8);
+```
+
+We are asking for a group size of `8x8x8 == 512`. So we are asking for 512 threads!

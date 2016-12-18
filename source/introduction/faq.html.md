@@ -1,8 +1,7 @@
 ---
-    title: FrequentlyAskedQuestions
+title: FAQ
+description: Frequently Asked Questions. 
 ---
-
-*Frequently Asked Questions Updated Oct 17, 2012 by frost.g...@gmail.com*
 
 ##Frequently Asked Questions
 
@@ -88,12 +87,15 @@ Yes, we do ship a small JNI shim to handle the host OpenCL calls.
 
 From within the Java code itself you can query the execution mode after Kernel.execute(n) has returned.
 
-    Kernel kernel = new Kernel(){
-       @Override public void run(){
-       }
-    } ;
-    kernel.execute(1024);
-    System.out.priintln(“Execution mode = “+kernel.getExecutionMode());
+```java
+
+Kernel kernel = new Kernel(){
+   @Override public void run(){
+   }
+} ;
+kernel.execute(1024);
+System.out.priintln(“Execution mode = “+kernel.getExecutionMode());
+```
 
 The above code fragment will print either ‘GPU’ if the kernel executed on the GPU or JTP if Aparapi executed the Kernel in a Java Thread Pool.
 

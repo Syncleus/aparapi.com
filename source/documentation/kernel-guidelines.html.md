@@ -1,8 +1,8 @@
 ---
-    title: JavaKernelGuidelines
+title: Kernel Guidelines
+description: What code can and can't be converted to OpenCL by Aparapi.
 ---
 
-*What code can and can't be converted to OpenCL by Aparapi. Updated Sep 13, 2011 by frost.g...@gmail.com*
 ##Aparapi Java Kernel Guidelines
 Certain practices can improve the chances of your Java kernel being converted to OpenCL and executing on a GPU.
 
@@ -46,14 +46,16 @@ Some restrictions/guidelines may be removed or augmented in a future Aparapi rel
 * A variable cannot have its first assignment be the side effect of an expression evaluation or a method call.  For example, the following will not be translated to run on the GPU.
 
 
-        int foo(int a) {
-           // . . .
-        }
-        public void run() {
-          int z;
-          foo(z = 3);
-        }
+```java
 
+int foo(int a) {
+   // . . .
+}
+public void run() {
+  int z;
+  foo(z = 3);
+}
+```
 
 * This should be regarded as an error which needs to be addressed, as a workaround, explicitly initialize variables (even to 0) when declared.
 
@@ -61,15 +63,22 @@ Some restrictions/guidelines may be removed or augmented in a future Aparapi rel
 OpenCL is C99-based and as such the result of expressions depending on side effects of other expressions can differ from what one might expect from Java, please avoid using code that assumes Java's tighter rules.  Generally code should be as simple as possible.
 For example, although Java explicitly defines
 
-    arra[i++] = arrb[i++];
+```java
+
+arra[i++] = arrb[i++];
+```
+    
   to be equivalent to
 
-    arra[i] = arrb[i+1];
-    i += 2;
+```java
+
+arra[i] = arrb[i+1];
+i += 2;
+```
 
 The C99/OpenCL standard does not define this and so the result would be undefined.
 
 ##Runtime Exceptions
-* When run on the GPU, array accesses will not generate an ArrayIndexOutOfBoundsException.  Instead the behavior will be unspecified.
+* When run on the GPU, array accesses will not generate an ArrayIndexOutOfBoundsException. Instead the behavior will be unspecified.
 * When run on the GPU, ArithmeticExceptions will not be generated, for example with integer division by zero. Instead the behavior will be unspecified.
 Attribution

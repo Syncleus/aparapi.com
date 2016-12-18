@@ -1,9 +1,10 @@
 ---
-    title: UsingConstantMemory
+title: Constant Memory
+description: How to make use of constant memory in a Kernel. 
 ---
 
-*How to make use of constant memory in a Kernel Updated Feb 28, 2012 by frost.g...@gmail.com*
 ##How to make use of new constant memory feature
+
 By default all primitive arrays accessed by an Aparapi Kernel is considered global. If we look at the generated code using `-Dcom.aparapi.enableShowGeneratedOpenCL=true` we will see that primitive arrays (such as `int buf[]`) are mapped to `__global` pointers (such as `__global int *buf`) in OpenCL.
 
 Although this makes Aparapi easy to use (especially to Java developers who are unfamiliar to tiered memory hierarchies), it does limit the ability of the 'power developer' wanting to extract more performance from Aparapi on the GPU.
@@ -23,29 +24,35 @@ Aparapi only supports constant arrays, not scalers.
 ##How to define a primitive array as "constant"
 We have two ways define a constant buffer. Either we can decorate the variable name with a _$constant$ suffix (yes it is a valid identifier n Java).
 
-    final int[] buffer = new int[1024]; // this is global accessable to all work items.
-    final int[] buffer_$constant$ = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
+```java
 
-    Kernel k = new Kernel(){
-        public void run(){
-             // access buffer
-             // access buffer_$constant$
-             // ....
-        }
+final int[] buffer = new int[1024]; // this is global accessable to all work items.
+final int[] buffer_$constant$ = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
+
+Kernel k = new Kernel(){
+    public void run(){
+         // access buffer
+         // access buffer_$constant$
+         // ....
     }
+}
+```
 
 Alternatively (if defining inside the derived Kernel class - cannot be used via anonymous inner class pattern above!) we can can use the @Constant annotation.
 
-    final int[] buffer = new int[1024]; // this is global accessable to all work items.
+```java
 
-    Kernel k = new Kernel(){
-        @Constant int[] constantBuffer = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
-        public void run(){
-             // access buffer
-             // access constantBuffers
-             // ....
-        }
+final int[] buffer = new int[1024]; // this is global accessable to all work items.
+
+Kernel k = new Kernel(){
+    @Constant int[] constantBuffer = new int[]{1,2,3,4,5,6,7,8,9} // this is a constant buffer
+    public void run(){
+         // access buffer
+         // access constantBuffers
+         // ....
     }
+}
+```
 
 ##Can I see some code?
 I updated the Mandelbrot example so that the pallete of RGB values is represented using constant memory, the source can be found here. Look at line #95. BTW for me this resulted in a 5-7 % performance improvement.

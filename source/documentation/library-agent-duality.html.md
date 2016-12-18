@@ -1,18 +1,23 @@
 ---
-    title: LIbraryAgentDuality
+title: Library Agent Duality
+description: Aparapi libraries can be loaded as JVMTI agents.
 ---
-
-*Aparapi libraries can now be loaded as JVMTI agents. Updated Jan 15, 2013 by frost.g...@gmail.com*
 
 ##What are all these check-ins referring to JVMTI agents?
 
 If you have been tracking Aparapi SVN checkins you will have noticed a bunch of changes to JNI code. I just finished arranging for aparapi libraries (.dll or .so) to be able to be loaded as JVMTI agent. Now (assuming library is in ${APARAPI_DIR}) we can either launch using the traditional...
 
-    java –Djava.library.path=${APARAPI_DIR} –classpath ${APARAPI_DIR}/aparapi.jar;my.jar mypackage.MyClass
+```bash
+
+java –Djava.library.path=${APARAPI_DIR} –classpath ${APARAPI_DIR}/aparapi.jar;my.jar mypackage.MyClass
+```
 
 or ...
 
-    java –agentpath=${APARAPI_DIR}/aparapi_x86_64.dll –classpath ${APARAPI_DIR}/aparapi.jar;my.jar mypackage.MyClass
+```bash
+
+java –agentpath=${APARAPI_DIR}/aparapi_x86_64.dll –classpath ${APARAPI_DIR}/aparapi.jar;my.jar mypackage.MyClass
+```
 
 So the dll/so is now both ‘just a library’ and a JVMTI agent.
 

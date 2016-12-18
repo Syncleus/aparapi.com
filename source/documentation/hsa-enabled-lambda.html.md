@@ -1,11 +1,10 @@
 ---
-    title: HSAEnablementOfLambdaBranch
+title: HSA Enabled Lambda
+description: Adding HSA Support to Aparapi lambda branch. 
 ---
 
-*Adding HSA Support to Aparapi lambda branch Updated Feb 28, 2014 by frost.g...@gmail.com*
-
-* [How to setup a HSA enabled Linux Platform](SettingUpLinuxHSAMachineForAparapi.md)
-* [How to setup a HSA simulator on a Linux Platform](UsingAparapiLambdaBranchWithHSASimulator.md)
+* [How to setup a HSA enabled Linux Platform](/documentation/setting-up-hsa.html)
+* [How to setup a HSA simulator on a Linux Platform](/documenation/using-hsa-simulator.html)
 
 Recently the HSA Foundation released their ‘Programmers Reference Manual’. This manual is for developers wishing to write code for upcoming HSA compatible devices, it describes the HSA Intermediate Language (HSAIL) along with its binary form (BRIG) and describes how code is expected to execute on a HSA enabled devices.
 
@@ -25,11 +24,15 @@ In the existing code (early prototype) we provide access to HSA as a specific de
 
 So our ubiquitous 'squares' example will initially be written as:
 
-    int in[] = ..//
-    int out[] = .../
-    Device.hsa().forEach(in.length, (i)->{
-       out[i] = in[i]*in[i];
-     });
+```java
+
+int in[] = ..//
+int out[] = .../
+Device.hsa().forEach(in.length, (i)->{
+   out[i] = in[i]*in[i];
+ });
+```
+     
 You will obviously need a Java 8 compatible JDK ([https://jdk8.java.net/download.html](https://jdk8.java.net/download.html)) in your path.
 
 We also recommend using IntelliJ which has preliminary support for Java 8 lambda features. You can download the community edition of IntelliJ from [http://www.jetbrains.com/idea/](http://www.jetbrains.com/idea/)
