@@ -65,13 +65,13 @@
         
         <p>Aparapi was originally a project conceived and developed by AMD corporation. It was later abandoned by AMD and sat mostly idle for several years. Despite this there were some failed efforts by the community to keep the project alive, but without a clear community leader no new releases ever came. Eventually we came along and rescued the project. Finally after such a long wait the first Aparapi release in 5 years was published and the community continues to push forward with renewed excitement.</p>
         
-        <p>Below you will find two side-by-side comparisons for the nbody problem on a CPU vs a GPU. The simulation is being run on an inexpensive computer graphics card. This simulation can be run from the Aparapi examples project. It is obvious the drastic performance gains that can be acheived with Aparapi.</p>
+        <p>Below you will find two side-by-side comparisons for the nbody problem on a CPU vs a GPU. The simulation is being run on an inexpensive graphics card; you can even run it yourself from the <a href="https://github.com/Syncleus/aparapi-examples" rel="nofollow">examples project</a>. Its obvious the drastic performance gains that can be acheived with Aparapi.</p>
         
         <p><img src="http://aparapi.com/images/nbody_gpu.gif" alt="NBody GPU" /> <img src="http://aparapi.com/images/nbody_cpu.gif" alt="NBody CPU" /></p>
         
         <h2>Support and Documentation</h2>
         
-        <p>Aparapi Javadocs: <a href="http://www.javadoc.io/doc/com.aparapi/aparapi" rel="nofollow">latest</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.2" rel="nofollow">1.3.2</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.1" rel="nofollow">1.3.1</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.0" rel="nofollow">1.3.0</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.2.0" rel="nofollow">1.2.0</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.2" rel="nofollow">1.1.2</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.1" rel="nofollow">1.1.1</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.0" rel="nofollow">1.1.0</a> - <a href="http://www.javadoc.io/doc/com.syncleus.aparapi/aparapi/1.0.0" rel="nofollow">1.0.0</a></p>
+        <p>Aparapi Javadocs: <a href="http://www.javadoc.io/doc/com.aparapi/aparapi" rel="nofollow">latest</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.3" rel="nofollow">1.3.3</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.2" rel="nofollow">1.3.2</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.1" rel="nofollow">1.3.1</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.3.0" rel="nofollow">1.3.0</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.2.0" rel="nofollow">1.2.0</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.2" rel="nofollow">1.1.2</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.1" rel="nofollow">1.1.1</a> - <a href="http://www.javadoc.io/doc/com.aparapi/aparapi/1.1.0" rel="nofollow">1.1.0</a> - <a href="http://www.javadoc.io/doc/com.syncleus.aparapi/aparapi/1.0.0" rel="nofollow">1.0.0</a></p>
         
         <p>For detailed documentation see <a href="http://Aparapi.com" rel="nofollow">Aparapi.com</a> or check out the <a href="http://www.javadoc.io/doc/com.aparapi/aparapi" rel="nofollow">latest Javadocs</a>.</p>
         
@@ -95,7 +95,7 @@
         
         <h2>Prerequisites</h2>
         
-        <p>Aparapi will run as-is on the CPU, however in order to access the GPU it requires OpenCL to be installed on the local system. If OpenCL isnt found then the library will just fallback to CPU mode. </p>
+        <p>Aparapi will run as-is on the CPU, however in order to access the GPU it requires OpenCL to be installed on the local system. If OpenCL isnt found then the library will just fallback to CPU mode. Aparapi supports, and has been tested on, both OpenCL 1.2 and OpenCL 2.0.</p>
         
         <p><strong>Aparapi runs on all operating systems and platforms, however GPU acceleration support is currently provided for the following platforms: Windows 64bit, Mac OSX 64bit, Linux 64bit, and Linux 32bit.</strong></p>
         
@@ -108,7 +108,7 @@
         <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>com.aparapi<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>aparapi<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>1.3.2<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.3.3<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
         </code></pre>
         <h2>Obtaining the Source</h2>
