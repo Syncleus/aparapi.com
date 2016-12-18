@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'>
+    <meta content='no' name='msapplication-tap-highlight'>
+    <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
+    <title>
+      Aparapi | Multiple Entry Points
+    </title>
+    <!-- Favicons -->
+    <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
+    <meta content='#FFFFFF' name='msapplication-TileColor'>
+    <meta content='/images/favicon/mstile-144x144.png' name='msapplication-TileImage'>
+    <link href='/images/favicon/favicon-32x32.png' rel='icon' sizes='32x32'>
+    <!-- Android 5 Chrome Color -->
+    <meta content='#EE6E73' name='theme-color'>
+    <!-- CSS -->
+    <link href='/stylesheets/highlight.css' media='screen,projection' rel='stylesheet' type='text/css'>
+    <link href='/stylesheets/style.css' media='screen,projection' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+  </head>
+  <body>
+    <header>
+      <div class='container'>
+        <a class='button-collapse top-nav waves-effect waves-light circle hide-on-large-only' data-activates='nav-mobile' href='#'>
+          <i class='material-icons'>menu</i>
+        </a>
+      </div>
+      <ul class='side-nav fixed' id='nav-mobile'>
+        <li class='logo'>
+          <a class='brand-logo' href='/' id='logo-container'>
+            <object data='/images/logo.svg' id='front-page-logo' type='image/svg+xml'>Your browser does not support SVG</object>
+          </a>
+        </li>
+        <li class='search'>
+          <div class='search-wrapper card'>
+            <input id='search'>
+            <i class='material-icons'>search</i>
+            <div class='search-results'></div>
+          </div>
+        </li>
+        <li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/">Overview</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Introduction</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/about.html">About</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/getting-started.html">Getting Started</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/faq.html">FAQ</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Documentation</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/aparapi-patterns.html">Aparapi Patterns</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/choosing-specific-devices.html">Choosing Specific Devices</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/converting-java-to-opencl.html">Converting Java to OpenCL</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/emulating-multiple-entrypoints.html">Emulating Multiple Entrypoints</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/explicit-buffer-handling.html">ExplicitBufferHandling</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/hsa-enabled-lambda.html">HSA Enabled Lambda</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/kernel-guidelines.html">Kernel Guidelines</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/library-agent-duality.html">Library Agent Duality</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/new-features.html">New Features</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/opencl-bindings.html">OpenCL Bindings</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/private-memory-space.html">Private Memory Space</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/profiling-the-kernel.html">Profiling the Kernel</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/setting-up-hsa.html">Setting Up HSA</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/unit-tests.html">Unit Tests</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/using-hsa-simulator.html">Using HSA Simulator</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/constant-memory.html">Constant Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/local-memory.html">Local Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/multiple-dim-ranges.html">Multiple Dim Ranges</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Proposals</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-dim-nd-range.html">Multiple Dim ND Range</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambdas.html">Lambdas</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/address-space-with-buffers.html">Address Space with Buffers</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/extensions.html">Extensions</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/device.html">Device</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-entry-points.html">Multiple Entry Points</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambda-syntax.html">Lambda Syntax</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/showcase.html">Showcase</a></li></ul></li>
+      </ul>
+    </header>
+    <main>
+      <div class='section no-pad-bot' id='index-banner'>
+        <div class='container'>
+          <h1 class='header center-on-small-only'>Multiple Entry Points</h1>
+          <div class='row center'>
+            <h4 class='header col s12 light center'>How to extend Aparapi to allow multiple entrypoints for kernels.</h4>
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class='container'>
+        <h2>The Current Single Entrypoint World</h2>
+        
+        <p>At present Aparapi allows us to dispatch execution to a single &lsquo;single entry point&rsquo; in a Kernel. Essentially for each Kernel only the overridden Kernel.run() method can be used to initiate execution on the GPU.</p>
+        
+        <p>Our canonical example is the &#39;Squarer&rsquo; Kernel which allows us to create squares for each element in an input array in an output array.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Kernel</span> <span class="n">squarer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+           <span class="nd">@Overide</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+              <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">getGlobalId</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+              <span class="n">out</span><span class="o">[</span><span class="n">id</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">id</span><span class="o">]</span> <span class="o">*</span> <span class="n">in</span><span class="o">[</span><span class="n">id</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">};</span>
+        </code></pre>
+        <p>If we wanted a vector addition Kernel we would have to create a whole new Kernel.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Kernel</span> <span class="n">adder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+           <span class="nd">@Overide</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+              <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">getGlobalId</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+              <span class="n">out</span><span class="o">[</span><span class="n">id</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">id</span><span class="o">]</span> <span class="o">*</span> <span class="n">in</span><span class="o">[</span><span class="n">id</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">};</span>
+        </code></pre>
+        <p>For us to square and then add a constant we would have to invoke two kernels. Or of course create single SquarerAdder kernel.</p>
+        
+        <p>See this page EmulatingMultipleEntrypointsUsingCurrentAPI for ideas on how to emulate having multiple methods, by passing data to a single run() method.</p>
+        
+        <h2>Why can&rsquo;t Aparapi just allow &#39;arbitary&rsquo; methods</h2>
+        
+        <p>Ideally we would just expose a more natural API, one which allows us to provide specific methods for each arithmetic operation.</p>
+        
+        <p>Essentially</p>
+        <pre class="highlight java"><code>
+        <span class="kd">class</span> <span class="nc">VectorKernel</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">();</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sub</span><span class="o">();</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqr</span><span class="o">();</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqrt</span><span class="o">();</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Unfortunately this is hard to implement using Aparapi. There are two distinct problems, both at runtime.</p>
+        
+        <ul>
+        <li>How will Aparapi know which of the available methods we want to execute when we call Kernel.execute(range)?</li>
+        <li>On first execution how does Aparapi determine which methods might be entrypoints and are therefore need to be converted to OpenCL?</li>
+        </ul>
+        
+        <p>The first problem can be solved by extending Kernel.execute() to accept a method name</p>
+        <pre class="highlight java"><code>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">SIZE</span><span class="o">,</span> <span class="s">"add"</span><span class="o">);</span>
+        </code></pre>
+        <p>This is the obvious solution, but really causes maintenence issues int that it trades compile time reporting for a runtime errors. If a developer mistypes the name of the method, :-</p>
+        <pre class="highlight java"><code>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">SIZE</span><span class="o">,</span> <span class="s">"sadd"</span><span class="o">);</span> <span class="c1">// there is no such method</span>
+        </code></pre>
+        <p>The code will compile perfectly, only at runtime will we detect that there is no such method.</p>
+        
+        <h2>An aside</h2>
+        
+        <p>Maybe the new Java 8 method reference feature method might help here. In the paper below Brian Goetz talks about a double-colon syntax (Class::Method) for directly referencing a method which is presumably checked at compile time.</p>
+        
+        <p>So presumably</p>
+        <pre class="highlight java"><code>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">SIZE</span><span class="o">,</span> <span class="nl">VectorKernel:</span><span class="o">:</span><span class="n">add</span><span class="o">);</span>
+        </code></pre>
+        <p>Would compile just fine, whereby</p>
+        <pre class="highlight java"><code>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">SIZE</span><span class="o">,</span> <span class="nl">VectorKernel:</span><span class="o">:</span><span class="n">sadd</span><span class="o">);</span>
+        </code></pre>
+        <p>Would yield a compile time error.</p>
+        
+        <p>See Brian Goetz&rsquo;s excellent Lambda documentation</p>
+        
+        <h2>back from Aside</h2>
+        
+        <p>The second problem (knowing which methods need to be converted to OpenCL) can probably be solved using an Annotation.</p>
+        <pre class="highlight java"><code>
+        <span class="kd">class</span> <span class="nc">VectorKernel</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="nd">@EntryPoint</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">();</span>
+           <span class="nd">@EntryPoint</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sub</span><span class="o">();</span>
+           <span class="nd">@EntryPoint</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqr</span><span class="o">();</span>
+           <span class="nd">@EntryPoint</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqrt</span><span class="o">();</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">nonOpenCLMethod</span><span class="o">();</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Here the @EntryPoint annotation allows the Aparapi runtime to determine which methods need to be exposed.</p>
+        
+        <h1>My Extension Proposal</h1>
+        
+        <p>Here is my proposal. Not only does it allow us to reference multiple entryoints, but I think it actually improves the single entrypoint API, albeit at the cost of being more verbose.</p>
+        
+        <h2>The developer must provide an API interface</h2>
+        
+        <p>First I propose that we should ask the developer to provide an interface for all methods that we wish to execute on the GPU (or convert to OpenCL).</p>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">VectorAPI</span> <span class="kd">extends</span> <span class="n">AparapiAPI</span> <span class="o">{</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sub</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqrt</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqr</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Note that each API takes a Range, this will make more sense in a moment.</p>
+        
+        <h2>The developer provides a bound implementation</h2>
+        
+        <p>Aparapi should provide a mechanism for mapping the proposed implementation of the API to it&rsquo;s implementation.</p>
+        
+        <p>Note the weasel words here, this is not a conventional implementation of an interface. We will use an annotation (@Implements(Class class)) to provide the binding.</p>
+        <pre class="highlight java"><code>
+        <span class="nd">@Implements</span><span class="o">(</span><span class="n">VectorAPI</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="kd">class</span> <span class="nc">Vector</span> <span class="kd">extends</span> <span class="n">Kernel</span> <span class="o">{</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span><span class="cm">/*implementation here */</span><span class="o">}</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sub</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span><span class="cm">/*implementation here */</span><span class="o">}</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqrt</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span><span class="cm">/*implementation here */</span><span class="o">}</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sqr</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span><span class="cm">/*implementation here */</span><span class="o">}</span>
+           <span class="kd">public</span> <span class="kt">void</span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">nonOpenCLMethod</span><span class="o">();</span>
+        <span class="o">}</span>
+        </code></pre>
+        <h2>Why we can&rsquo;t the implementation just implement the interface?</h2>
+        
+        <p>This would be ideal. Sadly we need to intercept a call to say VectorAPI.add(Range) and dispatch to the resulting Vector.add(RangeId) instances. If you look at the signatures, the interface accepts a Range as it&rsquo;s arg (the range over which we intend to execute) whereas the implementation (either called by JTP threads or GPU OpenCL dispatch) receives a RangeId (containing the unique globalId, localId, etc fields). At the very end of this page I show a strawman implementation of a sequential loop implementation.</p>
+        
+        <h2>So how do we get an implementation of VectorAPI</h2>
+        
+        <p>We instantiate our Kernel by creating an instance using new. We then ask this instance to create an API instance. Some presumably java.util.Proxy trickery will create an implementation of the actual instance, backed by the Java implementation.</p>
+        
+        <p>So execution would look something like.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Vector</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">();</span>
+        <span class="n">VectorAPI</span> <span class="n">kernelApi</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="na">api</span><span class="o">();</span>
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">);</span>
+        <span class="n">kernalApi</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        </code></pre>
+        <p>So the Vector instance is a pure Java implementation. The extracted API is the bridge to the GPU.</p>
+        
+        <p>Of course then we can also execute using an inline call through api()</p>
+        <pre class="highlight java"><code>
+        <span class="n">Vector</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">();</span>
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">sqrt</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        </code></pre>
+        <p>or even expose api as public final fields</p>
+        <pre class="highlight java"><code>
+        <span class="n">Vector</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">();</span>
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        </code></pre>
+        <h2>How would our canonical Squarer example look</h2>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">SquarerAPI</span> <span class="kd">extends</span> <span class="n">AparapiAPI</span><span class="o">{</span>
+           <span class="n">square</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="nd">@Implement</span><span class="o">(</span><span class="n">SquarerAPI</span><span class="o">)</span> <span class="kd">class</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="kt">int</span> <span class="n">in</span><span class="o">[];</span>
+           <span class="kt">int</span> <span class="n">square</span><span class="o">[];</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">square</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span>
+              <span class="n">square</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Then we execute using</p>
+        <pre class="highlight java"><code>
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Squarer</span><span class="o">();</span>
+        <span class="c1">// fill squarer.in[SIZE]</span>
+        <span class="c1">// create squarer.values[SIZE];</span>
+        
+        
+        <span class="n">squarer</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">));</span>
+        </code></pre>
+        <h1>Extending this proposal to allow argument passing</h1>
+        
+        <p>Note that we have effectively replaced the use of the &#39;abstract&rsquo; squarer.execute(range) with the more concrete squarer.api().add(range).</p>
+        
+        <p>Now I would like to propose that we take one more step by allowing us to pass arguments to our methods.</p>
+        
+        <p>Normally Aparapi captures buffer and field accesses to create the args that it passes to the generated OpenCL code. In our canonical squarer example the <code>in[]</code> and <code>square[]</code> buffers are captured from the bytecode and passed (behind the scenes) to the OpenCL.</p>
+        
+        <p>However, by exposing the actual method we want to execute, we could also allow the API to accept parameters.</p>
+        
+        <p>So our squarer example would go from</p>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">SquarerAPI</span> <span class="kd">extends</span> <span class="n">AparapiAPI</span><span class="o">{</span>
+           <span class="n">square</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="nd">@Implement</span><span class="o">(</span><span class="n">SquarerAPI</span><span class="o">)</span> <span class="kd">class</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="kt">int</span> <span class="n">in</span><span class="o">[];</span>
+           <span class="kt">int</span> <span class="n">square</span><span class="o">[];</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">square</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">){</span>
+              <span class="n">square</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">}</span>
+        
+        
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Squarer</span><span class="o">();</span>
+        <span class="c1">// fill squarer.in[SIZE]</span>
+        <span class="c1">// create squarer.values[SIZE];</span>
+        
+        <span class="n">squarer</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">));</span>
+        </code></pre>
+        <p>to</p>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">SquarerAPI</span> <span class="kd">extends</span> <span class="n">AparapiAPI</span><span class="o">{</span>
+           <span class="n">square</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="nd">@Implement</span><span class="o">(</span><span class="n">SquarerAPI</span><span class="o">)</span> <span class="kd">class</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">square</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span><span class="o">){</span>
+              <span class="n">square</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">}</span>
+        
+        
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Squarer</span><span class="o">();</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span> <span class="o">=</span> <span class="c1">// create and fill squarer.in[SIZE]</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span> <span class="o">=</span> <span class="c1">// create squarer.values[SIZE];</span>
+        
+        <span class="n">squarer</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">),</span> <span class="n">in</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        </code></pre>
+        <p>I think that this makes Aparapi look more conventional. It also allows us to allow overloading for the first time.</p>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">SquarerAPI</span> <span class="kd">extends</span> <span class="n">AparapiAPI</span><span class="o">{</span>
+           <span class="n">square</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span><span class="o">);</span>
+           <span class="n">square</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">,</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">square</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="nd">@Implement</span><span class="o">(</span><span class="n">SquarerAPI</span><span class="o">)</span> <span class="kd">class</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">Kernel</span><span class="o">{</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">square</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span><span class="o">){</span>
+              <span class="n">square</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">];</span>
+           <span class="o">}</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">square</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">,</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">square</span><span class="o">){</span>
+              <span class="n">square</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">gid</span><span class="o">];</span>
+           <span class="o">}</span>
+        <span class="o">}</span>
+        
+        
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Squarer</span><span class="o">();</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span> <span class="o">=</span> <span class="c1">// create and fill squarer.in[SIZE]</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">square</span> <span class="o">=</span> <span class="c1">// create squarer.values[SIZE];</span>
+        
+        <span class="n">squarer</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">),</span> <span class="n">in</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        <span class="kt">float</span><span class="o">[]</span> <span class="n">inf</span> <span class="o">=</span> <span class="c1">// create and fill squarer.in[SIZE]</span>
+        <span class="kt">float</span><span class="o">[]</span> <span class="n">squaref</span> <span class="o">=</span> <span class="c1">// create squarer.values[SIZE];</span>
+        
+        <span class="n">squarer</span><span class="o">.</span><span class="na">api</span><span class="o">().</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SIZE</span><span class="o">),</span> <span class="n">inf</span><span class="o">,</span> <span class="n">resultf</span><span class="o">);</span>
+        </code></pre>
+        <p>test harness</p>
+        <pre class="highlight java"><code>
+        <span class="kn">import</span> <span class="nn">java.lang.reflect.InvocationHandler</span><span class="o">;</span>
+        <span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="o">;</span>
+        <span class="kn">import</span> <span class="nn">java.lang.reflect.Proxy</span><span class="o">;</span>
+        
+        
+        <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ideal</span><span class="o">{</span>
+        
+           <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">OpenCLInvocationHandler</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">InvocationHandler</span> <span class="o">{</span>
+               <span class="n">Object</span> <span class="n">instance</span><span class="o">;</span>
+               <span class="n">OpenCLInvocationHandler</span><span class="o">(</span><span class="n">Object</span> <span class="n">_instance</span><span class="o">){</span>
+                  <span class="n">instance</span> <span class="o">=</span> <span class="n">_instance</span><span class="o">;</span>
+               <span class="o">}</span>
+              <span class="nd">@Override</span> <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">interfaceThis</span><span class="o">,</span> <span class="n">Method</span> <span class="n">interfaceMethod</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">interfaceArgs</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+                 <span class="n">Class</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+        
+                 <span class="n">Class</span><span class="o">[]</span> <span class="n">argTypes</span> <span class="o">=</span>  <span class="n">interfaceMethod</span><span class="o">.</span><span class="na">getParameterTypes</span><span class="o">();</span>
+                 <span class="n">argTypes</span><span class="o">[</span><span class="mi">0</span><span class="o">]=</span><span class="n">RangeId</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+                 <span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="n">interfaceMethod</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">argTypes</span><span class="o">);</span>
+        
+        
+                 <span class="k">if</span> <span class="o">(</span><span class="n">method</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"can't find method"</span><span class="o">);</span>
+                 <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                    <span class="n">RangeId</span> <span class="n">rangeId</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RangeId</span><span class="o">((</span><span class="n">Range</span><span class="o">)</span><span class="n">interfaceArgs</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+                    <span class="n">interfaceArgs</span><span class="o">[</span><span class="mi">0</span><span class="o">]=</span><span class="n">rangeId</span><span class="o">;</span>
+                    <span class="k">for</span> <span class="o">(</span><span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span> <span class="o">&lt;</span><span class="n">rangeId</span><span class="o">.</span><span class="na">r</span><span class="o">.</span><span class="na">width</span><span class="o">;</span> <span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span><span class="o">++){</span>
+                        <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">instance</span><span class="o">,</span> <span class="n">interfaceArgs</span><span class="o">);</span>
+                    <span class="o">}</span>
+                 <span class="o">}</span>
+        
+                 <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+              <span class="o">}</span>
+           <span class="o">}</span>
+        
+           <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Range</span><span class="o">{</span>
+              <span class="kt">int</span> <span class="n">width</span><span class="o">;</span>
+              <span class="n">Range</span><span class="o">(</span><span class="kt">int</span> <span class="n">_width</span><span class="o">)</span> <span class="o">{</span>
+                 <span class="n">width</span> <span class="o">=</span> <span class="n">_width</span><span class="o">;</span>
+              <span class="o">}</span>
+           <span class="o">}</span>
+        
+           <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Range2D</span> <span class="kd">extends</span> <span class="n">Range</span><span class="o">{</span>
+              <span class="kt">int</span> <span class="n">height</span><span class="o">;</span>
+        
+              <span class="n">Range2D</span><span class="o">(</span><span class="kt">int</span> <span class="n">_width</span><span class="o">,</span> <span class="kt">int</span> <span class="n">_height</span><span class="o">)</span> <span class="o">{</span>
+                 <span class="kd">super</span><span class="o">(</span><span class="n">_width</span><span class="o">);</span>
+                 <span class="n">height</span> <span class="o">=</span> <span class="n">_height</span><span class="o">;</span>
+              <span class="o">}</span>
+           <span class="o">}</span>
+        
+           <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Range1DId</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Range</span><span class="o">&gt;{</span>
+              <span class="n">Range1DId</span><span class="o">(</span><span class="n">T</span> <span class="n">_r</span><span class="o">){</span>
+                 <span class="n">r</span> <span class="o">=</span> <span class="n">_r</span><span class="o">;</span>
+              <span class="o">}</span>
+              <span class="n">T</span> <span class="n">r</span><span class="o">;</span>
+        
+              <span class="kt">int</span> <span class="n">wgid</span><span class="o">,</span> <span class="n">wlid</span><span class="o">,</span> <span class="n">wgsize</span><span class="o">,</span> <span class="n">wlsize</span><span class="o">,</span> <span class="n">wgroup</span><span class="o">;</span>
+           <span class="o">}</span>
+        
+           <span class="kd">static</span> <span class="kd">class</span> <span class="nc">RangeId</span>  <span class="kd">extends</span> <span class="n">Range1DId</span><span class="o">&lt;</span><span class="n">Range</span><span class="o">&gt;{</span>
+              <span class="n">RangeId</span><span class="o">(</span><span class="n">Range</span> <span class="n">r</span><span class="o">){</span>
+                 <span class="kd">super</span><span class="o">(</span><span class="n">r</span><span class="o">);</span>
+              <span class="o">}</span>
+           <span class="o">}</span>
+        
+           <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Range2DId</span> <span class="kd">extends</span> <span class="n">Range1DId</span><span class="o">&lt;</span><span class="n">Range2D</span><span class="o">&gt;{</span>
+              <span class="n">Range2DId</span><span class="o">(</span><span class="n">Range2D</span> <span class="n">r</span><span class="o">){</span>
+                 <span class="kd">super</span><span class="o">(</span><span class="n">r</span><span class="o">);</span>
+              <span class="o">}</span>
+        
+              <span class="kt">int</span> <span class="n">hgid</span><span class="o">,</span> <span class="n">hlid</span><span class="o">,</span> <span class="n">hgsize</span><span class="o">,</span> <span class="n">hlsize</span><span class="o">,</span> <span class="n">hgroup</span><span class="o">;</span>
+           <span class="o">}</span>
+        
+        
+        
+        
+        
+           <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="n">Object</span> <span class="n">_instance</span><span class="o">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">_interface</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">OpenCLInvocationHandler</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">invocationHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OpenCLInvocationHandler</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">_instance</span><span class="o">);</span>
+              <span class="n">T</span> <span class="n">instance</span> <span class="o">=</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">Ideal</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Class</span><span class="o">[]</span> <span class="o">{</span>
+                    <span class="n">_interface</span><span class="o">,</span>
+        
+              <span class="o">},</span> <span class="n">invocationHandler</span><span class="o">);</span>
+              <span class="k">return</span> <span class="o">(</span><span class="n">instance</span><span class="o">);</span>
+        
+           <span class="o">}</span>
+        
+        
+        
+           <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Squarer</span><span class="o">{</span>
+              <span class="kd">interface</span> <span class="nc">API</span> <span class="o">{</span>
+                 <span class="kd">public</span> <span class="n">API</span> <span class="nf">foo</span><span class="o">(</span><span class="n">Range</span> <span class="n">range</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">out</span><span class="o">);</span>
+                 <span class="kd">public</span> <span class="n">Squarer</span> <span class="nf">dispatch</span><span class="o">();</span>
+        
+              <span class="o">}</span>
+        
+              <span class="kd">public</span> <span class="n">API</span> <span class="nf">foo</span><span class="o">(</span><span class="n">RangeId</span> <span class="n">rangeId</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">out</span><span class="o">)</span> <span class="o">{</span>
+                 <span class="n">out</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span><span class="o">]*</span><span class="n">in</span><span class="o">[</span><span class="n">rangeId</span><span class="o">.</span><span class="na">wgid</span><span class="o">];</span>
+                 <span class="k">return</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+              <span class="o">}</span>
+           <span class="o">}</span>
+        
+           <span class="cm">/**
+            * @param args
+            */</span>
+           <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        
+              <span class="n">Squarer</span><span class="o">.</span><span class="na">API</span> <span class="n">squarer</span> <span class="o">=</span> <span class="n">create</span><span class="o">(</span><span class="k">new</span> <span class="n">Squarer</span><span class="o">(),</span> <span class="n">Squarer</span><span class="o">.</span><span class="na">API</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+              <span class="kt">int</span><span class="o">[]</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span>
+                    <span class="mi">1</span><span class="o">,</span>
+                    <span class="mi">2</span><span class="o">,</span>
+                    <span class="mi">3</span><span class="o">,</span>
+                    <span class="mi">4</span><span class="o">,</span>
+                    <span class="mi">5</span><span class="o">,</span>
+                    <span class="mi">6</span>
+              <span class="o">};</span>
+              <span class="kt">int</span><span class="o">[]</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">in</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+              <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="n">in</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        
+              <span class="n">squarer</span><span class="o">.</span><span class="na">foo</span><span class="o">(</span><span class="n">range</span><span class="o">,</span> <span class="n">in</span><span class="o">,</span> <span class="n">out</span><span class="o">);</span>
+        
+              <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="nl">s:</span><span class="n">out</span><span class="o">){</span>
+                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+              <span class="o">}</span>
+        
+           <span class="o">}</span>
+        
+        <span class="o">}</span>
+        </code></pre>
+      </div>
+    </main>
+    <footer class='page-footer'>
+      <div class='container'>
+        <div class='row'>
+          <div class='col l4 s12'>
+            <h5 class='white-text'>Help Aparapi Grow</h5>
+            <p class='grey-text text-lighten-4'>We are a team of volunteers working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+            <form action='https://www.paypal.com/cgi-bin/webscr' id='paypal-donate' method='post' target='_top'>
+              <input name='cmd' type='hidden' value='_s-xclick'>
+              <input name='encrypted' type='hidden' value='-----BEGIN PKCS7-----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-----END PKCS7-----'>
+              <button alt='PayPal - The safer, easier way to pay online!' class='btn waves-effect waves-light red lighten-3' name='action' type='submit'>
+                Donate Now
+              </button>
+            </form>
+          </div>
+          <div class='col l4 s12'>
+            <h5 class='white-text'>Join the Discussion</h5>
+            <p class='grey-text text-lighten-4'>We have a Gitter chat room set up where you can talk directly with us. Come in and discuss new features, future goals, general problems or questions, or anything else you can think of.</p>
+            <a class='btn waves-effect waves-light red lighten-3' href='https://gitter.im/Syncleus/aparapi' target='_blank'>Chat</a>
+          </div>
+          <div class='col l4 s12' style='overflow: hidden;'>
+            <h5 class='white-text'>Connect</h5>
+            <iframe allowtransparency='true' frameborder='0' height='30' scrolling='0' src='http://ghbtns.com/github-btn.html?user=Syncleus&amp;repo=aparapi&amp;type=watch&amp;count=true&amp;size=large' width='170'></iframe>
+            <br>
+            <a class='twitter-follow-button' data-dnt='true' data-show-count='true' data-size='large' href='https://twitter.com/AparapiLib'>Follow @AparapiLib</a>
+            <br>
+            <div class='g-follow' data-annotation='bubble' data-height='24' data-href='https://plus.google.com/102266131584900704956' data-rel='publisher'></div>
+          </div>
+        </div>
+      </div>
+      <div class='footer-copyright'>
+        <div class='container'>
+          © 2016-2017 Syncleus, All rights reserved.
+          <a class='grey-text text-lighten-4 right' href='https://github.com/Syncleus/aparapi/blob/master/LICENSE'>Apache License v2</a>
+        </div>
+      </div>
+    </footer>
+    <!-- Scripts -->
+    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+    <script>
+      if (!window.jQuery) { document.write('<script src="bin/jquery-2.1.1.min.js"><\/script>'); }
+    </script>
+    <script src='/javascripts/jquery.timeago.js'></script>
+    <script src='/javascripts/materialize.min.js'></script>
+    <script src='/javascripts/lunr.min.js'></script>
+    <script src='/javascripts/search.js'></script>
+    <script src='/javascripts/materialize.js'></script>
+    <script src='/javascripts/init.js'></script>
+    <!-- Twitter Button -->
+    <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    </script>
+    <!-- Google Plus Button -->
+    <script async='' defer='defer' src='https://apis.google.com/js/platform.js'></script>
+  </body>
+</html>

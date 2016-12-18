@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
     <title>
-      Aparapi | Aparapi
+      Aparapi | Device
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,75 +48,82 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Aparapi</h1>
+          <h1 class='header center-on-small-only'>Device</h1>
           <div class='row center'>
-            <h4 class='header col s12 light center'>Open-source framework for executing native Java code on the GPU.</h4>
+            <h4 class='header col s12 light center'>How we might use the extension mechanism devices for general Kernel execution.</h4>
           </div>
-          <div class='row center'>
-            <a class='btn-large waves-effect waves-light' href='/introduction/getting-started.html' id='download-button'>Get Started</a>
-          </div>
-          <div class='row center'>
-            <a class='red-text text-lighten-4' href='https://github.com/Syncleus/aparapi'>Release v1.3.3</a>
-          </div>
-          <br>
+          
         </div>
-        <div class='github-commit'>
-          <div class='container'>
-            <div class='commit'>
-              Latest Commit on Github:
-                
-              <a class='sha' href=''></a>
-                
-              <span class='date'></span>
-              <a class='btn-flat right grey-text text-lighten-5 waves-effect waves-light hide-on-small-only' href='https://github.com/Syncleus/aparapi' id='github-button'>Github</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class='container'>
-        <div class='section'>
-          <div class='row'>
-            <div class='col s12 m8 offset-m2'>
-              <br>
-              <img id='responsive-img' src='images/responsive.png'>
-            </div>
-          </div>
-          <div class='row'>
-            <h3 class='col s12 light center header'>Aparapi simplifies life for developers and reduces server costs.</h3>
-          </div>
-          <!-- Promo Section -->
-          <div class='row'>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>flash_on</i>
-                <p class='promo-caption'>Speeds up development</p>
-                <p class='light center'>We did most of the heavy lifting for you to provide a framework capable of executing native Java code directly on the GPU. No more writing code twice, write once run anywhere.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>attach_money</i>
-                <p class='promo-caption'>Save Money on Servers</p>
-                <p class='light center'>By utilizing the GPU to run your algorithms it is possible to acheive speedups hundreds of times that of a CPU alone. This can mean the difference between needing only a single server versus an entire data center.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>settings</i>
-                <p class='promo-caption'>Flexible</p>
-                <p class='light center'>The full power and flexibility of OpenCL coding is fully exposed. All the low level calls as well as the ability to manipulate or post kernel files are still accessible to developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='divider'></div>
-        <div class='section'>
-          <div class='row center'>
-            <h3 class='light header'>Aparapi Showcase</h3>
-            <p class='col s8 offset-s2 caption'>Checkout what people are creating with Aparapi. Get inspired by these projects and you can even submit your own projects to be showcased here.</p>
-            <a class='btn-large waves-effect waves-light' href='showcase.html'>Explore our Showcase</a>
-          </div>
-        </div>
+        <p>At present the first GPU or CPU device (depending on Kernel.ExecutionMode value) is chosen at execution time. This make it easy to execute simple Kernels, but is problematic when using some advanced feature (barriers, local memory) or for sizing buffers appropriate for the target device. I propose that we add API&rsquo;s to allow the developer to specify exactly which device we intend to target.</p>
+        
+        <p>In the extension proposal branch we needed to expose a Device class for binding arbitrary OpenCL to a Java interface. I suggest we also be use this to query device information useful for allocating suitable size global buffers/local buffers, and for dispatching Kernel&rsquo;s to specific devices.</p>
+        
+        <p>The general pattern would be that we ask Aparapi to give us a Device, probably via a Device factory method.</p>
+        
+        <p>Something like:-</p>
+        <pre class="highlight java"><code>
+        <span class="n">Device</span> <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="na">best</span><span class="o">();</span>
+        </code></pre>
+        <p>We would also offer other useful factory methods <code>getBestGPU()</code>, <code>getFirstCPU()</code>, <code>getJavaMultiThread()</code>, <code>getJavaSequential()</code> as well as a method to get all device so that the developer can filter themselves.</p>
+        
+        <p>Note that as well as real OpenCL devices we also expose &lsquo;pseudo&rsquo; devices such as JavaMultiThread and Sequential. We might also allow pseudo devices to group multiple devices. So <code>getAllGPUDevices()</code> might return a pseudo device for executing across devices.</p>
+        <pre class="highlight plaintext"><code>Device chosen=null;
+        for (Device device: devices.getAll()){
+           if (device.getVendor().contains("AMD") &amp;&amp; device.isGPU()){
+              chosen = device;
+              break;
+           }
+        }
+        </code></pre>
+        <p>A Device can be queried (<code>isGPU()</code>, <code>isOpenCL()</code>, <code>isGroup()</code>, <code>isJava()</code>, <code>getOpenCLPlatform()</code>, <code>getMaxMemory()</code>, <code>getLocalSizes()</code>) and may need to be cast to specific types.</p>
+        
+        <p>This would allow us to configure buffers.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Device</span> <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="na">best</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">device</span> <span class="k">instanceof</span> <span class="n">OpenCLDevice</span><span class="o">){</span>
+           <span class="n">OpenCLDevice</span> <span class="n">openCLDevice</span>  <span class="o">=</span> <span class="o">(</span><span class="n">OpenCLDevice</span><span class="o">)</span><span class="n">device</span><span class="o">;</span>
+           <span class="kt">char</span> <span class="n">input</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="n">openCLDevice</span><span class="o">.</span><span class="na">getMaxMemory</span><span class="o">()/</span><span class="mi">4</span><span class="o">);</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>We can also use the Device as a factory for creating Ranges.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="na">createRange2D</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+        </code></pre>
+        <p>This allows the Range to be created with knowledge of the underlying device. So for example <code>device.createRange3D(1024, 1024, 1024, 16, 16, 16)</code> will fail if the device does not allow a local size of (16x16x16).</p>
+        
+        <p>A range created using <code>device.createRangeXX()</code> would also capture the device that created it. As if we had</p>
+        <pre class="highlight java"><code>
+        <span class="n">Range</span> <span class="n">range</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="na">createRange2D</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+        <span class="c1">// implied range.setDevice(device);</span>
+        <span class="n">This</span> <span class="n">basically</span> <span class="n">means</span> <span class="n">that</span> <span class="n">the</span> <span class="n">Range</span> <span class="n">locks</span> <span class="n">the</span> <span class="n">device</span> <span class="n">that</span> <span class="n">it</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">with</span><span class="o">.</span>
+        
+        <span class="n">So</span> <span class="n">when</span> <span class="n">we</span> <span class="n">have</span> <span class="n">a</span> <span class="n">Kernel</span><span class="o">.</span>
+        
+        <span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+            <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+              <span class="o">...</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>And we then use</p>
+        <pre class="highlight java"><code>
+        <span class="n">Device</span> <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="na">firstGPU</span><span class="o">();</span>
+        <span class="kd">final</span> <span class="kt">char</span> <span class="n">input</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[((</span><span class="n">OpenCLDevice</span><span class="o">)</span><span class="n">device</span><span class="o">).</span><span class="na">getMaxMemory</span><span class="o">()/</span><span class="mi">4</span><span class="o">);</span>
+        <span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+            <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+              <span class="c1">// uses input[];</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+        <span class="n">range</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="na">createRange2D</span><span class="o">(</span><span class="mi">1024</span><span class="o">,</span> <span class="mi">1024</span><span class="o">);</span>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+        </code></pre>
+        <p>We have forced execution on the first GPU. Java fallback would still be possible (should we forbid this?).</p>
+        <pre class="highlight java"><code>
+        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span> <span class="n">Device</span><span class="o">.</span><span class="na">firstGPU</span><span class="o">().</span><span class="na">getRange2D</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">));</span>
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>

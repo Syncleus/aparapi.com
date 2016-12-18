@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
     <title>
-      Aparapi | Aparapi
+      Aparapi | Using HSA Simulator
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,75 +48,60 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Aparapi</h1>
+          <h1 class='header center-on-small-only'>Using HSA Simulator</h1>
           <div class='row center'>
-            <h4 class='header col s12 light center'>Open-source framework for executing native Java code on the GPU.</h4>
+            <h4 class='header col s12 light center'>Using Aparapi lambda branch with HSA Simulator.</h4>
           </div>
-          <div class='row center'>
-            <a class='btn-large waves-effect waves-light' href='/introduction/getting-started.html' id='download-button'>Get Started</a>
-          </div>
-          <div class='row center'>
-            <a class='red-text text-lighten-4' href='https://github.com/Syncleus/aparapi'>Release v1.3.3</a>
-          </div>
-          <br>
+          
         </div>
-        <div class='github-commit'>
-          <div class='container'>
-            <div class='commit'>
-              Latest Commit on Github:
-                
-              <a class='sha' href=''></a>
-                
-              <span class='date'></span>
-              <a class='btn-flat right grey-text text-lighten-5 waves-effect waves-light hide-on-small-only' href='https://github.com/Syncleus/aparapi' id='github-button'>Github</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class='container'>
-        <div class='section'>
-          <div class='row'>
-            <div class='col s12 m8 offset-m2'>
-              <br>
-              <img id='responsive-img' src='images/responsive.png'>
-            </div>
-          </div>
-          <div class='row'>
-            <h3 class='col s12 light center header'>Aparapi simplifies life for developers and reduces server costs.</h3>
-          </div>
-          <!-- Promo Section -->
-          <div class='row'>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>flash_on</i>
-                <p class='promo-caption'>Speeds up development</p>
-                <p class='light center'>We did most of the heavy lifting for you to provide a framework capable of executing native Java code directly on the GPU. No more writing code twice, write once run anywhere.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>attach_money</i>
-                <p class='promo-caption'>Save Money on Servers</p>
-                <p class='light center'>By utilizing the GPU to run your algorithms it is possible to acheive speedups hundreds of times that of a CPU alone. This can mean the difference between needing only a single server versus an entire data center.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>settings</i>
-                <p class='promo-caption'>Flexible</p>
-                <p class='light center'>The full power and flexibility of OpenCL coding is fully exposed. All the low level calls as well as the ability to manipulate or post kernel files are still accessible to developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='divider'></div>
-        <div class='section'>
-          <div class='row center'>
-            <h3 class='light header'>Aparapi Showcase</h3>
-            <p class='col s8 offset-s2 caption'>Checkout what people are creating with Aparapi. Get inspired by these projects and you can even submit your own projects to be showcased here.</p>
-            <a class='btn-large waves-effect waves-light' href='showcase.html'>Explore our Showcase</a>
-          </div>
-        </div>
+        <h2>Introduction</h2>
+        
+        <p>Although HSA compatible devices are available, we understand that Aparapi developers may not have access to these devices.</p>
+        
+        <p>The HSA foundation has open sourced an LLVM based HSAIL emulator which we can use to test HSAIL generated code.</p>
+        
+        <p>The project is based here (<a href="https://github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator" rel="nofollow">https://github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator</a>) but we have extracted detailed download and build instructions for Ubuntu below.</p>
+        
+        <p>Aparapi users/developers can use this simulator to test correctness.</p>
+        
+        <h2>Building the HSA Simulator on Ubuntu</h2>
+        
+        <p>We assume you have ant, svn and g++ available because you can build other aparapi artifacts.</p>
+        
+        <p>You will also need git, libelf-dev, libdwarf-dev, flex and cmake</p>
+        <pre class="highlight java"><code>
+        <span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">git</span> <span class="n">libelf</span><span class="o">-</span><span class="n">dev</span> <span class="n">libdwarf</span><span class="o">-</span><span class="n">dev</span> <span class="n">flex</span> <span class="n">cmake</span>
+        </code></pre>
+        <p>login&hellip;</p>
+        <pre class="highlight java"><code>
+        <span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="nl">https:</span><span class="c1">//github.com/HSAFoundation/Okra-Interface-to-HSAIL-Simulator.git okra</span>
+        <span class="err">$</span> <span class="n">cd</span> <span class="n">okra</span>
+        <span class="err">$</span> <span class="n">ant</span> <span class="o">-</span><span class="n">f</span> <span class="n">build</span><span class="o">-</span><span class="n">okra</span><span class="o">-</span><span class="n">sim</span><span class="o">.</span><span class="na">xml</span>
+        </code></pre>
+        <h2>The build should take approximately 15 mins.</h2>
+        
+        <p>How to setup and test an initial lambda/HSA enabled Aparapi build
+        Assuming you have built okra in /home/gfrost/okra</p>
+        
+        <p>Assuming your Java8 JDK is in /home/gfrost/jdk1.8.0</p>
+        
+        <p>Assuming your aparapi svn trunk is /home/gfrost/aparapi</p>
+        <pre class="highlight java"><code>
+        <span class="err">$</span> <span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">gfrost</span><span class="o">/</span><span class="n">jdk1</span><span class="o">.</span><span class="mf">8.0</span>
+        <span class="err">$</span> <span class="n">export</span> <span class="n">OKRA</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">gfrost</span><span class="o">/</span><span class="n">okra</span>
+        <span class="err">$</span> <span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="o">{</span><span class="n">PATH</span><span class="o">}:</span><span class="err">$</span><span class="o">{</span><span class="n">JAVA_HOME</span><span class="o">}/</span><span class="nl">bin:</span><span class="err">$</span><span class="o">{</span><span class="n">OKRA</span><span class="o">}/</span><span class="n">dist</span><span class="o">/</span><span class="n">bin</span>
+        <span class="err">$</span> <span class="n">java</span> <span class="o">-</span><span class="n">version</span>
+        <span class="n">java</span> <span class="n">version</span> <span class="s">"1.8.0-ea"</span>
+        <span class="n">Java</span><span class="o">(</span><span class="n">TM</span><span class="o">)</span> <span class="n">SE</span> <span class="n">Runtime</span> <span class="nf">Environment</span> <span class="o">(</span><span class="n">build</span> <span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">ea</span><span class="o">-</span><span class="n">b94</span><span class="o">)</span>
+        <span class="n">Java</span> <span class="nf">HotSpot</span><span class="o">(</span><span class="n">TM</span><span class="o">)</span> <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span> <span class="n">Server</span> <span class="nf">VM</span> <span class="o">(</span><span class="n">build</span> <span class="mf">25.0</span><span class="o">-</span><span class="n">b36</span><span class="o">,</span> <span class="n">mixed</span> <span class="n">mode</span><span class="o">)</span>
+        <span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gfrost</span><span class="o">/</span><span class="n">aparapi</span><span class="o">/</span><span class="n">branches</span><span class="o">/</span><span class="n">lambda</span>
+        <span class="err">$</span> <span class="n">ant</span>
+        <span class="err">$</span> <span class="n">export</span> <span class="n">LD_LIBRARY_PATH</span><span class="o">=</span><span class="err">$</span><span class="o">{</span><span class="n">LD_LIBRARY_PATH</span><span class="o">}:</span><span class="err">$</span><span class="o">{</span><span class="n">OKRA</span><span class="o">}/</span><span class="n">dist</span><span class="o">/</span><span class="n">bin</span>
+        <span class="err">$</span> <span class="n">java</span> <span class="o">-</span><span class="nl">agentpath:</span><span class="n">com</span><span class="o">.</span><span class="na">aparapi</span><span class="o">.</span><span class="na">jni</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">libaparapi_x86_64</span><span class="o">.</span><span class="na">so</span> <span class="o">-</span><span class="n">cp</span> <span class="n">com</span><span class="o">.</span><span class="na">aparapi</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">aparapi</span><span class="o">.</span><span class="na">jar</span><span class="o">:</span><span class="err">$</span><span class="o">{</span><span class="n">OKRA</span><span class="o">}/</span><span class="n">dist</span><span class="o">/</span><span class="n">okra</span><span class="o">.</span><span class="na">jar</span> <span class="n">hsailtest</span><span class="o">.</span><span class="na">Squares</span>
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>

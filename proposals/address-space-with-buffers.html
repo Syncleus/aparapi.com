@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
     <title>
-      Aparapi | Aparapi
+      Aparapi | Address Space with Buffers
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,75 +48,59 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Aparapi</h1>
+          <h1 class='header center-on-small-only'>Address Space with Buffers</h1>
           <div class='row center'>
-            <h4 class='header col s12 light center'>Open-source framework for executing native Java code on the GPU.</h4>
+            <h4 class='header col s12 light center'>Discussion of OpenCL address space support using java Buffers instead of arrays.</h4>
           </div>
-          <div class='row center'>
-            <a class='btn-large waves-effect waves-light' href='/introduction/getting-started.html' id='download-button'>Get Started</a>
-          </div>
-          <div class='row center'>
-            <a class='red-text text-lighten-4' href='https://github.com/Syncleus/aparapi'>Release v1.3.3</a>
-          </div>
-          <br>
+          
         </div>
-        <div class='github-commit'>
-          <div class='container'>
-            <div class='commit'>
-              Latest Commit on Github:
-                
-              <a class='sha' href=''></a>
-                
-              <span class='date'></span>
-              <a class='btn-flat right grey-text text-lighten-5 waves-effect waves-light hide-on-small-only' href='https://github.com/Syncleus/aparapi' id='github-button'>Github</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class='container'>
-        <div class='section'>
-          <div class='row'>
-            <div class='col s12 m8 offset-m2'>
-              <br>
-              <img id='responsive-img' src='images/responsive.png'>
-            </div>
-          </div>
-          <div class='row'>
-            <h3 class='col s12 light center header'>Aparapi simplifies life for developers and reduces server costs.</h3>
-          </div>
-          <!-- Promo Section -->
-          <div class='row'>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>flash_on</i>
-                <p class='promo-caption'>Speeds up development</p>
-                <p class='light center'>We did most of the heavy lifting for you to provide a framework capable of executing native Java code directly on the GPU. No more writing code twice, write once run anywhere.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>attach_money</i>
-                <p class='promo-caption'>Save Money on Servers</p>
-                <p class='light center'>By utilizing the GPU to run your algorithms it is possible to acheive speedups hundreds of times that of a CPU alone. This can mean the difference between needing only a single server versus an entire data center.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>settings</i>
-                <p class='promo-caption'>Flexible</p>
-                <p class='light center'>The full power and flexibility of OpenCL coding is fully exposed. All the low level calls as well as the ability to manipulate or post kernel files are still accessible to developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='divider'></div>
-        <div class='section'>
-          <div class='row center'>
-            <h3 class='light header'>Aparapi Showcase</h3>
-            <p class='col s8 offset-s2 caption'>Checkout what people are creating with Aparapi. Get inspired by these projects and you can even submit your own projects to be showcased here.</p>
-            <a class='btn-large waves-effect waves-light' href='showcase.html'>Explore our Showcase</a>
-          </div>
-        </div>
+        <p>The general idea is to have a AS<em>PRIMTYPE</em>Buffer for each AS=address space and PRIM=primitive type. Here is an example for LocalFloatBuffer which would be a buffer for floats that got mapped to OpenCL local address space.</p>
+        
+        <p>As with normal FloatBuffers, the float elements are accessed using get and put methods</p>
+        
+        <p>Although a LocalFloatBuffer conceptually exists only for the lifetime of a workgroup, it is still constructed in the enclosing Kernel, not in the Kernel.Entry.run method. (Aparapi does not support constructing new objects inside the Kernel.Entry.run method).</p>
+        
+        <p>A typical declaration would be:</p>
+        <pre class="highlight java"><code>
+        <span class="n">LocalFloatBuffer</span> <span class="n">locbuf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalFloatBuffer</span><span class="o">{</span><span class="mi">12</span><span class="o">);</span>
+        </code></pre>
+        <p>The argument 12 here means that 12 floats would be used by each workitem in the workgroup. So the total buffer would be LocalSize*12 floats. Aparapi would at runtime allocate a total local OpenCL buffer to be this size. Note how this removes the need for the programmer to specify localSize anywhere.</p>
+        
+        <p>Note: For each Kernel.Entry.execute(globalSize) call, the runtime will determine an appropriate workgroup size, also called localSize, depending on the capabilities of the device, and on the globalSize. The localSize will always evenly divide the globalSize, in other words all workgroups for an execute context will be the same size. A workitem can determine localSize by calling getLocalSize().</p>
+        
+        <p>Because workitems operate simultaneously and in an undetermined order, workitems will generally only use put on its own portion of the LocalFloatBuffer between the LocalBarriers, and will generally only use get outside the LocalBarriers.</p>
+        
+        <p>Some example code (from NBody) follows. Here each workitem copies a &ldquo;BODY&rdquo; consisting of 4 floats. The global array contains 4*globalSize floats, and we want to iterate thru this global array, copying it into local memory and operating on it there. This will take globalSize/localSize &ldquo;tiles&rdquo;. For each tile, each workitem fills in one &ldquo;BODY&rdquo;&rsquo;s worth or 4 elements</p>
+        <pre class="highlight java"><code>
+        <span class="c1">// outside run method...</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">BODYSIZE</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
+        <span class="n">LocalFloatBuffer</span> <span class="n">pos_xyzm_local</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalFloatBuffer</span><span class="o">(</span><span class="n">BODYSIZE</span><span class="o">);</span>
+        <span class="c1">//</span>
+        <span class="c1">// inside run method...</span>
+        <span class="kt">int</span> <span class="n">numTiles</span> <span class="o">=</span> <span class="n">globalSize</span> <span class="o">/</span> <span class="n">localSize</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numTiles</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+          <span class="c1">// load one tile into local memory</span>
+          <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">localSize</span> <span class="o">+</span> <span class="n">localId</span><span class="o">;</span>  <span class="c1">// index into a global memory array</span>
+          <span class="n">localBarrier</span><span class="o">();</span>
+          <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">localId</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">0</span><span class="o">,</span> <span class="n">pos_xyzm</span><span class="o">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">0</span><span class="o">]);</span>
+          <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">localId</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">pos_xyzm</span><span class="o">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]);</span>
+          <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">localId</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">2</span><span class="o">,</span> <span class="n">pos_xyzm</span><span class="o">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]);</span>
+          <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">localId</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">3</span><span class="o">,</span> <span class="n">pos_xyzm</span><span class="o">[</span><span class="n">idx</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">3</span><span class="o">]);</span>
+          <span class="c1">// Synchronize to make sure data is available for processing</span>
+          <span class="n">localBarrier</span><span class="o">();</span>
+        
+          <span class="c1">// now the entire LocalFloatBuffer has been filled.</span>
+          <span class="c1">// each workitem might use the entire Buffer</span>
+          <span class="c1">// which consists of localSize BODYs</span>
+          <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">localSize</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">float</span> <span class="n">r_x</span> <span class="o">=</span> <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">0</span><span class="o">)</span> <span class="o">-</span> <span class="n">myPos_x</span><span class="o">;</span>
+            <span class="kt">float</span> <span class="n">r_y</span> <span class="o">=</span> <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">-</span> <span class="n">myPos_y</span><span class="o">;</span>
+            <span class="kt">float</span> <span class="n">r_z</span> <span class="o">=</span> <span class="n">pos_xyzm_local</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">BODYSIZE</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span> <span class="o">-</span> <span class="n">myPos_z</span><span class="o">;</span>
+            <span class="c1">// ...etc</span>
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>

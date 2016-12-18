@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
     <title>
-      Aparapi | Aparapi
+      Aparapi | Profiling the Kernel
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,75 +48,64 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Aparapi</h1>
+          <h1 class='header center-on-small-only'>Profiling the Kernel</h1>
           <div class='row center'>
-            <h4 class='header col s12 light center'>Open-source framework for executing native Java code on the GPU.</h4>
+            <h4 class='header col s12 light center'>Using Aparapi's built in profiling APIs.</h4>
           </div>
-          <div class='row center'>
-            <a class='btn-large waves-effect waves-light' href='/introduction/getting-started.html' id='download-button'>Get Started</a>
-          </div>
-          <div class='row center'>
-            <a class='red-text text-lighten-4' href='https://github.com/Syncleus/aparapi'>Release v1.3.3</a>
-          </div>
-          <br>
+          
         </div>
-        <div class='github-commit'>
-          <div class='container'>
-            <div class='commit'>
-              Latest Commit on Github:
-                
-              <a class='sha' href=''></a>
-                
-              <span class='date'></span>
-              <a class='btn-flat right grey-text text-lighten-5 waves-effect waves-light hide-on-small-only' href='https://github.com/Syncleus/aparapi' id='github-button'>Github</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class='container'>
-        <div class='section'>
-          <div class='row'>
-            <div class='col s12 m8 offset-m2'>
-              <br>
-              <img id='responsive-img' src='images/responsive.png'>
-            </div>
-          </div>
-          <div class='row'>
-            <h3 class='col s12 light center header'>Aparapi simplifies life for developers and reduces server costs.</h3>
-          </div>
-          <!-- Promo Section -->
-          <div class='row'>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>flash_on</i>
-                <p class='promo-caption'>Speeds up development</p>
-                <p class='light center'>We did most of the heavy lifting for you to provide a framework capable of executing native Java code directly on the GPU. No more writing code twice, write once run anywhere.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>attach_money</i>
-                <p class='promo-caption'>Save Money on Servers</p>
-                <p class='light center'>By utilizing the GPU to run your algorithms it is possible to acheive speedups hundreds of times that of a CPU alone. This can mean the difference between needing only a single server versus an entire data center.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>settings</i>
-                <p class='promo-caption'>Flexible</p>
-                <p class='light center'>The full power and flexibility of OpenCL coding is fully exposed. All the low level calls as well as the ability to manipulate or post kernel files are still accessible to developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='divider'></div>
-        <div class='section'>
-          <div class='row center'>
-            <h3 class='light header'>Aparapi Showcase</h3>
-            <p class='col s8 offset-s2 caption'>Checkout what people are creating with Aparapi. Get inspired by these projects and you can even submit your own projects to be showcased here.</p>
-            <a class='btn-large waves-effect waves-light' href='showcase.html'>Explore our Showcase</a>
-          </div>
-        </div>
+        <p>If you want to extract OpenCL performance info from a kernel at runtime you need to set the property :-</p>
+        <pre class="highlight plaintext"><code>
+        -Dcom.aparapi.enableProfiling=true
+        </code></pre>
+        <p>Your application can then call kernel.getProfileInfo() after a successful call to kernel.execute(range) to extract a List List<ProfileInfo>.</p>
+        
+        <p>Each ProfileInfo holds timing information for buffer writes, executs and buffer reads.</p>
+        
+        <p>The following code will print a simple table of profile information</p>
+        <pre class="highlight java"><code>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">ProfileInfo</span><span class="o">&gt;</span> <span class="n">profileInfo</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="na">getProfileInfo</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kd">final</span> <span class="n">ProfileInfo</span> <span class="n">p</span> <span class="o">:</span> <span class="n">profileInfo</span><span class="o">)</span> <span class="o">{</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">" "</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getLabel</span><span class="o">()</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getStart</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">" .. "</span>
+               <span class="o">+</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getEnd</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="o">((</span><span class="n">p</span><span class="o">.</span><span class="na">getEnd</span><span class="o">()</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="na">getStart</span><span class="o">())</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">"us"</span><span class="o">);</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Here is an example implementation</p>
+        <pre class="highlight java"><code>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">result</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="mi">2048</span><span class="o">*</span><span class="mi">2048</span><span class="o">];</span>
+        <span class="n">Kernel</span> <span class="n">k</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+           <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+              <span class="kd">final</span> <span class="kt">int</span> <span class="n">gid</span><span class="o">=</span><span class="n">getGlobalId</span><span class="o">();</span>
+              <span class="n">result</span><span class="o">[</span><span class="n">gid</span><span class="o">]</span> <span class="o">=</span><span class="mi">0</span><span class="n">f</span><span class="o">;</span>
+           <span class="o">}</span>
+        <span class="o">};</span>
+        <span class="n">k</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">ProfileInfo</span><span class="o">&gt;</span> <span class="n">profileInfo</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="na">getProfileInfo</span><span class="o">();</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kd">final</span> <span class="n">ProfileInfo</span> <span class="n">p</span> <span class="o">:</span> <span class="n">profileInfo</span><span class="o">)</span> <span class="o">{</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">" "</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getLabel</span><span class="o">()</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getStart</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">" .. "</span>
+              <span class="o">+</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getEnd</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="o">((</span><span class="n">p</span><span class="o">.</span><span class="na">getEnd</span><span class="o">()</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="na">getStart</span><span class="o">())</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">+</span> <span class="s">"us"</span><span class="o">);</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">k</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+        </code></pre>
+        <p>And here is the tabular output from</p>
+        <pre class="highlight plaintext"><code>
+        java
+           -Djava.library.path=${APARAPI_HOME}
+           -Dcom.aparapi.enableProfiling=true
+           -cp ${APARAPI_HOME}:.
+           MyClass
+        
+        W val$result 69500 .. 72694 3194us
+        X exec()     72694 .. 72835  141us
+        R val$result 75327 .. 78225 2898us
+        </code></pre>
+        <p>The table shows that the transfer of the &lsquo;result&rsquo; buffer to the device (&#39;W&rsquo;) took 3194 us (micro seconds), the execute (&#39;X&rsquo;) of the kernel 141 us and the read (&#39;R&rsquo;) of resulting buffer 2898 us.</p>
       </div>
     </main>
     <footer class='page-footer'>

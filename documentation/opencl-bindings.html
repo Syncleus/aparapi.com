@@ -7,7 +7,7 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
     <title>
-      Aparapi | Aparapi
+      Aparapi | OpenCL Bindings
     </title>
     <!-- Favicons -->
     <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
@@ -48,75 +48,69 @@
     <main>
       <div class='section no-pad-bot' id='index-banner'>
         <div class='container'>
-          <h1 class='header center-on-small-only'>Aparapi</h1>
+          <h1 class='header center-on-small-only'>OpenCL Bindings</h1>
           <div class='row center'>
-            <h4 class='header col s12 light center'>Open-source framework for executing native Java code on the GPU.</h4>
+            <h4 class='header col s12 light center'>How to use new OpenCL binding mechanism.</h4>
           </div>
-          <div class='row center'>
-            <a class='btn-large waves-effect waves-light' href='/introduction/getting-started.html' id='download-button'>Get Started</a>
-          </div>
-          <div class='row center'>
-            <a class='red-text text-lighten-4' href='https://github.com/Syncleus/aparapi'>Release v1.3.3</a>
-          </div>
-          <br>
+          
         </div>
-        <div class='github-commit'>
-          <div class='container'>
-            <div class='commit'>
-              Latest Commit on Github:
-                
-              <a class='sha' href=''></a>
-                
-              <span class='date'></span>
-              <a class='btn-flat right grey-text text-lighten-5 waves-effect waves-light hide-on-small-only' href='https://github.com/Syncleus/aparapi' id='github-button'>Github</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <div class='container'>
-        <div class='section'>
-          <div class='row'>
-            <div class='col s12 m8 offset-m2'>
-              <br>
-              <img id='responsive-img' src='images/responsive.png'>
-            </div>
-          </div>
-          <div class='row'>
-            <h3 class='col s12 light center header'>Aparapi simplifies life for developers and reduces server costs.</h3>
-          </div>
-          <!-- Promo Section -->
-          <div class='row'>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>flash_on</i>
-                <p class='promo-caption'>Speeds up development</p>
-                <p class='light center'>We did most of the heavy lifting for you to provide a framework capable of executing native Java code directly on the GPU. No more writing code twice, write once run anywhere.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>attach_money</i>
-                <p class='promo-caption'>Save Money on Servers</p>
-                <p class='light center'>By utilizing the GPU to run your algorithms it is possible to acheive speedups hundreds of times that of a CPU alone. This can mean the difference between needing only a single server versus an entire data center.</p>
-              </div>
-            </div>
-            <div class='col s12 m4'>
-              <div class='center promo'>
-                <i class='material-icons'>settings</i>
-                <p class='promo-caption'>Flexible</p>
-                <p class='light center'>The full power and flexibility of OpenCL coding is fully exposed. All the low level calls as well as the ability to manipulate or post kernel files are still accessible to developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='divider'></div>
-        <div class='section'>
-          <div class='row center'>
-            <h3 class='light header'>Aparapi Showcase</h3>
-            <p class='col s8 offset-s2 caption'>Checkout what people are creating with Aparapi. Get inspired by these projects and you can even submit your own projects to be showcased here.</p>
-            <a class='btn-large waves-effect waves-light' href='showcase.html'>Explore our Showcase</a>
-          </div>
-        </div>
+        <p>As a step towards the extension mechanism I needed a way to easily bind OpenCL to an interface.</p>
+        
+        <p>Here is what I have come up with. We will use the &lsquo;Square&rsquo; example.</p>
+        
+        <p>You first define an interface with OpenCL annotations..</p>
+        <pre class="highlight java"><code>
+        <span class="kd">interface</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">OpenCL</span><span class="o">&lt;</span><span class="n">Squarer</span><span class="o">&gt;{</span>
+        <span class="nd">@Kernel</span><span class="o">(</span><span class="s">"{\n"</span><span class="c1">//</span>
+             <span class="o">+</span> <span class="s">"  const size_t id = get_global_id(0);\n"</span><span class="c1">//</span>
+             <span class="o">+</span> <span class="s">"  out[id] = in[id]*in[id];\n"</span><span class="c1">//</span>
+             <span class="o">+</span> <span class="s">"}\n"</span><span class="o">)</span><span class="c1">//</span>
+        <span class="kd">public</span> <span class="n">Squarer</span> <span class="nf">square</span><span class="o">(</span><span class="c1">//</span>
+             <span class="n">Range</span> <span class="n">_range</span><span class="o">,</span><span class="c1">//</span>
+             <span class="nd">@GlobalReadOnly</span><span class="o">(</span><span class="s">"in"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span><span class="c1">//</span>
+             <span class="nd">@GlobalWriteOnly</span><span class="o">(</span><span class="s">"out"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">out</span><span class="o">);</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>This describes the API we wish to bind to a set of kernel entrypoints (here we only have one, but we could have many). Then you &#39;realize&rsquo; the interface by asking a device to create an implementation of the interface. Device is a new Aparapi class which represents a GPU or CPU OpenCL device. So here we are asking for the first (default) GPU device to realize the interface.</p>
+        <pre class="highlight java"><code>
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="na">firstGPU</span><span class="o">(</span><span class="n">Squarer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        </code></pre>
+        <p>Now you can call the implementation directly with a Range.</p>
+        <pre class="highlight java"><code>
+        <span class="n">squarer</span><span class="o">.</span><span class="na">square</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">in</span><span class="o">.</span><span class="na">length</span><span class="o">),</span> <span class="n">in</span><span class="o">,</span> <span class="n">out</span><span class="o">);</span>
+        </code></pre>
+        <p>I think that we will have the easiest OpenCL binding out there&hellip;</p>
+        
+        <p>Following some conversations/suggestions online http://a-hackers-craic.blogspot.com/2012/03/aparapi.html we could also offer the ability to provide the OpenCL source from a file/url course using interface level Annotations.</p>
+        
+        <p>So we could allow.</p>
+        <pre class="highlight java"><code>
+        <span class="nd">@OpenCL</span><span class="o">.</span><span class="na">Resource</span><span class="o">(</span><span class="s">"squarer.cl"</span><span class="o">);</span>
+        <span class="kd">interface</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">OpenCL</span><span class="o">&lt;</span><span class="n">Squarer</span><span class="o">&gt;{</span>
+             <span class="kd">public</span> <span class="n">Squarer</span> <span class="nf">square</span><span class="o">(</span><span class="c1">//</span>
+               <span class="n">Range</span> <span class="n">_range</span><span class="o">,</span><span class="c1">//</span>
+               <span class="nd">@GlobalReadOnly</span><span class="o">(</span><span class="s">"in"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span><span class="c1">//</span>
+               <span class="nd">@GlobalWriteOnly</span><span class="o">(</span><span class="s">"out"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">out</span><span class="o">);</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Or if the text is on-hand at compile time in a single constant string</p>
+        <pre class="highlight java"><code>
+        <span class="nd">@OpenCL</span><span class="o">.</span><span class="na">Source</span><span class="o">(</span><span class="s">"... opencl text here"</span><span class="o">);</span>
+        <span class="kd">interface</span> <span class="nc">Squarer</span> <span class="kd">extends</span> <span class="n">OpenCL</span><span class="o">&lt;</span><span class="n">Squarer</span><span class="o">&gt;{</span>
+             <span class="kd">public</span> <span class="n">Squarer</span> <span class="nf">square</span><span class="o">(</span><span class="c1">//</span>
+               <span class="n">Range</span> <span class="n">_range</span><span class="o">,</span><span class="c1">//</span>
+               <span class="nd">@GlobalReadOnly</span><span class="o">(</span><span class="s">"in"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">in</span><span class="o">,</span><span class="c1">//</span>
+               <span class="nd">@GlobalWriteOnly</span><span class="o">(</span><span class="s">"out"</span><span class="o">)</span> <span class="kt">float</span><span class="o">[]</span> <span class="n">out</span><span class="o">);</span>
+        <span class="o">}</span>
+        </code></pre>
+        <p>Finally to allow for creation of dynamic OpenCL (good for FFT&rsquo;s of various Radii).</p>
+        <pre class="highlight java"><code>
+        <span class="n">String</span> <span class="n">openclSource</span> <span class="o">=</span> <span class="o">...;</span>
+        <span class="n">Squarer</span> <span class="n">squarer</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="na">firstGPU</span><span class="o">(</span><span class="n">Squarer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">openclSource</span><span class="o">);</span>
+        </code></pre>
       </div>
     </main>
     <footer class='page-footer'>
