@@ -4,7 +4,7 @@ description: Adding HSA Support to Aparapi lambda branch.
 ---
 
 * [How to setup a HSA enabled Linux Platform](/documentation/setting-up-hsa.html)
-* [How to setup a HSA simulator on a Linux Platform](/documentaion/using-hsa-simulator.html)
+* [How to setup a HSA simulator on a Linux Platform](/documentation/using-hsa-simulator.html)
 
 Recently the HSA Foundation released their ‘Programmers Reference Manual’. This manual is for developers wishing to write code for upcoming HSA compatible devices, it describes the HSA Intermediate Language (HSAIL) along with its binary form (BRIG) and describes how code is expected to execute on a HSA enabled devices.
 
