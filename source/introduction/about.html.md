@@ -10,12 +10,10 @@ However... "Apa rapi" in Indonesian (the language spoken on the island of Java) 
 
 # In the News
 
-* "GPU Acceleration of Interactive Large Scale Data Analytics Utilizing The Aparapi Framework" - Ryan LaMothe - AFDS
+* [GPU Acceleration of Interactive Large Scale Data Analytics Utilizing The Aparapi Framework](http://docplayer.net/4108807-Cloud-computing-cc-session-session-title-speaker-cc-4022.html)
 * "Aparapi: OpenCL GPU and Multi-Core CPU Heterogeneous Computing for Java" - Ryan LaMothe and Gary Frost - AFDS
-* "Performance Evaluation of AMD-APARAPI Using Real World Applications" - Prakash Raghavendra - AFDS
-* "Aparapi: An Open Source tool for extending the Java promise of ‘Write Once Run Anywhere’ to include the GPU" - Gary Frost - OSCON 7/18/2012
-* Aparapi talk at DOSUG (Denver Open Source User Group) Sept 4th 2012
-* Meetup meeting in Paris Sept 25th 2012
+* [Performance Evaluation of AMD-APARAPI Using Real World Applications](https://youtu.be/o0ZYz9lrp_Y)
+* [Aparapi: An Open Source tool for extending the Java promise of ‘Write Once Run Anywhere’ to include the GPU](http://conferences.oreilly.com/oscon/oscon2012/public/schedule/detail/23434)
 
 # Similar Work
 
