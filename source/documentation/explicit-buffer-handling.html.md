@@ -1,5 +1,5 @@
 ---
-title: ExplicitBufferHandling
+title: Explicit Buffer Handling
 description: How to minimize buffer transfers. 
 ---
 
