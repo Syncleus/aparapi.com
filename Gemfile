@@ -16,4 +16,4 @@ gem 'middleman-syntax', '~> 3.0.0'
 gem 'middleman-navtree'
 
 # Markdown parser:
-gem 'redcarpet', '~> 3.3.4'
+gem 'redcarpet', '~> 3.4.0'
