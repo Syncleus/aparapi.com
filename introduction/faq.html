@@ -1,251 +1,253 @@
 <!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <meta content='width=device-width, initial-scale=1' name='viewport'>
-    <meta content='IE=edge' http-equiv='X-UA-Compatible'>
-    <meta content='no' name='msapplication-tap-highlight'>
-    <meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
-    <title>
-      Aparapi | FAQ
-    </title>
-    <!-- Favicons -->
-    <link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
-    <meta content='#FFFFFF' name='msapplication-TileColor'>
-    <meta content='/images/favicon/mstile-144x144.png' name='msapplication-TileImage'>
-    <link href='/images/favicon/favicon-32x32.png' rel='icon' sizes='32x32'>
-    <!-- Android 5 Chrome Color -->
-    <meta content='#EE6E73' name='theme-color'>
-    <!-- CSS -->
-    <link href='/stylesheets/highlight.css' media='screen,projection' rel='stylesheet' type='text/css'>
-    <link href='/stylesheets/style.css' media='screen,projection' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
-  </head>
-  <body>
-    <header>
-      <div class='container'>
-        <a class='button-collapse top-nav waves-effect waves-light circle hide-on-large-only' data-activates='nav-mobile' href='#'>
-          <i class='material-icons'>menu</i>
-        </a>
-      </div>
-      <ul class='side-nav fixed' id='nav-mobile'>
-        <li class='logo'>
-          <a class='brand-logo' href='/' id='logo-container'>
-            <object data='/images/logo.svg' id='front-page-logo' type='image/svg+xml'>Your browser does not support SVG</object>
-          </a>
-        </li>
-        <li class='search'>
-          <div class='search-wrapper card'>
-            <input id='search'>
-            <i class='material-icons'>search</i>
-            <div class='search-results'></div>
-          </div>
-        </li>
-        <li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/">Overview</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Introduction</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/about.html">About</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/getting-started.html">Getting Started</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/faq.html">FAQ</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Documentation</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/aparapi-patterns.html">Aparapi Patterns</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/choosing-specific-devices.html">Choosing Specific Devices</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/converting-java-to-opencl.html">Converting Java to OpenCL</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/emulating-multiple-entrypoints.html">Emulating Multiple Entrypoints</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/explicit-buffer-handling.html">Explicit Buffer Handling</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/hsa-enabled-lambda.html">HSA Enabled Lambda</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/kernel-guidelines.html">Kernel Guidelines</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/library-agent-duality.html">Library Agent Duality</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/new-features.html">New Features</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/opencl-bindings.html">OpenCL Bindings</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/private-memory-space.html">Private Memory Space</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/profiling-the-kernel.html">Profiling the Kernel</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/setting-up-hsa.html">Setting Up HSA</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/unit-tests.html">Unit Tests</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/using-hsa-simulator.html">Using HSA Simulator</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/constant-memory.html">Constant Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/local-memory.html">Local Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/multiple-dim-ranges.html">Multiple Dim Ranges</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Proposals</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-dim-nd-range.html">Multiple Dim ND Range</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambdas.html">Lambdas</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/address-space-with-buffers.html">Address Space with Buffers</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/extensions.html">Extensions</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/device.html">Device</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-entry-points.html">Multiple Entry Points</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambda-syntax.html">Lambda Syntax</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/showcase.html">Showcase</a></li></ul></li>
-      </ul>
-    </header>
-    <main>
-      <div class='section no-pad-bot' id='index-banner'>
-        <div class='container'>
-          <h1 class='header center-on-small-only'>FAQ</h1>
-          <div class='row center'>
-            <h4 class='header col s12 light center'>Frequently Asked Questions.</h4>
-          </div>
-          
-        </div>
-        
-      </div>
-      <div class='container'>
-        <p><strong>Frequently Asked Questions</strong></p>
-        
-        <p><strong>Why is this project called Aparapi and how is it pronounced?</strong></p>
-        
-        <p>Aparapi is just a contraction of A PAR{allel} API and is pronounced (ap-per-rap-ee).</p>
-        
-        <p><strong>Does Aparapi only work with AMD graphics cards?</strong></p>
-        
-        <p>No. Aparapi has been tested with AMD&rsquo;s OpenCL enabled drivers and devices as well as a limited set of NVidia devices and drivers on Windows, Linux and Mac OSX platforms. The minimal requirement at runtime is OpenCL 1.1. If you have a compatible OpenCL 1.1 runtime and supported devices Aparapi should work.</p>
-        
-        <p>Although the build is currently configured for AMD APP SDK, OpenCL is an open standard and we look forward to contributions which will allow Aparapi to be built against other OpenCL SDK&rsquo;s.</p>
-        
-        <p>Note that dll&rsquo;s built using AMD APP SDK will work on other platforms at runtime. So the binary builds are expected to work on all OpenCL 1.1 platforms.</p>
-        
-        <p>Witold Bolt has kindly supplied the patches to allow Mac OS support. The Mac OS build will run against OpenCL 1.1 and 1.0 runtimes, but we won&rsquo;t fix any issues reported against the OpenCL 1.0, your code may run, or may not.</p>
-        
-        <p>Aparapi may be used in JTP (Java Thread Pool) mode on any platform supported by Oracle®’s JDK.</p>
-        
-        <p>** Does Aparapi only support AMD CPUs?**</p>
-        
-        <p>No, there is nothing restricting Aparapi to AMD CPUs. The JNI code that we use may run on any x86/x64 machine provided there is a compatible Java Virtual Machine® JVM implementation for your platform.</p>
-        
-        <p><strong>Will there be an Aparapi-like translator for .NET?</strong></p>
-        
-        <p>This is still an early technology and Aparapi is currently focused on Java® enablement. There are similar projects targeting .NET (See www.tidepowerd.com)</p>
-        
-        <p><strong>How can I profile the OpenCL kernels that Aparapi generates? Can I get details on the latency of my kernel request?How do I optimize my kernel?</strong></p>
-        
-        <p>AMD offers the ‘AMD APP Profiler’ which can be used to profile the kernels. With Aparapi, we recommend using the command line mode of the profiler, which is described in the release notes. Using the ‘AMD APP Profiler’ you can see how much time is taken by each kernel execution and buffer transfer. Also, in each kernel, you can get more detailed information on things like memory reads and writes, and other useful data.</p>
-        
-        <p><strong>Can I have multiple threads all using the GPU compute capabilities?</strong></p>
-        
-        <p>Yes. There might be a performance impact if the device becomes a bottleneck. However, OpenCL and your GPU driver are designed to coordinate the various threads of execution.</p>
-        
-        <p><strong>Can I make method calls from the run method?</strong></p>
-        
-        <p>You can generally only make calls to other methods declared in the same class as the initial run() method. Aparapi will follow this call chain to try to determine whether it can create OpenCL. If, for example, Aparapi encounters System.out.println(&ldquo;Hello World&rdquo;) ( call to a method not in the users Kernel class) it will detect this and refuse to consider the call chain as an OpenCL candidate.</p>
-        
-        <p>One exception to this rule allows a kernel to access or mutate the state of objects held in simple arrays via their setters/getters. For example a kernel can include :-</p>
-        <pre class="highlight java"><code>
-        <span class="n">out</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">setValue</span><span class="o">(</span><span class="n">in</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">()*</span><span class="mi">5</span><span class="o">);</span>
-        </code></pre>
-        <p><strong>Does Aparapi support vectorized types?</strong></p>
-        
-        <p>Due to Java&rsquo;s lack of vector types (float4 for example) Aparapi can&rsquo;t directly use them. Also, due to Java&rsquo;s lack of operator overloading, simulating these with Java abstracts could lead to very complex and unwieldy code.</p>
-        
-        <p><strong>Is there a way I can see the generated OpenCL?</strong></p>
-        
-        <p>Yes, by using adding -Dcom.aparapi.enableShowGeneratedOpenCL=true to your command line when you start your JVM.</p>
-        
-        <p><strong>Does Aparapi support sharing buffers with JOGL? Can I exploit the features of JOGAMP/glugen?</strong></p>
-        
-        <p>Rather than only supporting display-oriented compute, we are pursuing general data parallel compute. Therefore, we have chosen not to bind Aparapi too closely with JOGL.</p>
-        
-        <p><strong>What is the performance delta from handcrafted OpenCL?</strong></p>
-        
-        <p>This depends heavily on the application. Although we can currently show 20x performance improvement on some compute intensive Java applications compared with the same algorithm using a Java Thread Pool a developer who is prepared to handcraft and hand-tune OpenCL and write custom host code in C/C++ is likely to see better performance than Aparapi may achieve.</p>
-        
-        <p>We understand that some user may use Aparapi as a gateway technology to test their Java code before porting to hand-crafted/tuned OpenCL.</p>
-        
-        <p><strong>Are you working with Project Lambda for offloading/parallelizing suitable work?</strong></p>
-        
-        <p>We are following the progress of Project Lambda (currently scheduled for inclusion in Java 8) and would like to be able to leverage Lambda expression format in Aparapi, but none exists now.</p>
-        
-        <p><strong>Can I select a specific GPU if I have more than one card?</strong></p>
-        
-        <p>Under review. At present, Aparapi just looks for the first AMD GPU (or APU) device. If the community has feedback on its preference, let us know.</p>
-        
-        <p><strong>Can I get the demos/samples presented at JavaOne or ADFS?</strong></p>
-        
-        <p>The Squares and Mandlebrot sample code is included in the binary download of Aparapi. The NBody source is not included in the binary (because of a dependency on JOGL). We have, however, included the NBody code as an example project in the Open Source tree (code.google.com/p/aparapi) and provide details and we provide details on how to install the appropriate JOGL components.</p>
-        
-        <p><strong>Can Mersenne twister be ported as a random number function inside the kernel class?</strong></p>
-        
-        <p>You can elect to implement your own Mersenne twister and use it in our own derived Kernel.</p>
-        
-        <p><strong>Does Aparapi use JNI?</strong></p>
-        
-        <p>Yes, we do ship a small JNI shim to handle the host OpenCL calls.</p>
-        
-        <p><strong>How can I confirm that my code is actually executing on the GPU?</strong></p>
-        
-        <p>From within the Java code itself you can query the execution mode after Kernel.execute(n) has returned.</p>
-        <pre class="highlight java"><code>
-        <span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
-           <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
-           <span class="o">}</span>
-        <span class="o">}</span> <span class="o">;</span>
-        <span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="mi">1024</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">priintln</span><span class="o">(</span><span class="err">“</span><span class="n">Execution</span> <span class="n">mode</span> <span class="o">=</span> <span class="err">“</span><span class="o">+</span><span class="n">kernel</span><span class="o">.</span><span class="na">getExecutionMode</span><span class="o">());</span>
-        </code></pre>
-        <p>The above code fragment will print either ‘GPU’ if the kernel executed on the GPU or JTP if Aparapi executed the Kernel in a Java Thread Pool.</p>
-        
-        <p>Alternatively, setting the property –Dcom.aparapi.enableShowExecutionModes=true when you start your JVM will cause Aparapi to automatically report the execution mode of all kernels to stdout.</p>
-        
-        <p><strong>Why does Aparapi need me to compile my code with -g?</strong></p>
-        
-        <p>Aparapi extracts most of the information required to create OpenCL from the bytecode of your Kernel.run() (and run-reachable) methods. We use the debug information to re-create the original variable name and to determine the local variable scope information.</p>
-        
-        <p>Of course only the derived Kernel class (or accessed Objects using new Arrays of Objects feature) need to be compiled using -g.</p>
-        
-        <p><strong>Why does the Aparapi documentation suggest I use Oracle&rsquo;s JDK/JRE? Why can&rsquo;t I use any JVM/JDK?</strong></p>
-        
-        <p>The documentation suggests using Oracle&rsquo;s JDK/JRE for coverage reasons and not as a requirement. AMD focused its testing on Oracle&rsquo;s JVM/JDK.</p>
-        
-        <p>There are two parts to this.</p>
-        
-        <ol>
-        <li>Our bytecode to OpenCL engine is somewhat tuned to the bytecode structures created by javac supplied by Oracle®. Specifically, there are some optimizations that other javac implementation might perform that Aparapi won&rsquo;t recognize. Eclipse (for example) does not presently use Oracle&rsquo;s javac, and so we do have some experience handling Eclipse specific bytecode patterns.</li>
-        <li>At runtime, we piggyback on the (aptly named) sun.misc.Unsafe class, which is included in rt.jar from Oracle®. This class is useful because it helps us avoid some JNI calls by providing low level routines for accessing object field addresses (in real memory) and useful routines for Atomic operations. All accesses to &lsquo;sun.misc.Unsafe&rsquo; are handled by an Aparapi class called UnsafeWrapper with the intent that this could be refactored to avoid this dependency.</li>
-        </ol>
-        
-        <p><strong>I am using a dynamic language (Clojure, Scala, Groovy, Beanshell, etc) will I be able to use Aparapi?</strong></p>
-        
-        <p>No.</p>
-        
-        <p>To access the bytecode for a method Aparapi needs to parse the original class file. For Java code, Aparapi can use something like the code below to reload the class file bytes and parse the constant pool, attributes, fields, methods and method bytecode.</p>
-        <pre class="highlight java"><code>
-        <span class="n">YourClass</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">loadAsResource</span><span class="o">(</span><span class="n">YourClass</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">".class"</span><span class="o">))</span>
-        </code></pre>
-        <p>It is unlikely that this process would work with a dynamically created class based on the presumption that dynamic languages employ some form of custom classloader to make dynamically generated bytecode available to the JVM. Therefore, it is unlikely that these classloaders would yield the classfile bytes. However, we encourage contributors to investigate opportunities here. Even if the class bytes were loadable, Aparapi would also expect debug information to be available (see previous FAQ entry). Again, this is not impossible for a dynamic language to do, indeed it would probably even be desirable as it would allow the code to be debugged using JDB compatible debugger.</p>
-        
-        <p>Finally, Aparapi recognizes bytecode patterns created by the javac supplied by Oracle® and it is possible that the code generated by a particular dynamic language may not be compatible with Aparapi current code analyzer.</p>
-        
-        <p>Therefore, at present this is unlikely to work. However, these would be excellent contributions to Aparapi. It would be great to see Aparapi being adopted by other JVM based dynamic language.</p>
-        
-        <p><strong>Why does Aparapi seems to be copying data unnecessarily back and forth between host and GPU. Can I stop Aparapi from doing this?</strong></p>
-        
-        <p>Aparapi ensures that required data is moved to the GPU prior to kernel execution and returned to the appropriate array before Java execution resumes. Generally, this is what the Java user will expect. However, for some code patterns where multiple Kernel.execute() calls are made in succession (or more likely in a tight loop) Aparapi&rsquo;s approach may not be optimal.</p>
-        
-        <p>In the NewFeatures page we discuss a couple of Aparapi enhancements which will developers to elect intervene to reduce unnecessary copies.</p>
-        
-        <p><strong>Do I have to refactor my code to use arrays of primitives? Why can’t Aparapi just work with Java Objects?</strong></p>
-        
-        <p>Aparapi creates OpenCL from the bytecode. Generally, OpenCL constrains us to using parallel primitive arrays (OpenCL does indeed allow structs, but Java and OpenCL do not have comparable memory layouts for these structures). Therefore, you will probably need to refactor your code to use primitive arrays. In this initial contribution, we have included some limited support for Arrays of simple Objects and hope contributors extend them. Check the NewFeatures page which shows how you can use this feature.</p>
-      </div>
-    </main>
-    <footer class='page-footer'>
-      <div class='container'>
-        <div class='row'>
-          <div class='col l4 s12'>
-            <h5 class='white-text'>Help Aparapi Grow</h5>
-            <p class='grey-text text-lighten-4'>We are a team of volunteers working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-            <form action='https://www.paypal.com/cgi-bin/webscr' id='paypal-donate' method='post' target='_top'>
-              <input name='cmd' type='hidden' value='_s-xclick'>
-              <input name='encrypted' type='hidden' value='-----BEGIN PKCS7-----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-----END PKCS7-----'>
-              <button alt='PayPal - The safer, easier way to pay online!' class='btn waves-effect waves-light red lighten-3' name='action' type='submit'>
-                Donate Now
-              </button>
-            </form>
-          </div>
-          <div class='col l4 s12'>
-            <h5 class='white-text'>Join the Discussion</h5>
-            <p class='grey-text text-lighten-4'>We have a Gitter chat room set up where you can talk directly with us. Come in and discuss new features, future goals, general problems or questions, or anything else you can think of.</p>
-            <a class='btn waves-effect waves-light red lighten-3' href='https://gitter.im/Syncleus/aparapi' target='_blank'>Chat</a>
-          </div>
-          <div class='col l4 s12' style='overflow: hidden;'>
-            <h5 class='white-text'>Connect</h5>
-            <iframe allowtransparency='true' frameborder='0' height='30' scrolling='0' src='http://ghbtns.com/github-btn.html?user=Syncleus&amp;repo=aparapi&amp;type=watch&amp;count=true&amp;size=large' width='170'></iframe>
-            <br>
-            <a class='twitter-follow-button' data-dnt='true' data-show-count='true' data-size='large' href='https://twitter.com/AparapiLib'>Follow @AparapiLib</a>
-            <br>
-            <div class='g-follow' data-annotation='bubble' data-height='24' data-href='https://plus.google.com/102266131584900704956' data-rel='publisher'></div>
-          </div>
-        </div>
-      </div>
-      <div class='footer-copyright'>
-        <div class='container'>
-          © 2016-2017 Syncleus, All rights reserved.
-          <a class='grey-text text-lighten-4 right' href='https://github.com/Syncleus/aparapi/blob/master/LICENSE'>Apache License v2</a>
-        </div>
-      </div>
-    </footer>
-    <!-- Scripts -->
-    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-    <script>
-      if (!window.jQuery) { document.write('<script src="bin/jquery-2.1.1.min.js"><\/script>'); }
-    </script>
-    <script src='/javascripts/jquery.timeago.js'></script>
-    <script src='/javascripts/materialize.min.js'></script>
-    <script src='/javascripts/lunr.min.js'></script>
-    <script src='/javascripts/search.js'></script>
-    <script src='/javascripts/materialize.js'></script>
-    <script src='/javascripts/init.js'></script>
-    <!-- Twitter Button -->
-    <script>
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- Google Plus Button -->
-    <script async='' defer='defer' src='https://apis.google.com/js/platform.js'></script>
-  </body>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='no' name='msapplication-tap-highlight'>
+<meta content='Aparapi is an Open-source framework for executing native Java code on the GPU, developed by Syncleus.' name='description'>
+<title>
+Aparapi | FAQ
+</title>
+<!-- Favicons -->
+<link href='/images/favicon/apple-touch-icon-152x152.png' rel='apple-touch-icon-precomposed'>
+<meta content='#FFFFFF' name='msapplication-TileColor'>
+<meta content='/images/favicon/mstile-144x144.png' name='msapplication-TileImage'>
+<link href='/images/favicon/favicon-32x32.png' rel='icon' sizes='32x32'>
+<!-- Android 5 Chrome Color -->
+<meta content='#EE6E73' name='theme-color'>
+<!-- CSS -->
+<link href='/stylesheets/highlight.css' media='screen,projection' rel='stylesheet' type='text/css'>
+<link href='/stylesheets/style.css' media='screen,projection' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+</head>
+<body>
+<header>
+<div class='container'>
+<a class='button-collapse top-nav waves-effect waves-light circle hide-on-large-only' data-activates='nav-mobile' href='#'>
+<i class='material-icons'>menu</i>
+</a>
+</div>
+<ul class='side-nav fixed' id='nav-mobile'>
+<li class='logo'>
+<a class='brand-logo' href='/' id='logo-container'>
+<object data='/images/logo.svg' id='front-page-logo' type='image/svg+xml'>Your browser does not support SVG</object>
+</a>
+</li>
+<li class='search'>
+<div class='search-wrapper card'>
+<input id='search'>
+<i class='material-icons'>search</i>
+<div class='search-results'></div>
+</div>
+</li>
+<li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/">Overview</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Introduction</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/about.html">About</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/getting-started.html">Getting Started</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/introduction/faq.html">FAQ</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Documentation</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/aparapi-patterns.html">Aparapi Patterns</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/choosing-specific-devices.html">Choosing Specific Devices</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/converting-java-to-opencl.html">Converting Java to OpenCL</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/emulating-multiple-entrypoints.html">Emulating Multiple Entrypoints</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/explicit-buffer-handling.html">Explicit Buffer Handling</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/hsa-enabled-lambda.html">HSA Enabled Lambda</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/kernel-guidelines.html">Kernel Guidelines</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/library-agent-duality.html">Library Agent Duality</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/new-features.html">New Features</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/opencl-bindings.html">OpenCL Bindings</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/private-memory-space.html">Private Memory Space</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/profiling-the-kernel.html">Profiling the Kernel</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/setting-up-hsa.html">Setting Up HSA</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/unit-tests.html">Unit Tests</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/using-hsa-simulator.html">Using HSA Simulator</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/constant-memory.html">Constant Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/local-memory.html">Local Memory</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/documentation/multiple-dim-ranges.html">Multiple Dim Ranges</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a class='collapsible-header waves-effect waves-teal'>Proposals</a><div class='collapsible-body'><ul><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-dim-nd-range.html">Multiple Dim ND Range</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambdas.html">Lambdas</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/address-space-with-buffers.html">Address Space with Buffers</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/extensions.html">Extensions</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/device.html">Device</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/multiple-entry-points.html">Multiple Entry Points</a></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/proposals/lambda-syntax.html">Lambda Syntax</a></li></ul></li></ul></div></li></ul></li><li class='no-padding'><ul class='collapsible collapsible-accordion'><li class='bold'><a href="/showcase.html">Showcase</a></li></ul></li>
+</ul>
+</header>
+<main>
+<div class='section no-pad-bot' id='index-banner'>
+<div class='container'>
+<h1 class='header center-on-small-only'>FAQ</h1>
+<div class='row center'>
+<h4 class='header col s12 light center'>Frequently Asked Questions.</h4>
+</div>
+
+</div>
+
+</div>
+<div class='container'>
+<p><strong>Frequently Asked Questions</strong></p>
+
+<p><strong>Why is this project called Aparapi and how is it pronounced?</strong></p>
+
+<p>Aparapi is just a contraction of A PAR{allel} API and is pronounced (ap-per-rap-ee).</p>
+
+<p><strong>Does Aparapi only work with AMD graphics cards?</strong></p>
+
+<p>No. Aparapi has been tested with AMD&rsquo;s OpenCL enabled drivers and devices as well as a limited set of NVidia devices and drivers on Windows, Linux and Mac OSX platforms. The minimal requirement at runtime is OpenCL 1.1. If you have a compatible OpenCL 1.1 runtime and supported devices Aparapi should work.</p>
+
+<p>Although the build is currently configured for AMD APP SDK, OpenCL is an open standard and we look forward to contributions which will allow Aparapi to be built against other OpenCL SDK&rsquo;s.</p>
+
+<p>Note that dll&rsquo;s built using AMD APP SDK will work on other platforms at runtime. So the binary builds are expected to work on all OpenCL 1.1 platforms.</p>
+
+<p>Witold Bolt has kindly supplied the patches to allow Mac OS support. The Mac OS build will run against OpenCL 1.1 and 1.0 runtimes, but we won&rsquo;t fix any issues reported against the OpenCL 1.0, your code may run, or may not.</p>
+
+<p>Aparapi may be used in JTP (Java Thread Pool) mode on any platform supported by Oracle®’s JDK.</p>
+
+<p>** Does Aparapi only support AMD CPUs?**</p>
+
+<p>No, there is nothing restricting Aparapi to AMD CPUs. The JNI code that we use may run on any x86/x64 machine provided there is a compatible Java Virtual Machine® JVM implementation for your platform.</p>
+
+<p><strong>Will there be an Aparapi-like translator for .NET?</strong></p>
+
+<p>This is still an early technology and Aparapi is currently focused on Java® enablement. There are similar projects targeting .NET (See www.tidepowerd.com)</p>
+
+<p><strong>How can I profile the OpenCL kernels that Aparapi generates? Can I get details on the latency of my kernel request?How do I optimize my kernel?</strong></p>
+
+<p>AMD offers the ‘AMD APP Profiler’ which can be used to profile the kernels. With Aparapi, we recommend using the command line mode of the profiler, which is described in the release notes. Using the ‘AMD APP Profiler’ you can see how much time is taken by each kernel execution and buffer transfer. Also, in each kernel, you can get more detailed information on things like memory reads and writes, and other useful data.</p>
+
+<p><strong>Can I have multiple threads all using the GPU compute capabilities?</strong></p>
+
+<p>Yes. There might be a performance impact if the device becomes a bottleneck. However, OpenCL and your GPU driver are designed to coordinate the various threads of execution.</p>
+
+<p><strong>Can I make method calls from the run method?</strong></p>
+
+<p>You can generally only make calls to other methods declared in the same class as the initial run() method. Aparapi will follow this call chain to try to determine whether it can create OpenCL. If, for example, Aparapi encounters System.out.println(&ldquo;Hello World&rdquo;) ( call to a method not in the users Kernel class) it will detect this and refuse to consider the call chain as an OpenCL candidate.</p>
+
+<p>One exception to this rule allows a kernel to access or mutate the state of objects held in simple arrays via their setters/getters. For example a kernel can include :-</p>
+<div class="highlight"><pre class="highlight java"><code>
+<span class="n">out</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">setValue</span><span class="o">(</span><span class="n">in</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">()*</span><span class="mi">5</span><span class="o">);</span>
+</code></pre></div>
+<p><strong>Does Aparapi support vectorized types?</strong></p>
+
+<p>Due to Java&rsquo;s lack of vector types (float4 for example) Aparapi can&rsquo;t directly use them. Also, due to Java&rsquo;s lack of operator overloading, simulating these with Java abstracts could lead to very complex and unwieldy code.</p>
+
+<p><strong>Is there a way I can see the generated OpenCL?</strong></p>
+
+<p>Yes, by using adding -Dcom.aparapi.enableShowGeneratedOpenCL=true to your command line when you start your JVM.</p>
+
+<p><strong>Does Aparapi support sharing buffers with JOGL? Can I exploit the features of JOGAMP/glugen?</strong></p>
+
+<p>Rather than only supporting display-oriented compute, we are pursuing general data parallel compute. Therefore, we have chosen not to bind Aparapi too closely with JOGL.</p>
+
+<p><strong>What is the performance delta from handcrafted OpenCL?</strong></p>
+
+<p>This depends heavily on the application. Although we can currently show 20x performance improvement on some compute intensive Java applications compared with the same algorithm using a Java Thread Pool a developer who is prepared to handcraft and hand-tune OpenCL and write custom host code in C/C++ is likely to see better performance than Aparapi may achieve.</p>
+
+<p>We understand that some user may use Aparapi as a gateway technology to test their Java code before porting to hand-crafted/tuned OpenCL.</p>
+
+<p><strong>Are you working with Project Lambda for offloading/parallelizing suitable work?</strong></p>
+
+<p>We are following the progress of Project Lambda (currently scheduled for inclusion in Java 8) and would like to be able to leverage Lambda expression format in Aparapi, but none exists now.</p>
+
+<p><strong>Can I select a specific GPU if I have more than one card?</strong></p>
+
+<p>Under review. At present, Aparapi just looks for the first AMD GPU (or APU) device. If the community has feedback on its preference, let us know.</p>
+
+<p><strong>Can I get the demos/samples presented at JavaOne or ADFS?</strong></p>
+
+<p>The Squares and Mandlebrot sample code is included in the binary download of Aparapi. The NBody source is not included in the binary (because of a dependency on JOGL). We have, however, included the NBody code as an example project in the Open Source tree (code.google.com/p/aparapi) and provide details and we provide details on how to install the appropriate JOGL components.</p>
+
+<p><strong>Can Mersenne twister be ported as a random number function inside the kernel class?</strong></p>
+
+<p>You can elect to implement your own Mersenne twister and use it in our own derived Kernel.</p>
+
+<p><strong>Does Aparapi use JNI?</strong></p>
+
+<p>Yes, we do ship a small JNI shim to handle the host OpenCL calls.</p>
+
+<p><strong>How can I confirm that my code is actually executing on the GPU?</strong></p>
+
+<p>From within the Java code itself you can query the execution mode after Kernel.execute(n) has returned.</p>
+<div class="highlight"><pre class="highlight java"><code>
+<span class="n">Kernel</span> <span class="n">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Kernel</span><span class="o">(){</span>
+   <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(){</span>
+   <span class="o">}</span>
+<span class="o">}</span> <span class="o">;</span>
+<span class="n">kernel</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="mi">1024</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">priintln</span><span class="o">(</span><span class="err">“</span><span class="n">Execution</span> <span class="n">mode</span> <span class="o">=</span> <span class="err">“</span><span class="o">+</span><span class="n">kernel</span><span class="o">.</span><span class="na">getExecutionMode</span><span class="o">());</span>
+</code></pre></div>
+<p>The above code fragment will print either ‘GPU’ if the kernel executed on the GPU or JTP if Aparapi executed the Kernel in a Java Thread Pool.</p>
+
+<p>Alternatively, setting the property –Dcom.aparapi.enableShowExecutionModes=true when you start your JVM will cause Aparapi to automatically report the execution mode of all kernels to stdout.</p>
+
+<p><strong>Why does Aparapi need me to compile my code with -g?</strong></p>
+
+<p>Aparapi extracts most of the information required to create OpenCL from the bytecode of your Kernel.run() (and run-reachable) methods. We use the debug information to re-create the original variable name and to determine the local variable scope information.</p>
+
+<p>Of course only the derived Kernel class (or accessed Objects using new Arrays of Objects feature) need to be compiled using -g.</p>
+
+<p><strong>Why does the Aparapi documentation suggest I use Oracle&rsquo;s JDK/JRE? Why can&rsquo;t I use any JVM/JDK?</strong></p>
+
+<p>The documentation suggests using Oracle&rsquo;s JDK/JRE for coverage reasons and not as a requirement. AMD focused its testing on Oracle&rsquo;s JVM/JDK.</p>
+
+<p>There are two parts to this.</p>
+
+<ol>
+<li>Our bytecode to OpenCL engine is somewhat tuned to the bytecode structures created by javac supplied by Oracle®. Specifically, there are some optimizations that other javac implementation might perform that Aparapi won&rsquo;t recognize. Eclipse (for example) does not presently use Oracle&rsquo;s javac, and so we do have some experience handling Eclipse specific bytecode patterns.</li>
+<li>At runtime, we piggyback on the (aptly named) sun.misc.Unsafe class, which is included in rt.jar from Oracle®. This class is useful because it helps us avoid some JNI calls by providing low level routines for accessing object field addresses (in real memory) and useful routines for Atomic operations. All accesses to &lsquo;sun.misc.Unsafe&rsquo; are handled by an Aparapi class called UnsafeWrapper with the intent that this could be refactored to avoid this dependency.</li>
+</ol>
+
+<p><strong>I am using a dynamic language (Clojure, Scala, Groovy, Beanshell, etc) will I be able to use Aparapi?</strong></p>
+
+<p>No.</p>
+
+<p>To access the bytecode for a method Aparapi needs to parse the original class file. For Java code, Aparapi can use something like the code below to reload the class file bytes and parse the constant pool, attributes, fields, methods and method bytecode.</p>
+<div class="highlight"><pre class="highlight java"><code>
+<span class="n">YourClass</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">loadAsResource</span><span class="o">(</span><span class="n">YourClass</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">".class"</span><span class="o">))</span>
+</code></pre></div>
+<p>It is unlikely that this process would work with a dynamically created class based on the presumption that dynamic languages employ some form of custom classloader to make dynamically generated bytecode available to the JVM. Therefore, it is unlikely that these classloaders would yield the classfile bytes. However, we encourage contributors to investigate opportunities here. Even if the class bytes were loadable, Aparapi would also expect debug information to be available (see previous FAQ entry). Again, this is not impossible for a dynamic language to do, indeed it would probably even be desirable as it would allow the code to be debugged using JDB compatible debugger.</p>
+
+<p>Finally, Aparapi recognizes bytecode patterns created by the javac supplied by Oracle® and it is possible that the code generated by a particular dynamic language may not be compatible with Aparapi current code analyzer.</p>
+
+<p>Therefore, at present this is unlikely to work. However, these would be excellent contributions to Aparapi. It would be great to see Aparapi being adopted by other JVM based dynamic language.</p>
+
+<p><strong>Why does Aparapi seems to be copying data unnecessarily back and forth between host and GPU. Can I stop Aparapi from doing this?</strong></p>
+
+<p>Aparapi ensures that required data is moved to the GPU prior to kernel execution and returned to the appropriate array before Java execution resumes. Generally, this is what the Java user will expect. However, for some code patterns where multiple Kernel.execute() calls are made in succession (or more likely in a tight loop) Aparapi&rsquo;s approach may not be optimal.</p>
+
+<p>In the NewFeatures page we discuss a couple of Aparapi enhancements which will developers to elect intervene to reduce unnecessary copies.</p>
+
+<p><strong>Do I have to refactor my code to use arrays of primitives? Why can’t Aparapi just work with Java Objects?</strong></p>
+
+<p>Aparapi creates OpenCL from the bytecode. Generally, OpenCL constrains us to using parallel primitive arrays (OpenCL does indeed allow structs, but Java and OpenCL do not have comparable memory layouts for these structures). Therefore, you will probably need to refactor your code to use primitive arrays. In this initial contribution, we have included some limited support for Arrays of simple Objects and hope contributors extend them. Check the NewFeatures page which shows how you can use this feature.</p>
+
+</div>
+</main>
+<footer class='page-footer'>
+<div class='container'>
+<div class='row'>
+<div class='col l4 s12'>
+<h5 class='white-text'>Help Aparapi Grow</h5>
+<p class='grey-text text-lighten-4'>We are a team of volunteers working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+<form action='https://www.paypal.com/cgi-bin/webscr' id='paypal-donate' method='post' target='_top'>
+<input name='cmd' type='hidden' value='_s-xclick'>
+<input name='encrypted' type='hidden' value='-----BEGIN PKCS7-----MIIHoAYJKoZIhvcNAQcEoIIHkTCCB40CAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYATcKxN8t35TG2x34eY272SuZO3QbGy+BTGIM5DRV6Hmosotzw2TF42ceWmbXb3Gk4Wy5kUgo4TgHExCZHUSlHUl+A9KWLFejotgQJPhbiBsnns3klWbKftA3LEnP/kz/SW7OyBlpluoHoEGb354/aoX3JEctp3akHiZEmD7JyEgjELMAkGBSsOAwIaBQAwggEcBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECOGCJwba6JICgIH4RtE1LE3juagKs+swI5tb9Y2LacWo+qn1H1aLKeg57bQMqqcWYvkoO1joYoglPc1h4mO0egZjHPQ6ih0K0IYlXw2SRpNylSlIMUE3GW6smjSSwRhscZfXQYUnmQsfYvkFwoKrlZGf/1u0Q7nwlZ1szIKnDMZ5f+k8xBcM0sMNutn/y9CH6A3zo01gQBIF29+1WYAoQspNAnfWQy3ydV7nbjIA9ThDp2WquWw3EVlvqlvm/3C2AFuH/L4q0ltn3qjkCdzXK0O2jW3TRrzligPkAy6CN0Tw2jGW5GENNC1L92vHFH4kBXUPlhvw39TgoN7/KRUjVoYPYgugggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNjExMjkyMjA1NTNaMCMGCSqGSIb3DQEJBDEWBBS4i3Exr/pFcKOJy8uKmH+nGIMjqDANBgkqhkiG9w0BAQEFAASBgDAbFZ2jieloeB/0wCAcvYCFAIXmmBaMS5js/byzU5gK7exSTlRMX74IkmHemItaOcw3wyFlu4i118D9K9SbSbFiX9DGDcezGh42u/6G8TuZMwlvmiehwMioTVcm4jWG40YLiv8pJZypfoSx2w4IAFb4na5i/E1qOrwQOpiBho+s-----END PKCS7-----
+'>
+<button alt='PayPal - The safer, easier way to pay online!' class='btn waves-effect waves-light red lighten-3' name='action' type='submit'>
+Donate Now
+</button>
+</form>
+</div>
+<div class='col l4 s12'>
+<h5 class='white-text'>Join the Discussion</h5>
+<p class='grey-text text-lighten-4'>We have a Gitter chat room set up where you can talk directly with us. Come in and discuss new features, future goals, general problems or questions, or anything else you can think of.</p>
+<a class='btn waves-effect waves-light red lighten-3' href='https://gitter.im/Syncleus/aparapi' target='_blank'>Chat</a>
+</div>
+<div class='col l4 s12' style='overflow: hidden;'>
+<h5 class='white-text'>Connect</h5>
+<iframe allowtransparency='true' frameborder='0' height='30' scrolling='0' src='http://ghbtns.com/github-btn.html?user=Syncleus&amp;repo=aparapi&amp;type=watch&amp;count=true&amp;size=large' width='170'></iframe>
+<br>
+<a class='twitter-follow-button' data-dnt='true' data-show-count='true' data-size='large' href='https://twitter.com/AparapiLib'>Follow @AparapiLib</a>
+<br>
+<div class='g-follow' data-annotation='bubble' data-height='24' data-href='https://plus.google.com/102266131584900704956' data-rel='publisher'></div>
+</div>
+</div>
+</div>
+<div class='footer-copyright'>
+<div class='container'>
+© 2016-2017 Syncleus, All rights reserved.
+<a class='grey-text text-lighten-4 right' href='https://github.com/Syncleus/aparapi/blob/master/LICENSE'>Apache License v2</a>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+<script>
+  if (!window.jQuery) { document.write('<script src="bin/jquery-2.1.1.min.js"><\/script>'); }
+</script>
+<script src='/javascripts/jquery.timeago.js'></script>
+<script src='/javascripts/materialize.min.js'></script>
+<script src='/javascripts/lunr.min.js'></script>
+<script src='/javascripts/search.js'></script>
+<script src='/javascripts/materialize.js'></script>
+<script src='/javascripts/init.js'></script>
+<!-- Twitter Button -->
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+</script>
+<!-- Google Plus Button -->
+<script async='' defer='defer' src='https://apis.google.com/js/platform.js'></script>
+</body>
 </html>
