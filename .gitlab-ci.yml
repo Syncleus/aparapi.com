@@ -6,7 +6,8 @@ cache:
 
 test:
   script:
-  - apk --update add bower
+  - apk --update add npm
+  - npm install -g bower
   - bundle install --path vendor
   - bower install
   - bundle exec middleman build
@@ -15,7 +16,8 @@ test:
 
 pages:
   script:
-  - apk --update add bower
+  - apk --update add npm
+  - npm install -g bower
   - bundle install --path vendor
   - bower install
   - bundle exec middleman build
