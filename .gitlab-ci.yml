@@ -1,4 +1,4 @@
-image: nielsvdoorn/middleman
+image: ruby
 
 cache:
   paths:
@@ -6,7 +6,7 @@ cache:
 
 test:
   script:
-  - apk --update add npm
+  - apk --update add nodejs npm
   - npm install -g bower
   - bundle install --path vendor
   - bower install
@@ -16,7 +16,7 @@ test:
 
 pages:
   script:
-  - apk --update add npm
+  - apk --update add nodejs npm
   - npm install -g bower
   - bundle install --path vendor
   - bower install
