@@ -12,6 +12,7 @@ test:
   - bundle install --path vendor
   - bower --allow-root install
   - bundle exec middleman build
+  - du -hs build
   except:
     - master
 
@@ -23,6 +24,7 @@ pages:
   - bundle install --path vendor
   - bower --allow-root install
   - bundle exec middleman build
+  - du -hs build
   artifacts:
     paths:
     - build
