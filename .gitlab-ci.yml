@@ -10,7 +10,7 @@ test:
   - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
-  - bower install
+  - bower --allow-root install
   - bundle exec middleman build
   except:
     - master
@@ -21,7 +21,7 @@ pages:
   - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
-  - bower install
+  - bower --allow-root install
   - bundle exec middleman build
   artifacts:
     paths:
