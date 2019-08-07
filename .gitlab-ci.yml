@@ -25,8 +25,9 @@ pages:
   - bower --allow-root install
   - bundle exec middleman build
   - du -hs build
+  - mv build public
   artifacts:
     paths:
-    - build
+    - public
   only:
   - master
