@@ -6,7 +6,6 @@ cache:
 
 test:
   script:
-  - apt-get update -y
   - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
@@ -18,7 +17,6 @@ test:
 
 pages:
   script:
-  - apt-get update -y
   - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
