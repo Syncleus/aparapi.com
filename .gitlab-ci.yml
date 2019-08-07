@@ -6,7 +6,8 @@ cache:
 
 test:
   script:
-  - apk --update add nodejs npm
+  - apt-get update -y
+  - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
   - bower install
@@ -16,7 +17,8 @@ test:
 
 pages:
   script:
-  - apk --update add nodejs npm
+  - apt-get update -y
+  - apt-get install -y nodejs npm
   - npm install -g bower
   - bundle install --path vendor
   - bower install
