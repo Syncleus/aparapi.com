@@ -7,8 +7,9 @@ cache:
 test:
   script:
   - apt-get update -yqqq
-  - apt-get install -y nodejs
+  - apt-get install -y nodejs bower
   - bundle install --path vendor
+  - bower install
   - bundle exec middleman build
   except:
     - master
@@ -16,8 +17,9 @@ test:
 pages:
   script:
   - apt-get update -yqqq
-  - apt-get install -y nodejs
+  - apt-get install -y nodejs bower
   - bundle install --path vendor
+  - bower install
   - bundle exec middleman build
   artifacts:
     paths:
