@@ -1,0 +1,12 @@
+version: '3'
+services:
+  middleman-buildchain:
+    container_name: middleman_buildchain
+    image: 'syncleus/middleman-buildchain:latest'
+    #user: "$UID:$GID"
+    command: sh -c "bundle install; bower --allow-root install; bundle exec middleman build; chown -R ${UID}:${GID} /app"
+    volumes:
+      - '${PWD}:/app'
+#    environment:
+#      - OUSER=$UID
+#      - OGROUP=$GID

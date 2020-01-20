@@ -14,5 +14,5 @@ LDFLAGS="-L/usr/local/opt/libffi/lib" PKG_CONFIG_PATH="/usr/local/opt/libffi/lib
 Alternatively compile it using a docker container:
 
 ```
-docker run -v "$PWD":/app nielsvdoorn/middleman bundle install && bower install && bundle exec middleman build
+UID=${UID} GID=${GID} docker-compose up
 ```
